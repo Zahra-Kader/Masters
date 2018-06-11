@@ -1,0 +1,67 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun  9 20:01:45 2018
+
+@author: KaderF
+"""
+
+from scipy.interpolate import interp1d
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.integrate
+
+H0=70.
+m_p=1.6e-27
+kpar,P= np.genfromtxt('C:\\Users\\kaderf\\Downloads\\camb_84189500_matterpower_z0.dat', dtype=float,
+                      unpack=True)
+f = interp1d(kpar, P)
+def kpar_min(x, y=0):
+    return 1.0000e-04
+        
+def kpar_max(x,y=0):
+    return 1.0071e+01
+        
+def zero(x, y=0):
+    return 0.
+        
+def chi_max(x, y=0):
+    return 1.4e5
+def func():
+    res = []
+    append = res.append
+    for l in range(200):
+        def integrand(kpar, chi, chip):
+            integrand=(1.-H0*chi/2.)**(-4)*(1.-H0*chip/2.)**(-4)*(kpar/(kpar**2+(l**2/chi**2)))**2*np.cos(kpar*(chi-chip))/chi**2*f(kpar)
+            return integrand
+        # limits of integration
+       
+        # integrate over phi [0, Pi), alpha [0, 2 Pi), gamma [0, 2 Pi)
+        
+        
+        result, err = scipy.integrate.tplquad(integrand, 0., 1.4e5, zero, chi_max, kpar_min, kpar_max)
+        append(result)
+    return res
+Result_f=func()
+    #print (l,res)
+
+plt.loglog(Result_f)
+
+plt.show()
+#def Integral():
+#    result, err = scipy.integrate.tplquad(integrand, 0., 1., zero, twopi, zero, one)
+ #   return result
+
+#d_Ls = np.linspace(0., 200., 1000)
+#for index in range(1000):
+ #   d_Ls[index] = d_L(zs[index], omega_m=omega_m)
+# integrate over r [0, 1), beta [0, 2 Pi), theta [0, 2 Pi)
+
+#def F(x):
+ #   res = np.zeros_like(x)
+  #  for i,val in enumerate(x):
+   #     y,err = scipy.integrate.quad(Integral,0,val)
+    #    res[i]=y
+    #return res
+
+#plt.plot(l,F(l))
+
