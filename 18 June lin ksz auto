@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun  9 20:01:45 2018
+
+@author: KaderF
+"""
+
+from scipy.interpolate import interp1d
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.integrate
+from cosmolopy import b
+
+H0=70.
+m_p_inv=6.25e26
+
+#get matter power spec data
+kpar,P= np.genfromtxt('C:\\Users\\kaderf\\Downloads\\camb_84189500_matterpower_z0.dat', dtype=float,
+                      unpack=True)
+#interpolate the matter power spec
+f = interp1d(kpar, P)
+
+#limits of integration
+def kpar_min(x, y=0):
+    return 1.e-4
+        
+def kpar_max(x,y=0):
+    return 1.0071e+01
+        
+def zero(x, y=0):
+    return 0.
+        
+def chi_max(x, y=0):
+    return 13303.41299578
+
+#visibility function
+def g(chi):
+    g=(1.+b(chi))**(3)
+    return g
+
+#function to perform triple integral
+def func():
+    res = []
+    append = res.append
+    for l in range(200):
+        def integrand(kpar, chi, chip):
+            integrand=g(chi)*g(chip)*(kpar/(kpar**2+(l**2/chi**2)))**2*np.cos(kpar*(chi-chip))/chi**2*f(kpar)
+            return integrand
+        # limits of integration
+       
+        # integrate over phi [0, Pi), alpha [0, 2 Pi), gamma [0, 2 Pi)
+        
+        result, err = scipy.integrate.tplquad(integrand, 0., 13303.41299578, zero, chi_max, kpar_min, kpar_max)
+        result=result*m_p_inv
+        append(result)
+    return res
+Result_f=func()
+    #print (l,res)
+plt.loglog(Result_f)
+plt.show()
+#def Integral():
+#    result, err = scipy.integrate.tplquad(integrand, 0., 1., zero, twopi, zero, one)
+ #   return result
+
+#d_Ls = np.linspace(0., 200., 1000)
+#for index in range(1000):
+ #   d_Ls[index] = d_L(zs[index], omega_m=omega_m)
+# integrate over r [0, 1), beta [0, 2 Pi), theta [0, 2 Pi)
+
+#def F(x):
+ #   res = np.zeros_like(x)
+  #  for i,val in enumerate(x):
+   #     y,err = scipy.integrate.quad(Integral,0,val)
+    #    res[i]=y
+    #return res
+
+#plt.plot(l,F(l))
+
