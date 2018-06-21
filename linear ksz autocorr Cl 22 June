@@ -1,0 +1,98 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jun  9 20:01:45 2018
+
+@author: KaderF
+"""
+
+import scipy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+from cosmolopy import zed, cosmo
+import distance as cd
+import density as den
+import constants as cc
+import reionization as cr
+
+#print (chi_m)
+
+n_points=200
+H0=cc.H100_s*cosmo['h']
+z_r=20.0
+x_e=1.
+G=cc.G_const_Mpc_Msun_s/cc.M_sun_g
+#rho_c=3*H0**2/(8.*np.pi*G)
+rho_c=den.cosmo_densities(**cosmo)[0]*cc.M_sun_g
+gamma=0.53
+sigma_T=cc.sigma_T_Mpc
+chi_r = cd.comoving_distance(z_r, **cosmo)
+chi_m = cd.comoving_distance(1100, **cosmo)
+#print (omega_b_0)
+#tau_r=0.046*omega_b_0*h*x_e[np.sqrt(omega_M_0(1+z_r)**3+(1-omega_M_0))-1]
+tau_r=0.5
+#get matter power spec data
+kabs,P= np.genfromtxt('C:\\Users\\kaderf\\Downloads\\camb_84189500_matterpower_z0.dat', dtype=float,
+                      unpack=True)
+#interpolate the matter power spec
+Mps_interpf = sp.interpolate.interp1d(kabs, P, bounds_error=False,fill_value=0.)
+
+#visibility function
+def g():
+    f=(den.omega_M_z(z_r,**cosmo))**(gamma)
+    #tau=cr.integrate_optical_depth(zed(chi), x_ionH=1.0, x_ionHe=1.0, **cosmo)
+    #tau_der=(1.+zed(chi))**2*cosmo['omega_b_0']*rho_c*x_e*sigma_T/cc.m_p_g*np.exp(-tau)
+    delta_chi=chi_m-1.
+    g=((1.-np.exp(-tau_r))/np.sqrt(2*np.pi*(delta_chi)**2)) #*np.exp(-(chi_r-chi_r)**2/(2*(delta_chi)**2))
+    #g=(f*H0*2*np.pi)**2*tau_der/cc.c_light_Mpc_s
+    g=(f*H0*2*np.pi)**2/cc.c_light_Mpc_s
+   
+    return g
+#function to perform triple integral
+'''
+def Cl_all_ell(ell):
+    chi = np.linspace(1.,chi_m,n_points)
+    kpar = np.linspace(0.0001,10.,n_points)
+    g_int = sp.interpolate.interp1d(chi,g(chi))
+    Cl=np.array([])
+    for i in ell:
+        ch1,ch2=np.meshgrid(chi,chi)
+        integrand=[g_int(ch1)*g_int(ch2)*(j/(j**2+(i**2/ch1**2)))**2*np.cos(kpar*(ch1-ch2))/ch1**2 * Mps_interpf(np.sqrt((i**2/ch1**2) + j**2. )) for j in kpar]
+        integrand=[sp.integrate.trapz(sp.integrate.trapz(integrand,chi,axis=0)
+                   ,chi,axis=0)]
+        Cl=np.append(Cl,sp.integrate.trapz(integrand,kpar))
+    return Cl
+'''
+def Cl_all_ell_method2(ell):
+    kpar = np.linspace(0.0001,10.,n_points)
+    Cl=np.array([])
+    for i in ell:
+        integrand=[g()**2*(kpar/(kpar**2+(i**2/chi_r**2)))**2/chi_r**2 * Mps_interpf(np.sqrt((i**2/chi_r**2) + kpar**2. ))]
+        Cl=np.append(Cl,sp.integrate.trapz(integrand,kpar))
+    return Cl
+'''
+def Cl_low_ell():
+    chi = np.linspace(1.,chi_m,n_points)
+    kpar = np.linspace(0.0001,10.,n_points)
+    g_int = sp.interpolate.interp1d(chi,g(chi))
+    ch1,ch2=np.meshgrid(chi,chi)
+    integrand=[g_int(ch1)*g_int(ch2)*np.cos(kpar*(ch1-ch2))/ch1**2*Mps_interpf(j)/j**2 for j in kpar]
+    integrand=[sp.integrate.trapz(sp.integrate.trapz(integrand,chi,axis=0)
+               ,chi,axis=0)]
+    Cl=sp.integrate.trapz(integrand,kpar)
+    return Cl
+
+'''
+def Cl_low_ell_method2():
+    kpar = np.linspace(0.0001,10.,n_points)
+    integrand=[g()**2/(chi_r**2)*Mps_interpf(kpar)/kpar**2]
+    Cl=sp.integrate.trapz(integrand,kpar)
+    return Cl
+ell=np.linspace(0,200,n_points)
+
+print (Cl_low_ell_method2())
+
+#print (Cl_all_ell(ell))
+
+plt.loglog(ell,Cl_all_ell_method2(ell))
+plt.show()
+
