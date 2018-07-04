@@ -1,0 +1,106 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jun 12 15:37:55 2018
+
+@author: KaderF
+"""
+
+import distance as cd
+from scipy.interpolate import interp1d
+import numpy as np
+import perturbation as cp
+import density as den
+import constants as cc
+import matplotlib.pyplot as plt
+#import perturbation as cp
+
+b_HI=1.0
+omega_HI=0.8e-3
+
+cosmo = {'omega_M_0':0.3, 'omega_lambda_0':0.7, 'omega_k_0':0.0, 'h':0.7, 'omega_b_0' : 0.045, 'omega_n_0' : 0.0,
+         'N_nu' : 0, 'n' : 1.0, 'sigma_8' : 0.9, 'baryonic_effects' : False,'X_H':.75}
+H0=cc.H100_s*cosmo['h']
+
+#z=np.logspace(-10,np.log(2000),2000)
+z=np.linspace(0,1100,1101)
+
+kabs,P= np.genfromtxt('C:\\Users\\kaderf\\Downloads\\camb_84189500_matterpower_z0.dat', dtype=float,
+                      unpack=True)
+#interpolate the matter power spec
+Mps_interpf = interp1d(kabs, P, bounds_error=False,fill_value=0.)
+
+def zed(chi_in):
+    chi_full = cd.comoving_distance(z, **cosmo)
+    f=interp1d(chi_full,z,bounds_error=False,fill_value=0.)
+    return f(chi_in)
+
+def chi(z):
+    chi_full = cd.comoving_distance(z, **cosmo)
+    return chi_full
+
+def H(z):
+    H=cd.hubble_z(z,**cosmo)
+    return H
+
+def D_1(z):
+    D_1=cp.fgrowth(z,cosmo['omega_M_0'],0)
+    return D_1
+
+#plt.loglog(z,D_1(z))
+#plt.show()
+chi_m=chi(1100)
+chi_array=np.linspace(0,chi_m,2000)
+plt.plot(chi_array,D_1(zed(chi_array)))
+plt.show()
+
+def f(z):
+    f=(den.omega_M_z(z,**cosmo))**(cc.gamma)
+    return f
+
+#plt.plot(den.omega_M_z(z,**cosmo),f(z))
+#plt.show()
+
+def r(z):
+    r=cc.c_light_Mpc_s*(1+z)**2/H(z)
+    return r
+
+def kpar(y,z):
+    kpar=y/r(z)
+    return kpar
+
+def T_mean(z):
+    T_mean=566.*cosmo['h']*H0*omega_HI*(1+z)**2/(H(z)*0.003)
+    return T_mean
+#plt.plot(z,T_mean(z))
+#plt.xlabel('z')
+#plt.ylabel('T(z)')
+#plt.show()
+##print (z)
+'''
+def chi_flat():
+    for i in enumerate(z):
+        chi =2*(1-(1/np.sqrt(1+z)))/H0
+    return chi
+#chi_f=chi_flat()
+    ##print ("Comoving distance to z is %.1f Mpc" % (chi))
+##print (chi)
+##print (z)
+#return res
+#result=zed()
+##plt.loglog(chi,b(chi))
+##plt.show()
+##plt.loglog(chi_f,z)
+##plt.show()
+##print (b(chi))
+#f=cp.fgrowth(b(chi), omega_M_0=0.27, unnormed=False)
+##print (f)
+##plt.loglog(b(chi),f)
+
+'''
+import reionization as cr
+
+tau_r=cr.optical_depth_instant(z_r=6.0, x_ionH=1.0, x_ionHe=1.0, z_rHe = None,return_tau_star=False, verbose=0, **cosmo)
+##print (tau_r)
+#cosmo = {'omega_M_0':0.3, 'omega_lambda_0':0.7, 'omega_k_0':0.0, 'h':0.72, 'omega_b_0' : 0.045, 'omega_n_0' : 0.0,
+ #        'N_nu' : 0, 'n' : 1.0, 'sigma_8' : 0.9, 'baryonic_effects' : False}
+#I=cr.ionization_from_collapse(z=6, coeff_ion=1, temp_min=1e4, passed_min_mass = False,**cosmo) 
