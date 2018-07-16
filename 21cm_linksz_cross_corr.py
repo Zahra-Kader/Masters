@@ -18,10 +18,14 @@ import lin_ksz_method2 as lksz
 import twentyonecm_autocorr as tcm
 import matplotlib.patches as mpatches
 
-
 z_r=lksz.z_r
 chi_r=lksz.chi_r
+g=lksz.g
+const=lksz.const
+u=lksz.u
 T_rad=2.73*1e6
+
+
 def k(i,y,z):
     k=np.sqrt(uf.kpar(y,z)**2+(i/uf.chi(z))**2)
     return k
@@ -39,7 +43,7 @@ def Cl_21_lksz(ell,y,z):
         #print (a)
         delta_tcm=(uf.T_mean(z)*a*uf.D_1(z))/(uf.chi(z)**2*uf.r(z))
         #print (delta_tcm)
-        delta_lksz=T_rad*lksz.f*uf.H0/cc.c_light_Mpc_s*lksz.g(chi_r)*np.abs(np.sin(uf.kpar(y,z_r)*chi_r))*mu_k(i,y,z_r)/k(i,y,z_r)*lksz.Mps_interpf(k(i,y,z_r))
+        delta_lksz=const*u(z_r)*np.abs(np.cos(uf.kpar(y,z_r)*chi_r))/k(i,y,z_r)**2*lksz.Mps_interpf(k(i,y,z_r))
         #print (delta_lksz)
         Cl_one=delta_tcm*delta_lksz
         Cl=np.append(Cl,Cl_one)
@@ -52,7 +56,7 @@ def sin(y):
 plt.plot(y,sin(y))
 plt.show()
 '''
-ell=np.linspace(0,1000,1000)
+ell=np.linspace(0,300,1000)
 #plt.loglog(ell,Cl_21_lksz(ell,y=5,z=z_r),'r')
 #plt.loglog(ell,Cl_21_lksz(ell,y=1,z=z_r),'b')
 #plt.loglog(ell,Cl_21_lksz(ell,y=2,z=z_r),'r')
