@@ -12,19 +12,22 @@ import perturbation as cp
 import density as den
 import constants as cc
 import matplotlib.pyplot as plt
+import scipy as sp
+
 #import perturbation as cp
 
 b_HI=1.0
 omega_HI=0.8e-3
+n_points=2000
 
-cosmo = {'omega_M_0':0.3, 'omega_lambda_0':0.7, 'omega_k_0':0.0, 'h':0.7, 'omega_b_0' : 0.045, 'omega_n_0' : 0.0,
+cosmo = {'omega_M_0':0.3, 'omega_lambda_0':0.7, 'omega_k_0':0.0, 'h':0.68, 'omega_b_0' : 0.0486, 'omega_n_0' : 0.0,
          'N_nu' : 0, 'n' : 1.0, 'sigma_8' : 0.9, 'baryonic_effects' : False,'X_H':.75}
 H0=cc.H100_s*cosmo['h']
 
 #z=np.logspace(-10,np.log(2000),2000)
-z=np.linspace(0,1100,1101)
+z=np.linspace(1e-4,10,n_points)
 
-kabs,P= np.genfromtxt('C:\\Users\\kaderf\\Downloads\\camb_84189500_matterpower_z0.dat', dtype=float,
+kabs,P= np.genfromtxt('C:\\Users\\kaderf\\Downloads\\camb_88429443_matterpower_z0.dat', dtype=float,
                       unpack=True)
 #interpolate the matter power spec
 Mps_interpf = interp1d(kabs, P, bounds_error=False,fill_value=0.)
@@ -50,8 +53,8 @@ def D_1(z):
 #plt.show()
 chi_m=chi(1100)
 chi_array=np.linspace(0,chi_m,2000)
-plt.plot(chi_array,D_1(zed(chi_array)))
-plt.show()
+#plt.plot(chi_array,D_1(zed(chi_array)))
+#plt.show()
 
 def f(z):
     f=(den.omega_M_z(z,**cosmo))**(cc.gamma)
@@ -97,10 +100,25 @@ def chi_flat():
 ##plt.loglog(b(chi),f)
 
 '''
+delta_z=2.
+z_r=10.
+z_ri=z_r-delta_z/2
+z_rf=z_r+delta_z/2
+chi_ri=chi(z_ri)
+chi_rf=chi(z_rf)
+delta_chi=chi_rf-chi_ri
+r_H=2*cc.c_light_Mpc_s/(3*H0*np.sqrt(cosmo['omega_M_0'])*(1+z_r)**1.5)
+#r_H=cd.light_travel_distance(z_r,0.0,**cosmo)
+chi_r=chi(z_r)
+theta=r_H/cd.angular_diameter_distance(z_r,0,**cosmo)
+#print (theta)
+
 import reionization as cr
 
-tau_r=cr.optical_depth_instant(z_r=6.0, x_ionH=1.0, x_ionHe=1.0, z_rHe = None,return_tau_star=False, verbose=0, **cosmo)
-##print (tau_r)
+tau=cr.integrate_optical_depth(z,x_ionH=1.0, x_ionHe=1.0, **cosmo)
+
+tau_r=cr.optical_depth_instant(z_r=10.0, x_ionH=1.0, x_ionHe=1.0, z_rHe = None,return_tau_star=False, verbose=0, **cosmo)
+#print (tau_r)
 #cosmo = {'omega_M_0':0.3, 'omega_lambda_0':0.7, 'omega_k_0':0.0, 'h':0.72, 'omega_b_0' : 0.045, 'omega_n_0' : 0.0,
  #        'N_nu' : 0, 'n' : 1.0, 'sigma_8' : 0.9, 'baryonic_effects' : False}
 #I=cr.ionization_from_collapse(z=6, coeff_ion=1, temp_min=1e4, passed_min_mass = False,**cosmo) 
