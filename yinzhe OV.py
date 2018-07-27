@@ -68,6 +68,7 @@ def tau(z):
 #print (tau(z)[11])
 #plt.plot(z,tau(z))
 #plt.show()
+x=ionized_elec(0.24,1)
 '''
 x=np.linspace(0,5,5)
 y=np.linspace(0,5,5)
@@ -100,45 +101,52 @@ print (C_l)
 '''
 
 kp=np.linspace(k_min,k_max,n_points)
-kp_norm=np.linalg.norm(kp)
-
-def Delta_b(k,z):
-    Delta_b=np.array([]) 
-    for i in k:
+chi=uf.chi
+def C_l(ell):
+    C_l=np.array([])
+    zz=z[:,np.newaxis]
+    kk=kp[np.newaxis,:]
+    kk_norm=np.linalg.norm(kk)
+    for i in ell:
         #mu=kk/i
         #mu=(i**2+kk**2-(np.abs(i-kk))**2)/(2*i*kk)
         #print (mu)
         #I=i**2/(kk**2*(i**2+kk**2))
-        k_norm=np.linalg.norm(i)
-        mu=np.dot(i,kp)/(k_norm*kp_norm)
+        k_norm=np.linalg.norm(i/chi(zz))
+        mu=np.dot(i/chi(zz),kk)/(k_norm*kk_norm)
         #print (mu)
-        I=i*(i-2*kp*mu)*(1-mu**2)/(i**2+kp**2-2*i*kp*mu)
-        constants=i**3*uf.f(z)**2/((2*np.pi**2)*(2*np.pi)**3)
-        delta_sq=constants*Mps_interpf(kp)*Mps_interpf(np.abs(i-kp))*I
-        Integral=sp.integrate.trapz(delta_sq,kp)
-        Delta_b=np.append(Delta_b,Integral)
-        Delta_b_sqrt=np.sqrt(Delta_b)
-    return Delta_b_sqrt
-
+        I=i/chi(zz)*(i/chi(zz)-2*kk*mu)*(1-mu**2)/((i/chi(zz))**2+kk**2-2*i/chi(zz)*kk*mu)
+        constants=(i/chi(zz))**3/((2*np.pi**2)*(2*np.pi)**3)
+        delta_sq=constants*Mps_interpf(kk)*Mps_interpf(np.abs(i/chi(zz)-kk))*I
+        const=8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
+        integrand=[const*(1+zz)**2*uf.f(zz)**2*delta_sq*uf.chi(zz)*uf.H(zz)*np.exp(-2*tau(zz))]        
+    C_l=np.append(C_l,sp.integrate.trapz(sp.integrate.trapz(integrand,zz,axis=0),kp,axis=0))
+    return C_l
+'''
 k=np.linspace(1e-2,10,n_points)
-plt.loglog(k,Delta_b(k,z=0)*k)
+plt.loglog(k,Delta_b(k)*k)
 plt.ylim(1e-13,1e3)
 plt.xlim(1e-2,10)
+plt.ylabel(r'$\rm{\Delta_b(k,z)k/H(z)}$')
+plt.xlabel('k [h/Mpc]')
 plt.show()
-   
+
+def R_d():
+    
+    const=8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
+    integrand=[const*(1+z)**2*uf.f(z)**2*uf.chi(z)*uf.H(z)*np.exp(-2*tau(z))]
+    #print (np.shape(integrand))
+    #integrand=np.resize(integrand,(n_points,n_points))
+    #print (np.shape(integrand))
+    Redshift_dep=sp.integrate.trapz(integrand,z)
+    print (Redshift_dep)
+    return Redshift_dep
+
 def C_l(ell):
-    C_l=np.array([])
-    for i in ell: 
-        const=8*np.pi**2*T_rad**2/((cc.c_light_Mpc_s)*(2*i+1)**3)*(sigma_T*rho_g0/(mu_e*m_p))**2
-        Delta_bsq=Delta_b(k,z)**2
-        integrand=[const*(1+z)**2*ionized_elec(0.24,1)**2*Delta_bsq*uf.chi(z)*uf.H(z)]
-        #print (np.shape(integrand))
-        #integrand=np.resize(integrand,(n_points,n_points))
-        #print (np.shape(integrand))
-        C_l=np.append(C_l,sp.integrate.trapz(integrand,z))
+    C_l=R_d()*Delta_b(k)**2/(2*ell+1)**3
     return C_l
-ell=np.linspace(2,4000,n_points)
-plt.loglog(ell,C_l(ell))
+'''
+ell=np.linspace(2,10000,n_points)
+plt.loglog(ell,ell*(ell+1)*C_l(ell)/(2*np.pi)*1e12)
 #plt.loglog(ell,ell*(ell+1)*C_l(ell)*1e12/(2*np.pi))
 plt.show()
- 
