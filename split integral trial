@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jul 30 20:30:38 2018
+
+@author: KaderF
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.integrate as sp
+
+n=200
+kp=np.linspace(0,4,n)
+z=np.linspace(1,2,n)
+ell=np.linspace(1,10,n)
+k=ell*z
+def F(k):
+    F=np.array([])
+    for i in k:
+        Integrand=kp*i*(kp+i)
+        F=np.append(F,sp.trapz(Integrand,kp))
+    return F
+
+def F_actual(k):
+    F=64/3*k+8*k**2
+    return F
+'''
+k=np.linspace(0,5,n)
+plt.plot(k,F(k))
+plt.plot(k,F_actual(k))
+plt.show()
+'''
+def Cl(ell):
+    Cl=np.array([])
+    for i in ell:
+        Cl=np.append(Cl,sp.trapz(F(i*z)/z**3,z))
+    return Cl
+
+def Cl_check(ell):
+    Cl_check=32*ell+ell**2*56/3
+    return Cl_check
+
+def Cl_alt():
+    Cl=F(k)*sp.trapz(1/z**3,z)
+    return Cl
+    
+plt.plot(ell,Cl(ell)*ell/ell,'g')
+plt.plot(ell,Cl_alt()*ell/ell,'b')
+#plt.plot(ell,Cl_check(ell))
+plt.show()
