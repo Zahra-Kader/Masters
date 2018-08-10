@@ -1,0 +1,183 @@
+\documentclass[a0,portrait]{a0poster}
+
+\usepackage{multicol} % This is so we can have multiple columns of text side-by-side
+\columnsep=100pt % This is the amount of white space between the columns in the poster
+\columnseprule=3pt % This is the thickness of the black line between the columns in the poster
+
+\usepackage[svgnames]{xcolor} % Specify colors by their 'svgnames', for a full list of all colors available see here: http://www.latextemplates.com/svgnames-colors
+
+\usepackage{times} % Use the times font
+%\usepackage{palatino} % Uncomment to use the Palatino font
+
+\usepackage{graphicx} % Required for including images
+\graphicspath{{figures/}} % Location of the graphics files
+\usepackage{booktabs} % Top and bottom rules for table
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+\usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
+\usepackage{wrapfig} % Allows wrapping text around tables and figures
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	POSTER HEADER 
+%----------------------------------------------------------------------------------------
+
+% The header is divided into two boxes:
+% The first is 75% wide and houses the title, subtitle, names, university/organization and contact information
+% The second is 25% wide and houses a logo for your university/organization or a photo of you
+% The widths of these boxes can be easily edited to accommodate your content as you see fit
+
+\begin{minipage}[b]{0.75\linewidth}
+\VeryHuge \color{NavyBlue} \textbf{HIRAX: Cross Correlation of 21-cm Fluctuations and Kinetic Sunyaev Z'eldovich Effect} \color{Black}\\ % Title
+%\Huge\textit{Country Update}\\[2.4cm] % Subtitle
+\huge \textbf{Zahra Kader}\\[0.5cm] % Author(s)
+\huge University of KwaZulu-Natal, Westville Campus\\[0.4cm] % University/organization
+%\Large \texttt{zahrakader@gmail.com}\\
+% --- +81 (092) 802 3316
+\end{minipage}
+%
+\begin{minipage}[b]{0.25\linewidth}
+\includegraphics[width=25cm]{"Desktop/hirax logo"}\ 
+%\includegraphics[width=14cm]{"Downloads/Cl OV"}\\
+\end{minipage}
+
+\vspace{1cm} % A bit of extra whitespace between the header and poster content
+
+%----------------------------------------------------------------------------------------
+
+\begin{multicols}{3} % This is how many columns your poster will be broken into, a portrait poster is generally split into 2 columns
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\color{Navy} % Navy color for the abstract
+
+\section*{Introduction}
+\noindent The signals from the 21-cm neutral Hydrogen brightness temperature fluctuations and the Kinetic Sunyaev Z'eldovich (KSZ) effect both allow cosmologists to learn more about large scale structures (LSS) and reionization. Cross correlating the two signals removes problems of foreground removal and line of sight cancellation, and also provides us with a valuable tool in constraining cosmological parameters. HIRAX aims to detect this cross correlation which has not yet been detected. HIRAX will operate in the redshift range 0.8-2.5 and will therefore focus on using this cross correlation signal to learn more about size and distribution of large structures in the universe. Combined with the work on Baryon Acoustic Oscillations (BAOs) HIRAX promises to provide revolutionary improvements in our understanding of the origins of the universe as well as the expansion rate due to dark energy
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\color{Black} % SaddleBrown color for the introduction
+\section*{Neutral Hydrogen 21-cm Fluctuations}
+\begin{itemize}
+	\item The electron in a neutral Hydrogen atom undergoes a spin-flip transition which results in the emission of a 21-cm wavelength photon 
+	\item This is a rare transition but due to the large amount of neutral Hydrogen gas, this signal is always measurable at any given time
+\end{itemize}
+
+\begin{center}\vspace{1cm}
+	\includegraphics[width=0.8\linewidth]{"Desktop/cosmology/21cm spin flip"}
+	\captionof{figure}{\color{Green} Spin Flip transition of electron in Hydrogen atom}
+\end{center}\vspace{1cm}
+
+\begin{itemize}
+	\item Neutral Hydrogen is used as a probe of the Dark Ages and reionization, thereby providing insight into the early universe 
+	\item Acts as a tracer of large scale structures due to the shielding of dense structures from UV radiation at reionization. Therefore, measuring the 21 cm signal enables cosmologists to probe clusters 
+	\item The brightness temperature fluctuations are obtained by measuring the redshifted 21-cm signal, and is dependant on the matter density perturbations combined with the perturbations in the ionized fraction of Hydrogen. Therefore, using the expression which relates redshift space to real space, the expression for the brightness temperature fluctuation is given as
+	
+\begin{equation*}
+\delta T_{21}=\int d\chi \bar{T}(z)D(z)x_H \delta(\vec{x}_1) \delta_{x_H}(\vec{x}_2)(1+f\mu_k^2)
+\end{equation*}
+\end{itemize}
+
+\begin{center}\vspace{1cm}
+	\includegraphics[width=1\linewidth]{Desktop/cosmology/Cl_21cm_autocorr}
+	\captionof{figure}{\color{Green} Angular Power spectrum of the 21-cm signal shown for different y values, where y is proportional to Fourier modes in the line of sight and \textit{l} is inversely proportional to the angular size being observed.}
+\end{center}\vspace{1cm}
+
+\begin{itemize}
+\item There is more power at low \textit{l} due to the larger quantities of neutral Hydrogen that is observed at larger angular scales. The power decreases with decrease in the wavelength of the perturbation due to the low frequency signal that is being measured
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	GEOLOGY
+%----------------------------------------------------------------------------------------
+\vfill\null
+\columnbreak
+\color{Black} % DarkSlateGray color for the rest of the content
+
+\section*{Kinetic Sunyaev-Z'eldovich Effect}
+\begin{itemize}
+\item The SZ effect is a secondary scattering effect which can be subcategorised into thermal (TSZ) and kinetic (KSZ). TSZ is due to inverse Compton scattering from electrons in hot regions such as the intra-cluster medium (ICM). Photon energy increases and the spectrum distorts in a characteristic way. The KSZ is due to the motion of the cluster in relation to the CMB rest frame, which causes a Doppler shift, resulting in further spectral distortion. This effect occurs at reionization as well due to the large number of ionized electrons
+\end{itemize}
+\begin{center}\vspace{1cm}
+	\includegraphics[width=0.7\linewidth]{"Desktop/cosmology/ksz image"}
+	\captionof{figure}{\color{Green} Illustration of the KSZ effect due to relative motions of CMB photons and ionized electrons in ICM}
+\end{center}\vspace{1cm}
+
+\begin{itemize}
+\item While the 21-cm signal is a useful probe of large structures, it can only give limited information of the size and distribution of massive objects. The KSZ effect is unique in that it provides a measure of velocity fields as well. Thus, the motions of massive structures can be studied in relation to each other
+\item Since velocity fields decrease as $1/\sqrt{r}$, the velocity field extends further out than the diameter of the galaxy or cluster. Thus, knowledge of the velocity fields obtained from the KSZ effect is useful in resolving large structures
+\item Using the KSZ signal is much easier than traditional methods of measuring velocities since this effect is independant of the distance of objects
+\item It is important to note that the signal is weak due to the small chance of a photon scattering, as well as the small photon energy change due to the effect. Therefore, the signals from several clusters must be considered
+\item The spectral distortion of the CMB due to the KSZ effect is dependant on the number density of electrons in our line of sight and the optical depth which determines scattering rates of photons. It also depends on the velocity of electrons and the electron density perturbation. Thus, the KSZ spectral distortion is given as
+\begin{equation*}
+\frac{T_{KSZ}}{T_{rad}}=-\frac{1}{c}\int_{0}^{\eta_0} d\chi g(\chi)\hat{\theta}.\vec{v}(\vec{x})(1+\delta_e(\vec{x}))
+\end{equation*}
+\end{itemize}
+
+\subsection*{Doppler effect}
+\begin{itemize}
+\item In the linear regime it is assumed that electron density perturbations are negligible and thus only large scale anisotropies due to doppler shifting are accounted for
+\item The angular power spectrum due to the doppler effect is shown for different reionization histories. Reionization models are more extensive, taking into consideration homogenous or patchy reionization. Though HIRAX will not be probing reionization, it is important to analyse the effect that reionization has on the signal which we hope to detect 
+\end{itemize}
+\begin{center}\vspace{1cm}
+\includegraphics[width=1.0\linewidth]{"Desktop/cosmology/alvarez diff reionization histories"}
+\captionof{figure}{\color{Green} Angular power spectrum for the doppler effect is shown for different reionization histories, Alvarez 2015}
+\end{center}\vspace{1cm}
+\begin{itemize}
+\item Alvarez et al 2006 has predicted that SKA will detect the cross correlation signal of the doppler effect with the 21-cm signal after 1 year of survey observation. We plan to make similar predictions to determine how well HIRAX will be able to detect the 21-cm KSZ cross correlation signal. Since HIRAX will focus more on small scale anisotropies, we turn our attention to the KSZ effect in the non-linear regime
+\end{itemize}
+
+%------------------------------------------------
+
+\subsection*{KSZ effect}
+
+\begin{itemize}
+\item In the non-linear regime the KSZ effect is normally separated into linear KSZ and non-linear KSZ, accounting for linear and non-linear density perturbations, respectively
+\end{itemize}
+
+\begin{center}\vspace{1cm}
+\includegraphics[width=0.8\linewidth]{"Desktop/cosmology/lin&nonlin ksz plots theory_yinzhe"}
+\captionof{figure}{\color{Green} Angular power spectrum of the linear and non-linear KSZ, Ma and Zhao 2014}
+\end{center}\vspace{1cm}
+
+\begin{itemize}
+\item The linear KSZ power spectrum peaks at a high \textit{l} of $\approx 2000$ which corresponds roughly to the angular size of a cluster. The doppler effect in comparison peaked at a much lower l due to the larger angular scale of the rescattering surface. Thus, we can be certain that we are probing much smaller scales in the non-linear regime, which is ideal for HIRAX
+\item The HIRAX telescope will predominantly focus on using these cross correlations to probe large scale structures, which will differ from current research on the cross correlations between 21-cm fluctuations and the KSZ effect (Cooray 2004, Ma et al 2017, Jeli´c et al 2009, Tashiro 2011) all of which examine the signal at reionization
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	CONCLUSIONS
+%----------------------------------------------------------------------------------------
+
+\color{SaddleBrown} % SaddleBrown color for the conclusions to make them stand out
+
+\section*{Conclusions}
+
+The cross correlation between the 21-cm signal and the KSZ signal can be used to study large scale structures in the universe, which is applicable in a number of areas such as constraining the dark energy equation of state parameter. This cross correlation is unique in that the KSZ signal provides useful information on velocity fields of massive objects. Thus, the motions of large structures is studied together with their size and distribution. In studying the KSZ signal we find that the signal in the linear regime is dominant on large angular scales and is therefore not ideal for HIRAX. HIRAX is designed to probe anisotropies on small scales and we will therefore focus on the KSZ signal in the non-linear regime. In contrast to the majority of current papers that study this cross correlation at reionization, HIRAX will provide new studies in which the focus of this signal will be at low redshifts 
+
+
+\color{Black} % Set the color back to DarkSlateGray for the rest of the content
+
+%----------------------------------------------------------------------------------------
+%	FORTHCOMING RESEARCH
+%----------------------------------------------------------------------------------------
+
+\section*{Forthcoming Research}
+
+Signal to noise plots for the cross correlation signal will be used to determine how well HIRAX will be able to detect the signal and the survey time required to acquire the desired results
+
+ %----------------------------------------------------------------------------------------
+%	REFERENCES
+%----------------------------------------------------------------------------------------
+
+%\nocite{*} % Print all references regardless of whether they were cited in the poster or not
+%\bibliographystyle{plain} % Plain referencing style
+%\bibliography{sample} % Use the example bibliography file sample.bib
+
+%----------------------------------------------------------------------------------------
+
+\end{multicols}
+\end{document}
