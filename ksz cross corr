@@ -1,0 +1,309 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 20 11:30:07 2018
+
+@author: 214506052
+"""
+
+import scipy as sp
+
+
+
+import numpy as np
+
+
+
+import matplotlib.pyplot as plt
+
+
+
+import matplotlib.patches as mpatches
+
+
+
+import useful_functions as uf
+
+
+
+import distance as cd
+
+
+
+import density as den
+
+
+
+import constants as cc
+
+
+
+import reionization as cr
+
+
+
+from decimal import Decimal
+
+import lin_ksz_method2 as lksz
+
+from sympy.physics.quantum.cg import CG
+
+
+
+cosmo=uf.cosmo
+
+
+
+Mps_interpf=uf.Mps_interpf
+
+
+
+
+
+
+
+n_points=uf.n_points
+
+
+
+z_r=10.8
+
+
+
+x_e=1.
+
+
+
+G=cc.G_const_Mpc_Msun_s/cc.M_sun_g
+
+
+
+#rho_c=3*H0**2/(8.*np.pi*G)
+
+
+
+rho_c=den.cosmo_densities(**cosmo)[0]*cc.M_sun_g #in units of g/Mpc^3
+
+
+
+sigma_T=cc.sigma_T_Mpc
+
+
+
+tau_r=0.055
+
+
+
+T_rad=2.73 #In Kelvin
+
+Ts=13*T_rad
+
+
+
+
+
+chi_r = uf.chi(z_r)
+
+
+
+chi_m = uf.chi(1100)
+
+
+
+chi_min=0.0001
+
+
+
+k_min=1e-3
+
+
+
+k_max=0.1
+
+
+
+chi_array=np.linspace(chi_min,chi_m,n_points)
+
+
+
+#tau_r=0.046*omega_b_0*h*x_e[np.sqrt(omega_M_0(1+z_r)**3+(1-omega_M_0))-1]
+
+
+
+#get matter power spec data
+
+
+
+mu_e=1.44
+
+
+
+m_p=cc.m_p_g #in grams
+
+
+
+rho_g0=cosmo['omega_b_0']*rho_c
+
+
+
+#plt.loglog(uf.kabs,Mps_interpf(uf.kabs))
+
+
+
+#plt.show()
+
+
+
+g=lksz.g
+
+
+
+
+
+zed=uf.zed
+
+
+
+z=uf.z
+
+z_N=uf.D_1(z_r)*(1+z_r)-1
+
+print (uf.D_1(z_N),'zn')
+
+b_h=10
+
+
+delta_z=0.5
+
+def x_H(z):
+    x_H=1/(1+np.exp(-(z-z_r)/delta_z))
+    return x_H
+
+
+def Cl_with_ellsq(k,z): #ell**2*Cl/2*np.pi
+
+    line1=58*(4/3)*Mps_interpf(k)
+
+    x_H=0.5
+
+    line2=(1+z_N)**2/1e5*(cosmo['omega_b_0']*cosmo['h']**2/0.02)**2
+
+    Cl=line1*line2*np.sqrt(cosmo['omega_M_0']*cosmo['h']**2/0.15)*x_H*(1-x_H)*(1.5-x_H*(1+z)/delta_z)*((1+z)/10)**1.5
+
+    Cl=np.abs(Cl)
+
+    return Cl
+
+'''
+
+def Powerspec_ksz_21(ell,z):
+
+    Cl=np.array([])
+
+    for i in ell:
+
+        line1=58*2*x_H*(x_H/(1-x_H)*np.log(x_H)*(b_h-uf.f(z)-1))**2*Mps_interpf(i/uf.chi(z))
+
+        line2=(1+z_N)**2/1e5*(cosmo['omega_b_0']*cosmo['h']**2/0.02)**2
+
+        result=line1*line2*np.sqrt(cosmo['omega_M_0']*cosmo['h']**2/0.15)*x_H*(1-x_H)*(1.5-x_H*(1+z)/delta_z)*((1+z)/10)**1.5
+
+        Cl=np.append(Cl,sp.integrate.trapz(np.abs(result),z))
+
+    return Cl 
+
+'''
+
+a=x_H(z)/(1-x_H(z))*np.log(x_H(z))*(b_h-uf.f(z)-1)
+
+
+
+def Px_delta(k):
+
+    P=a*Mps_interpf(k)
+
+    return P
+
+
+
+def Pxx(k):
+
+    Pxx=a**2*Mps_interpf(k)
+
+    return Pxx
+
+
+
+def Powerspec_ksz_21(ell,z):
+    k=ell/uf.chi(z)
+
+    line1=58*(1-T_rad*(1+z)/Ts)*(-(1-x_H(z))*Px_delta(k)+x_H(z)*(Mps_interpf(k)-Px_delta(k)))
+
+    print (1-T_rad*(1+z)/Ts,'kappa')
+
+    line2=(1+z_N)**2/1e5*(cosmo['omega_b_0']*cosmo['h']**2/0.02)**2
+
+    result=line1*line2*np.sqrt(cosmo['omega_M_0']*cosmo['h']**2/0.15)*x_H(z)*(1-x_H(z))*(1.5-x_H(z)*(1+z)/delta_z)*((1+z)/10)**1.5
+
+    print (1.5-x_H(z)*(1+z)/delta_z)
+
+    return result 
+
+ell=np.linspace(0,1e5,n_points)
+
+
+
+def Powerspec_mine(ell):
+
+    Cl=np.array([])
+
+    kp=np.linspace(1e-4,10,n_points)
+
+    #kp=ell/chi_r
+
+    for i in ell:
+
+        #j=np.sqrt(np.pi /(2*kp*chi_r))*sp.special.jn(i+0.5,kp*chi_r)
+
+        const=-T_rad*1e6/cc.c_light_Mpc_s*g(z_r)*(4/3)*uf.T_mean(z_r)*uf.D_1(z_r)*uf.f(z_r)*uf.H(z_r)/(1+z_r)/chi_r**2
+
+        integrand=const*kp*(Mps_interpf(kp)*(Px_delta(i/chi_r)+Pxx(i/chi_r))+(Px_delta(i/chi_r)+Mps_interpf(i/chi_r))*Px_delta(kp))
+
+        Cl=np.append(Cl,sp.integrate.trapz(integrand,kp))
+
+    return Cl
+
+        
+
+print (58*4/3*(1+z_N)**2/1e5*(0.046*0.7**2/0.02)**2*(0.3*0.7**2/0.15)**0.5*0.5**2*(1.5-(1+z_r))*((1+z_r)/10)**1.5*Mps_interpf(150/chi_r))
+
+print (58*2*x_H(z)*(x_H(z)/(1-x_H(z))*np.log(x_H(z))*(b_h-uf.f(z_r)-1))**2*4/3*(1+z_N)**2/1e5*(0.046*0.7**2/0.02)**2*(0.3*0.7**2/0.15)**0.5*0.5**2*(1.5-16)*1.6**1.5)
+
+print (Mps_interpf(0.01))
+
+k=np.linspace(1e-4,10,n_points)
+
+print (max(Mps_interpf(k)))
+
+plt.loglog(ell,Mps_interpf(k))
+
+plt.show()
+
+plt.loglog(ell,Cl_with_ellsq(k,z=15))
+
+plt.xlim(10,1e3)
+
+plt.ylim(10,1e3)
+
+plt.show()
+
+plt.plot(z,1-x_H(z))
+plt.xlim(8,20)
+plt.show()
+
+plt.semilogx(ell,Powerspec_ksz_21(ell,9.3))
+
+plt.show()
+
+plt.semilogx(ell,ell**2*Powerspec_mine(ell)/2/np.pi)
+
+plt.show()
