@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 29 12:02:13 2018
+
+@author: KaderF
+"""
+
+import scipy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import useful_functions as uf
+import distance as cd
+import density as den
+import constants as cc
+import reionization as cr
+from decimal import Decimal
+from scipy.special import legendre
+
+
+n_points=200
+z=np.linspace(0,6,n_points)
+#z_interv1=np.linspace(0,0.8,n_points)
+#z_interv2=np.linspace(0.8,2.5,n_points)
+#zinterv3=np.linspace(2.5,z_r,n_points)
+def redshift_kernel(z,z_r):
+    x=1-uf.x_H(z,z_r)
+    red_kern=uf.f(z)*x*(1+z)**2*uf.D_1(z)
+    #red_kern_integ1=sp.integrate.trapz(red_kern,z_interv1)
+    #red_kern_integ2=sp.integrate.trapz(red_kern,z_interv2)
+    print (np.shape(red_kern))
+    red_kern_sum=sp.integrate.cumtrapz(red_kern,z,initial=0)
+    print (np.shape(red_kern_sum))
+    return red_kern,red_kern_sum
+
+plt.plot(z,redshift_kernel(z,10)[0])
+plt.xlabel('z')
+plt.ylabel('Redshift dependance of kSZ signal')
+plt.show()
+
+plt.plot(z,redshift_kernel(z,10)[1])
+plt.xlabel('z')
+plt.ylabel('Cumulative redshift dependance, W')
+plt.show()
