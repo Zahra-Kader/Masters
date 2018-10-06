@@ -1,0 +1,473 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct  2 07:33:16 2018
+
+@author: zahra
+"""
+
+import scipy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import useful_functions as uf
+import distance as cd
+import density as den
+import constants as cc
+import reionization as cr
+from decimal import Decimal
+
+cosmo=uf.cosmo
+
+Mps_interpf=uf.Mps_interpf
+
+n_points=uf.n_points
+
+z_r=10
+
+x_e=1.
+
+G=cc.G_const_Mpc_Msun_s/cc.M_sun_g
+
+#rho_c=3*H0**2/(8.*np.pi*G)
+
+rho_c=den.cosmo_densities(**cosmo)[0]*cc.M_sun_g #in units of g/Mpc^3
+
+sigma_T=cc.sigma_T_Mpc
+
+tau_r=0.055
+
+T_rad=2.725 #In Kelvin
+
+chi_r = uf.chi(z_r)
+
+chi_m = uf.chi(1100)
+
+chi_min=0.0001
+
+k_min=1e-4
+
+k_max=100000
+
+chi_array=np.linspace(chi_min,chi_m,n_points)
+
+#tau_r=0.046*omega_b_0*h*x_e[np.sqrt(omega_M_0(1+z_r)**3+(1-omega_M_0))-1]
+
+#get matter power spec data
+
+mu_e=1.44
+
+m_p=cc.m_p_g #in grams
+
+rho_g0=cosmo['omega_b_0']*rho_c
+
+#plt.loglog(uf.kabs,Mps_interpf(uf.kabs))
+
+#plt.show()
+
+
+zed=uf.zed
+z=uf.z
+
+
+
+def ionized_elec(Yp,N_He):
+
+    x=(1-Yp*(1-N_He/4))/(1-Yp/2)
+
+    return x
+
+
+
+def density(z,rho_g0):
+
+    rho_g=rho_g0*(1+z)**3
+
+    return rho_g
+
+
+
+def ionized_electron_number(z):
+
+    n=ionized_elec(0.24,1)*density(z,rho_g0)/(mu_e*m_p)
+
+    return n
+
+
+
+def tau(z):
+
+    tau_der=sigma_T*cc.c_light_Mpc_s*ionized_electron_number(z)/((1+z)*uf.H(z))
+
+    tau=sp.integrate.trapz(tau_der,z)
+
+    return tau
+
+##print (tau(z))
+
+#plt.plot(z,tau(z))
+
+#plt.show()
+
+x=ionized_elec(0.24,0)
+
+ell=np.linspace(1e-2,1e4,n_points)
+
+chi=uf.chi
+
+#k=ell/chi
+
+
+def chi_check(z):
+    chi_der=cc.c_light_Mpc_s/uf.H(z)
+    chi=sp.integrate.trapz(chi_der,z)
+    return chi
+
+##print (chi_check(z))
+
+min_k=1e-2
+
+def Delta_b(k,z):
+    Delta_b=np.array([])
+    kp=np.linspace(k_min,k_max,n_points)
+    kp_norm=np.linalg.norm(kp)
+    k_norm=np.linalg.norm(k)
+    for i in k:
+        mu=np.dot(i,kp)/(k_norm*kp_norm)
+        I=i*(i-2*kp*mu)*(1-mu**2)/(i**2+kp**2-2*i*kp*mu)
+        constants=i**3/((2*np.pi**2)*(2*np.pi)**3)
+        delta_sq=constants*uf.f(z)**2*uf.D_1(z)**4*Mps_interpf(kp)*Mps_interpf(np.abs(i-kp))*I/(1+z)**2
+        Integral=sp.integrate.trapz(delta_sq,kp)
+        Delta_b=np.append(Delta_b,Integral)
+    return Delta_b
+
+def Delta_b_noredshift(k):
+    Delta_b=np.array([])
+    kp=np.linspace(k_min,k_max,n_points)
+    kp_norm=np.linalg.norm(kp)
+    k_norm=np.linalg.norm(k)
+    #print (kp_norm,'kp_norm')
+    #print (k_norm,'k_norm')
+    #print (1/(k_norm*kp_norm),'frac of both')
+    for i in k:
+        mu=np.dot(i,kp)/(k_norm*kp_norm)
+        I=i*(i-2*kp*mu)*(1-mu**2)/(i**2+kp**2-2*i*kp*mu)
+        constants=1/((2*np.pi**2)*(2*np.pi)**3)
+        delta_sq=constants*Mps_interpf(kp)*Mps_interpf(np.abs(i-kp))*I
+        Integral=sp.integrate.trapz(delta_sq,kp)
+        Delta_b=np.append(Delta_b,Integral)
+    return Delta_b    
+
+def Delta_b_noredshift_single(ell,z):
+    kp=np.linspace(k_min,k_max,n_points)
+    kp_norm=np.linalg.norm(kp)
+    k=ell/uf.chi(z)
+    k_norm=np.linalg.norm(k)  
+    mu=np.dot(k,kp)/(k_norm*kp_norm)
+    I=k*(k-2*kp*mu)*(1-mu**2)/(k**2+kp**2-2*k*kp*mu)
+    constants=1/((2*np.pi**2)*(2*np.pi)**3)
+    delta_sq=constants*Mps_interpf(kp)*Mps_interpf(np.abs(k-kp))*I
+    Integral=sp.integrate.trapz(delta_sq,kp)
+    return Integral  
+
+def Delta_b_noredshift_single_integrand(ell,z):
+    kp=np.linspace(k_min,k_max,n_points)
+    kp_norm=np.linalg.norm(kp)
+    k=ell/uf.chi(z)
+    k_norm=np.linalg.norm(k)  
+    mu=np.dot(k,kp)/(k_norm*kp_norm)
+    I=k*(k-2*kp*mu)*(1-mu**2)/(k**2+kp**2-2*k*kp*mu)
+    constants=1/((2*np.pi**2)*(2*np.pi)**3)
+    delta_sq=constants*Mps_interpf(kp)*Mps_interpf(np.abs(k-kp))*I
+    return delta_sq   
+
+def Delta_b_mesh(K,z):
+    Kp=np.linspace(k_min,k_max,n_points)
+    Kp_norm=np.linalg.norm(Kp)
+    K_norm=np.linalg.norm(K)
+
+    #print (Kp,'Kp')
+    k,kp=np.meshgrid(K,Kp)  
+    #print (kp,'kp mesh')
+    #print (k,'k mesh')
+    #print (Kp_norm,'Kp norm mesh')
+    #mu=kk/i
+
+    #mu=(i**2+kk**2-(np.abs(i-kk))**2)/(2*i*kk)
+
+    ##print (mu)
+
+    #I=i**2/(kk**2*(i**2+kk**2))
+    #k_inp=np.linspace(min_k,i,n_points)
+    ##print (k_inp)
+    #print (K_norm,'K norm mesh')
+    ##print (k_norm,'knorm')
+
+    mu=np.dot(k,kp)/(K_norm*Kp_norm)
+    
+    #print (mu,'mu')
+
+    I=k*(k-2*kp*mu)*(1-mu**2)/(k**2+kp**2-2*k*kp*mu)
+    #print (I,'I')
+    constants=1/((2*np.pi**2)*(2*np.pi)**3)
+
+    delta_sq=constants*uf.f(z)**2*uf.D_1(z)**4*Mps_interpf(kp)*Mps_interpf(np.abs(k-kp))*I/(1+z)**2
+    #print (delta_sq,'delta_sq')
+    Integral=sp.integrate.trapz(delta_sq,Kp)
+    #print (Integral,'integral')
+
+    return Integral
+
+
+
+k=np.linspace(1e-2,10,n_points)
+#k=ell/chi(z)
+'''
+##print ((np.sqrt(Delta_b(k,z=0))*k).min(),'min')
+##print ((np.sqrt(Delta_b(k,z=4))*k).min(),'min')
+plt.loglog(k,np.sqrt(Delta_b(k,z=0))*k,'b')
+
+plt.loglog(k,np.sqrt(Delta_b(k,z=4))*k,'r')
+
+
+
+plt.ylim(1e-13,1e3)
+
+plt.xlim(1e-2,10)
+
+plt.ylabel(r'$\rm{\Delta_b(k,z)k/H(z)}$')
+
+plt.xlabel('k [h/Mpc]')
+
+plt.show()
+
+plt.loglog(k,np.sqrt(Delta_b_mesh(k,z=4))*k)
+plt.loglog(k,np.sqrt(Delta_b_mesh(k,z=0))*k)
+plt.ylim(1e-13,1e3)
+
+plt.xlim(1e-2,10)
+plt.show()
+'''
+
+def C_l_integrand(ell,z):
+    H_z=uf.H(z)
+    chi_z=chi(z)
+    tau_z=uf.tau_inst(z)
+    f_z=uf.f(z)
+    D_z=uf.D_1(z)    
+    const=1e12*np.pi**2*T_rad**2*x**2*(sigma_T*rho_g0/(mu_e*m_p))**2/cc.c_light_Mpc_s
+    integrand=const*(1+z)**2*np.exp(-2*tau_z)/chi_z**2*f_z**2*H_z*D_z**4*Delta_b_noredshift(ell/chi_z)
+        ##print (np.shape(integrand))
+        #integrand=np.resize(integrand,(n_points+1))
+        ##print (np.shape(integrand))
+    return integrand
+
+def C_l(ell,z_min):
+    z=np.linspace(z_min,z_r,n_points)
+    H_z=uf.H(z)
+    chi_z=chi(z)
+    tau_z=tau(z)
+    C_l=np.array([])
+    for i in ell:     
+        const=1e12*8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
+        integrand=const*(1+z)**4*H_z*chi_z*np.exp(-2*tau_z)*Delta_b(i/chi_z,z)
+        Redshift_dep=sp.integrate.trapz(integrand,z)
+        C_l=np.append(C_l,Redshift_dep/(2*i+1)**3)
+    #print (C_l)
+    return C_l
+
+def C_l_allredshift(ell,z_min):
+    z=np.linspace(z_min,z_r,n_points)
+    f_z=uf.f(z)
+    D_z=uf.D_1(z)
+    H_z=uf.H(z)
+    chi_z=chi(z)
+    tau_z=tau(z)
+    C_l=np.array([])
+    for i in ell:     
+        const=1e12*np.pi**2*T_rad**2*x**2*(sigma_T*rho_g0/(mu_e*m_p))**2/cc.c_light_Mpc_s
+        integrand=const*(1+z)**2/chi_z**2*np.exp(-2*tau_z)*f_z**2*H_z*Delta_b_noredshift(i/chi_z)*D_z**4
+        Redshift_dep=sp.integrate.trapz(integrand,z)
+        C_l=np.append(C_l,Redshift_dep)
+    #print (C_l)
+    return C_l
+
+def C_l_mesh(ell,z_min):
+    Z=np.linspace(z_min,z_r,n_points)
+    Kp=np.linspace(k_min,k_max,n_points)
+    z,kp=np.meshgrid(Z,Kp)
+    H_z=uf.H(z)
+    chi_z=chi(z)
+    chi_Z=chi(Z)
+    tau_z=tau(z)
+    f_z=uf.f(z)
+    D_z=uf.D_1(z)
+    const=1e12*8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
+    kp_norm=np.linalg.norm(Kp)
+    k_norm=np.linalg.norm(ell/chi_Z)
+    C_l=np.array([])
+    for i in ell:     
+        k=i/chi_z
+        mu=np.dot(k,Kp)/(k_norm*kp_norm)
+        I=k*(k-2*kp*mu)*(1-mu**2)/(k**2+kp**2-2*k*kp*mu)
+        constants=k**3/((2*np.pi**2)*(2*np.pi)**3)
+        integrand=constants*f_z**2*D_z**4*Mps_interpf(kp)*Mps_interpf(np.sqrt(k**2+kp**2-2*k*kp*mu))*I*const*(1+z)**2*H_z*chi_z*np.exp(-2*tau_z)
+        integral=sp.integrate.trapz(sp.integrate.trapz(integrand,Z,axis=0),Kp,axis=0)
+        C_l=np.append(C_l,integral/(2*i+1)**3)
+    return C_l
+
+def C_l_mu_integral(ell,z_min):
+    Z=np.linspace(z_min,z_r,n_points)
+    Kp=np.linspace(k_min,k_max,n_points)
+    z,kp=np.meshgrid(Z,Kp)
+    mu=np.linspace(-1,1,n_points)
+    H_z=uf.H(z)
+    chi_z=chi(z)
+    #chi_Z=chi(Z)
+    tau_z=tau(z)
+    f_z=uf.f(z)
+    D_z=uf.D_1(z)
+    const=1e12*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
+    #kp_norm=np.linalg.norm(Kp)
+    #k_norm=np.linalg.norm(ell/chi_Z)
+    C_l=np.array([])
+    for i in ell: 
+        k=i/chi_z
+        constants=1/((2*np.pi**2)*(2*np.pi)**3)
+        #mu=np.dot(k,Kp)/(k_norm*kp_norm)
+        #I=k*(k-2*kp*j)*(1-j**2)/(k**2+kp**2-2*k*kp*j)
+        integral=[constants*sp.integrate.trapz(sp.integrate.trapz(f_z**2
+        *Mps_interpf(kp)*Mps_interpf(np.abs(k-kp))*k*(k-2*kp*j)
+        *(1-j**2)/(k**2+kp**2-2*k*kp*j)*const*(1+z)**2*H_z*D_z**4
+        *np.exp(-2*tau_z)/chi_z**2,Kp,axis=0),Z,axis=0) for j in mu]
+        integral_final=sp.integrate.trapz(integral,mu)
+        C_l=np.append(C_l,integral_final)
+    return C_l
+
+def C_l_mu_integrand(ell,z):
+    Kp=np.linspace(k_min,k_max,n_points)
+    Mu=np.linspace(-1,1,n_points)
+    mu,kp=np.meshgrid(Mu,Kp)
+    H=uf.H
+    chi=uf.chi
+    #chi_Z=chi(Z)
+    tau=uf.tau_inst
+    f=uf.f
+    D=uf.D_1
+    const=1e12*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
+    #kp_norm=np.linalg.norm(Kp)
+    #k_norm=np.linalg.norm(ell/chi_Z)
+    constants=1/((2*np.pi**2)*(2*np.pi)**3)
+    C_l=np.array([])
+    for i in z: 
+        k=ell/chi(i)
+        #mu=np.dot(k,Kp)/(k_norm*kp_norm)
+        #I=k*(k-2*kp*j)*(1-j**2)/(k**2+kp**2-2*k*kp*j)
+        integral=constants*sp.integrate.trapz(sp.integrate.trapz(f(i)**2
+        *Mps_interpf(kp)*Mps_interpf(np.abs(k-kp))*k*(k-2*kp*mu)
+        *(1-mu**2)/(k**2+kp**2-2*k*kp*mu)*const*(1+i)**2*H(i)*D(i)**4
+        *np.exp(-2*tau(i))/chi(i)**2,Kp,axis=0),Mu,axis=0) 
+        C_l=np.append(C_l,integral)
+    return C_l
+
+def C_l_castro(ell,z_min):
+    Z=np.linspace(z_min,z_r,n_points)
+    Kp=np.linspace(0,1000,n_points)
+    mu=np.linspace(-1,1,n_points)
+    z,kp=np.meshgrid(Z,Kp)
+    H_z=uf.H(z)
+    chi_z=chi(z)
+    #chi_Z=chi(Z)
+    tau_z=tau(z)
+    f_z=uf.f(z)
+    D_z=uf.D_1(z)
+    const=1e12*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2/(8*np.pi**2)
+    C_l=np.array([])
+    for i in ell:
+        k=i/chi_z
+        integral=[const*sp.integrate.trapz(sp.integrate.trapz(f_z**2*D_z**4
+        *Mps_interpf(k*kp)*Mps_interpf(k*np.sqrt(1+kp**2-2*kp*j))*(1-2*kp*j)**2
+        *(1-j**2)/(1+kp**2-2*kp*j)*(1+z)**2*H_z
+        *np.exp(-2*tau_z)/chi_z**2,Z,axis=0),Kp,axis=0) for j in mu]
+        integral_final=sp.integrate.trapz(integral,mu)
+        C_l=np.append(C_l,integral_final) 
+    return C_l
+        
+
+#plt.loglog(ell,ell*(ell+1)*C_l_castro(ell,1e-4)/(2*np.pi))
+#plt.xlabel('l')
+#plt.ylabel(r'$\rm{l(l+1)Cl^{OV}}/(2 \pi)[\mu K^2]$')
+#plt.ylim(0,10)
+#plt.show()
+
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,1e-4)/(2*np.pi))
+#plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,0.8)/(2*np.pi))
+#plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,5)/(2*np.pi))
+#plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,2.5)/(2*np.pi))
+#plt.ylim(0,0.0054)
+plt.show()
+
+
+plt.plot(z,3000*(3000+1)*C_l_integrand(3000,z)/(2*np.pi))
+plt.show()
+'''
+plt.plot(ell,ell*(ell+1)*C_l_mu_integral(ell,1e-4)/(2*np.pi))
+plt.show()
+
+plt.plot(z,3000*(3000+1)*C_l_mu_integrand(3000,z)/(2*np.pi))
+plt.ylim(0,0.0016)
+plt.show()
+'''
+plt.plot(z,Delta_b_noredshift(3000/uf.chi(z)))
+plt.show()
+'''
+plt.plot(ell,ell*(ell+1)*C_l_integrand(ell,0.4)/(2*np.pi),'b')
+plt.plot(ell,ell*(ell+1)*C_l_integrand(ell,1.2)/(2*np.pi),'g')
+plt.plot(ell,ell*(ell+1)*C_l_integrand(ell,2.05)/(2*np.pi),'r')
+plt.plot(ell,ell*(ell+1)*C_l_integrand(ell,3)/(2*np.pi),'k')
+plt.plot(ell,ell*(ell+1)*C_l_integrand(ell,4)/(2*np.pi),'m')
+plt.plot(ell,ell*(ell+1)*C_l_integrand(ell,5)/(2*np.pi),'y')
+blue_patch = mpatches.Patch(color='blue', label='z=0.4')
+green_patch = mpatches.Patch(color='green', label='z=1.2')
+red_patch = mpatches.Patch(color='red', label='z=2.05')
+black_patch = mpatches.Patch(color='black', label='z=3')
+magenta_patch = mpatches.Patch(color='magenta', label='z=4')
+yellow_patch = mpatches.Patch(color='yellow', label='z=5')
+plt.legend(handles=[blue_patch,green_patch,red_patch,black_patch,magenta_patch,yellow_patch])
+plt.ylabel(r'$\rm{l(l+1)Cl^{OV}}/(2 \pi)[\mu K^2]$')
+plt.xlabel('l')
+#plt.ylim(1e-6,1e-3)
+plt.show()
+
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,1e-4)/(2*np.pi),'b')
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,0.8)/(2*np.pi),'g')
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,1.6)/(2*np.pi),'r')
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,2.5)/(2*np.pi),'k')
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,3.5)/(2*np.pi),'m')
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,4.5)/(2*np.pi),'y')
+plt.plot(ell,ell*(ell+1)*C_l_allredshift(ell,5.5)/(2*np.pi),'c')
+
+blue_patch = mpatches.Patch(color='blue', label='6>z>0')
+green_patch = mpatches.Patch(color='green', label='6>z>0.8')
+red_patch = mpatches.Patch(color='red', label='6>z>1.6')
+black_patch = mpatches.Patch(color='black', label='6>z>2.5')
+magenta_patch = mpatches.Patch(color='magenta', label='6>z>3.5')
+yellow_patch = mpatches.Patch(color='yellow', label='6>z>4.5')
+cyan_patch = mpatches.Patch(color='cyan', label='6>z>5.5')
+plt.legend(handles=[blue_patch,green_patch,red_patch,black_patch,magenta_patch,yellow_patch,cyan_patch])
+plt.ylabel(r'$\rm{l(l+1)Cl^{OV}}/(2 \pi)[\mu K^2]$')
+plt.xlabel('l')
+plt.ylim(1e-4,1)
+plt.show()
+
+
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,1e-4),'b')
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,0.8),'g')
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,1.6),'r')
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,2.5),'k')
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,3.5),'m')
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,4.5),'y')
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,5.5),'c')
+plt.xlabel('l')
+plt.ylabel(r'$\rm{l(l+1)Cl^{OV}}/(2 \pi)[\mu K^2]$')
+'''
+
