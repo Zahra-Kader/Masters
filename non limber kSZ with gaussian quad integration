@@ -1,0 +1,104 @@
+
+import scipy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import useful_functions as uf
+import distance as cd
+import density as den
+import constants as cc
+import reionization as cr
+from decimal import Decimal
+from scipy.interpolate import interp1d
+from scipy.interpolate import RegularGridInterpolator
+
+
+cosmo=uf.cosmo
+Mps_interpf=uf.Mps_interpf
+n_points=uf.n_points
+x_e=1.
+G=cc.G_const_Mpc_Msun_s/cc.M_sun_g
+#rho_c=3*H0**2/(8.*np.pi*G)
+rho_c=den.cosmo_densities(**cosmo)[0]*cc.M_sun_g #in units of g/Mpc^3
+sigma_T=cc.sigma_T_Mpc
+tau_r=0.055
+T_rad=2.725 #In Kelvin
+k_min=1e-5
+k_max=1e-1
+#tau_r=0.046*omega_b_0*h*x_e[np.sqrt(omega_M_0(1+z_r)**3+(1-omega_M_0))-1]
+#get matter power spec data
+mu_e=1.44
+m_p=cc.m_p_g #in grams
+rho_g0=cosmo['omega_b_0']*rho_c
+#plt.loglog(uf.kabs,Mps_interpf(uf.kabs))
+#plt.show()
+
+zed=uf.zed
+z=uf.z
+def ionized_elec(Yp,N_He):
+    x=(1-Yp*(1-N_He/4))/(1-Yp/2)
+    return x
+
+def density(z,rho_g0):
+    rho_g=rho_g0*(1+z)**3
+    return rho_g
+
+def ionized_electron_number(z):
+    n=ionized_elec(0.24,1)*density(z,rho_g0)/(mu_e*m_p)
+    return n
+
+def tau(z):
+    tau_der=sigma_T*cc.c_light_Mpc_s*ionized_electron_number(z)/((1+z)*uf.H(z))
+    tau=sp.integrate.trapz(tau_der,z)
+    return tau
+#print (tau(z))
+#plt.plot(z,tau(z))
+#plt.show()
+x=ionized_elec(0.24,0)
+#kp=np.logspace(np.log(k_min),np.log(k_max),n_points)
+
+ell=np.linspace(1e2,1e4,n_points)
+chi=uf.chi
+Kpar=np.geomspace(1e-5,1e-2,n_points)
+kpar=Kpar
+#k=ell/chi
+
+def chi_check(z):
+    chi_der=cc.c_light_Mpc_s/uf.H(z)
+    chi=sp.integrate.trapz(chi_der,z)
+    return chi
+min_k=1e-2
+
+def Integrand(Mu,Kp,Z1,Z2,Kpar,ell):
+    mu,kp,z1,z2,kpar=np.meshgrid(Mu,Kp,Z1,Z2,Kpar) 
+    chi_z1=chi(z1)
+    chi_z2=chi(z2)
+    f_z1=uf.f(z1)
+    f_z2=uf.f(z2)
+    D_z1=uf.D_1(z1)
+    D_z2=uf.D_1(z2)
+    tau_z1=uf.tau_inst(z1)
+    tau_z2=uf.tau_inst(z2)
+    k_perp=ell/chi_z1 
+    k=np.sqrt(k_perp**2+kpar**2)
+    K=np.sqrt(k**2+kp**2-2*k*kp*mu)
+    integrand=[(kpar*mu*kp**2/k+k_perp*kp**2*np.sqrt(1-mu**2)/k)*((kpar*mu+k_perp*np.sqrt(1-mu**2))*(k-2*kp*mu)/kp**2/K**2
+                +kpar/kp/K**2)*Mps_interpf(kp)*Mps_interpf(K)*(1+z1)*(1+z2)*np.exp(-tau_z1)
+    *np.exp(-tau_z2)*f_z1*f_z2*D_z1**2*D_z2**2/chi_z1**2*np.cos(kpar*(chi_z1-chi_z2))]
+    return integrand
+
+
+def func(ell):
+    const=1e12*T_rad**2*x**2*(sigma_T*rho_g0/(mu_e*m_p))**2/(2*np.pi)**2*2*np.pi/2
+    array=np.array([])
+    for i in ell:
+        int1=lambda mu,z1,z2,kpar,i: sp.integrate.fixed_quad(Integrand,k_min,k_max,args=(mu,z1,z2,kpar,i, ),n=6)[0]
+        int2=lambda z1,z2,kpar,i: sp.integrate.fixed_quad(int1,-1,1,args=(z1,z2,kpar,i, ),n=6)[0]
+        int3=lambda z2,kpar,i: sp.integrate.fixed_quad(int2,1e-4,10,args=(z2,kpar,i,),n=6)[0]
+        int4=lambda kpar,i: sp.integrate.fixed_quad(int3,1e-4,10,args=(kpar,i,),n=6)[0]
+        int5=sp.integrate.fixed_quad(int4,1e-4,1e-2,args=(i,),n=6)[0]
+        array=np.append(array,const*int5)
+    return array
+
+plt.plot(ell,ell*(ell+1)*func(ell)/2/np.pi)
+plt.show()
