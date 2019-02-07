@@ -1,0 +1,1156 @@
+\documentclass[12pt]{article}
+\usepackage{tgtermes}
+%\usepackage[english]{babel}
+%\usepackage[utf8]{inputenc}
+\linespread{1.3}
+\usepackage[a4paper,top=3cm,bottom=2.54cm,left=2.54cm,right=2.54cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[normalem]{ulem}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=cyan,      
+	urlcolor=blue,
+}
+%\usepackage[backend=bibtex]{biblatex}
+%\addbibresource{kSZworkbib.bib}
+
+\usepackage{url}
+%opening
+\title{Cross correlation kSZ and 21 cm signal}
+\author{Zahra Kader}
+\begin{document}
+\maketitle
+\begin{abstract}
+\end{abstract}
+\section{Measuring the HI signal}
+Structures such as galaxies contain large amounts of neutral hydrogen, the gas which is commonly known as star forming gas. Because of this, measuring 21 cm signals gives an indication of the LSS in the universe. We say that neutral hydrogen is a biased tracer of matter densities. The HI signal is measured using radio telescopes and due to redshift space distortions, the signal measured on Earth has been redshifted. Therefore, we have
+\begin{equation}\label{delta HI to delta m}
+\delta_{HI}(\vec{k})=\delta_m(\vec{k})[b_{HI}+f\mu_k^2]
+\end{equation}
+where $b_{HI}$ is the HI bias and $\delta_{HI}$ is the density contrast of the HI signal intensity. Now, the signal intensity measured from radio telescopes is related to temperature via Rayleigh-Jean's apprximation, $I_\nu=2k_BT\frac{\nu^2}{c^2}$, for long wavelengths such as 21 cm. Since this approximation shows that the signal intensity is proportional to temperature, we have 
+\begin{equation}\label{delta 21 ito k}
+\begin{aligned}
+\delta T_{21}(\vec{k};z_i)&=\overline{T}(z_i)\delta_{HI}(\vec{k};z_i)
+\\&=\overline{T}(z_i)\delta_m(\vec{k};z_i)[b_{HI}+f\mu_k^2]
+\\&=\overline{T}(z_i)D(z_i)\delta_m(\vec{k};z=0)[b_{HI}+f\mu_k^2]
+\end{aligned}
+\end{equation}
+where the third equality comes from removing redshift dependance from $\delta_m$ and the mean temperature given by 
+\begin{equation}\label{mean 21 cm temp}
+\bar{T} \approx 566h \left(\frac{H_0}{H(z)}\right)\left(\frac{\Omega_{HI}}{0.003}\right)(1+z)^2 \mu K
+\end{equation}
+Expressing this in observational-space Fourier variables gives %\cite{bibid}
+\begin{equation}\label{delta 21 ito y and l final eqn}
+\delta T_{21}(\vec{l},y;z_i)=\frac{\delta T_{21}(\vec{k}_\bot,k_\parallel;z_i)}{(\chi )^2r_{\nu(z_i)}}
+\end{equation}
+where the expression for $y$ is given as
+\begin{equation}\label{y eqn}
+y=k_\parallel r_\nu
+\end{equation}
+with $r_\nu=\frac{c(1+z_i)^2}{H(z_i)}$. Using the relation $1+z=\frac{1420 MHz}{\nu}$ for observing frequency, $\nu$, we see that $y$ is the inverse of $\nu$. Note that in the equation, $z_i$ is used to denote a particular redshift bin. 
+
+\subsection{21 cm density field}
+The angular power spectrum for 21 cm temperature fluctuations is given by 
+\begin{equation}\label{Cl 21 relation to autocorrelation}
+\begin{aligned}
+&\langle  \delta T_{21}(\vec{l},y;z_i) \delta T_{21}^*(\vec{l'},y';z_i)\rangle  =(2 \pi)^3\delta^2(\vec{l}-\vec{l'})\delta(y-y')C_l^{21}(y;z_i)
+\\&
+\Rightarrow C_l^{21}(y;z_i)=\int \frac{d^2\vec{l'}}{(2\pi)^2} \int \frac{dy'}{2\pi}\langle  \delta T_{21}(\vec{l},y;z_i) \delta T_{21}^*(\vec{l'},y';z_i)\rangle  
+\end{aligned}
+\end{equation}
+Substituting equation \ref{delta 21 ito y and l final eqn} into equation \ref{Cl 21 relation to autocorrelation} gives
+\begin{equation}
+\Rightarrow C_l^{21}(y;z_i)=\int \frac{d^2\vec{l'}}{(2\pi)^2}\int \frac{dy'}{2\pi}\frac{(\overline{T}(z_i)D(z_i)[b_{HI}+f\mu_k^2])^2}{(\chi )^2 (\chi' )^2 r_{\nu}(z_i) r'_{\nu}(z_i)}\langle  \delta_m(\vec{k};z=0)\delta_m^*(\vec{k};z=0)\rangle  
+\end{equation}
+Expressing $\langle  \delta_m(\vec{k};z=0)\delta_m^*(\vec{k};z=0)\rangle  $ in terms of the matter power spectrum, we have
+\begin{equation}
+C_l^{21}(y;z_i)=\int \frac{d^2\vec{l'}}{(2\pi)^2}\int \frac{dy'}{2\pi}\frac{(\overline{T}(z_i)D(z_i)[b_{HI}+f\mu_k^2])^2}{(\chi )^2 (\chi' )^2 r_{\nu}(z_i) r'_{\nu}(z_i)}(2\pi)^3
+\delta^2(\vec{k_{\bot}}-\vec{k'_\bot})\delta(k_{\parallel}-k'_\parallel)P_m(\vec{k})
+\end{equation}
+Substituting equations and applying the Dirac delta functions gives
+\begin{equation}
+C_l^{21}(y;z_i)=\frac{(\overline{T}(z_i)D(z_i)[b_{HI}+f\mu_k^2])^2}{(\chi )^2 r_{\nu}(z_i)}P_m(\vec{k})
+\end{equation}
+
+This is plotted in Figure \ref{fig:cl-21cm-auto-diff-y}. 
+
+Integrating over all $y$ modes and writing the integral dimensionlessly gives
+
+\begin{equation}
+C_l^{21}(z_i)=1 \mu K^2 \int_{10^{-10}}^{10^{3}} \frac{dy}{10^{3}} \frac{\overline{T}(z_i)^2 }{200^2 \mu K^2 }\frac{D(z_i)^2}{0.5^2}\frac{[b_{HI}+f\mu_k^2])^2}{(1+0.5\times 0.5^2)^2}\frac{5000^2 Mpc^{2}}{\chi ^2 }\frac{10^4 Mpc}{r_{\nu}(z_i)}\frac{P_m(\vec{k}) }{2\times 10^4 Mpc^{3}}
+\end{equation}
+
+This is plotted in Figures \ref {fig:cl-21cm-matter-power-spec-integrating-over-kpar-modes-1e-4-to-1e-1-plotted-as-cl} and \ref{fig:cl-21-cm-matter-power-spec-integrating-over-all-kpar-modes-1e-4-to-1e-1}
+
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl 21cm auto diff y"}
+	\caption{Angular power spectrum for the 21 cm neutral hydrogen signal for different y modes.}
+	\label{fig:cl-21cm-auto-diff-y}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl 21cm matter power spec integrating over kpar modes 1e-4 to 1e-1 plotted as Cl"}
+	\caption{Angular power spectrum for  the 21 cm neutral hydrogen signal density field after integrating over all y.}
+	\label{fig:cl-21cm-matter-power-spec-integrating-over-kpar-modes-1e-4-to-1e-1-plotted-as-cl}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl 21 cm matter power spec integrating over all kpar modes 1e-4 to 1e-1"}
+	\caption{Angular power spectrum $l(l+1)C_l^{p_{21}}/2 \pi$ for  the 21 cm neutral hydrogen signal density field after integrating over all y modes in the range $y=1$ to $y=1000$.}
+	\label{fig:cl-21-cm-matter-power-spec-integrating-over-all-kpar-modes-1e-4-to-1e-1}
+\end{figure}
+\newpage
+\subsection{Doppler HI signal}
+
+We consider the 21 cm momentum field,
+\begin{equation}
+p_{21}(\vec{\theta})=\frac{-1}{c}\hat{\theta}.q_{21}(\vec{x}(\vec{\theta},\chi))
+\end{equation}
+
+%\begin{equation}
+%p_{21}(\vec{l},y;\chi_i)=\frac{q_\perp^{21}(\vec{k}_\perp \chi,k_\parallel r_\nu)}{\chi^2 r_\nu}
+%\end{equation}
+where $\vec{q}_{21}(\vec{x})=(1+\delta_{21}(\vec{x}))\vec{v}_{21}(\vec{x})$, the product of the 21 cm velocity and density fields. 
+\noindent We can use Fourier conventions to find $q(\vec{k})$
+\begin{equation}\label{q_21 of k}
+q(\chi\vec{\theta},\chi)=\int \frac{d^3 \vec{k}}{(2 \pi)^3} e^{i\vec{k}.\vec{x}}q(\vec{k},\chi )=\int \frac{d^2 \vec{k_\bot}}{(2\pi)^2} e^{i\vec{k_\bot}.\chi_\bot} \int \frac{dk_\parallel}{2\pi} e^{ik_{\parallel}\chi } q(\vec{k_\bot},k_\parallel,\chi )
+\end{equation}
+\noindent where the second equality was obtained by separating $\vec{k}$ into its components, $k_\parallel$ and $\vec{k_\bot}$. In equation \ref{q_21 of k}, $\theta$ is replaced with the vector 
+\begin{subequations}
+	\begin{equation}\label{chi perp equals theta times chi parallel}
+	\vec{\chi_{\bot}}=\vec{\theta}\chi 
+	\end{equation}
+	\text{Since $\vec{l}$ is the fourier conjugate of $\vec{\theta}$ and $\vec{k_{\bot}}$ is the fourier conjugate of $\vec{\chi_{\bot}}$, the expression for $\vec{\chi_{\bot}}$ becomes}
+	\begin{equation}\label{k perp equals l divided by chi parallel}
+	\vec{k_{\bot}}=\frac{\vec{l}}{\chi }
+	\end{equation}
+\end{subequations}
+By combining equations \ref{chi perp equals theta times chi parallel} and \ref{k perp equals l divided by chi parallel}, equation \ref{q_21 of k} can be expressed as 
+\begin{equation}\label{IFT of delta m ito l}
+\vec{q}(\chi\vec{\theta},\chi )=\int \frac{d^2 \vec{l}}{(2\pi)^2} e^{i\vec{l}.\vec{\theta}} \int \frac{dk_\parallel}{2\pi} e^{ik_{\parallel}\chi }\frac{\vec{q}(\vec{k_\bot},k_\parallel,\chi )}{\chi ^2}
+\end{equation}
+Substituting equation \ref{IFT of delta m ito l} we have
+\begin{equation}\label{kappa of theta with l}
+p(\vec{\theta})=-\frac{1}{c}\int \frac{d^2 \vec{l}}{(2\pi)^2} \frac{e^{i \vec{l}.\vec{\theta}}}{\chi ^2} \int \frac{dk_\parallel}{2\pi} e^{ik_{\parallel}\chi }\hat{\theta}.\vec{q}(\vec{k_\bot},k_\parallel,\chi )
+\end{equation}
+\noindent Now, using the fact that $\vec{l}$ is the fourier conjugate of $\vec{\theta}$, $p(\vec{\theta})$ can be written as 
+\begin{equation}\label{FT of kappa of theta}
+p(\vec{\theta})=\int \frac{d^2 \vec{l}}{(2\pi)^2} e^{i\vec{l}.\vec{\theta}}p(\vec{l})
+\end{equation}   
+By comparing equations \ref{kappa of theta with l} and \ref{FT of kappa of theta}, the equation for $p(\vec{l})$ is given by
+\begin{equation}\label{final p(l) equation}
+p(\vec{l})=-\frac{1}{c} \int \frac{dk_\parallel}{2\pi} \frac{e^{ik_{\parallel}\chi }}{\chi^2} \hat{\theta}.\vec{q}(\vec{k_\bot},k_\parallel,\chi )
+\end{equation}
+
+
+For $\delta \ll 1$, we have
+
+
+\begin{equation}
+p_{21}^{Doppler}(\vec{l},z_1)=\frac{-1}{c}\int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} \chi(z_1)}}{\chi(z_1)^2} \hat{\theta}.\vec{v}_{21}(\vec{k},z_1)
+\end{equation}
+
+ In linear theory, the expression relating velocity to density is given as
+ \begin{equation}\label{v(k)}
+ \begin{aligned}
+ \vec{v}(\vec{k})=&\frac{ifH(z)\delta(\vec{k},z)}{(1+z)k^2}\vec{k}\\
+ =&\frac{ifH(z)D(z)\delta(\vec{k})}{(1+z)k^2}\vec{k}
+ \end{aligned}
+ \end{equation}
+ where the linear growth factor is given as $f\equiv\frac{a}{D}\frac{dD}{da}$ and can be approximated by the relation 
+ \begin{equation}
+ f(z)=\Omega_m(z)^\gamma
+ \end{equation}
+ with $\gamma=0.53$.\\ 
+For the second 21 cm Doppler signal we have
+
+\begin{equation}
+p_{21}^{Doppler}(\vec{l}',z_2)=\frac{-1}{c}\int \frac{dk'_{\parallel}}{2\pi}\frac{e^{ik'_{\parallel} \chi(z_2)}}{\chi(z_2)^2} \hat{\theta}'.\vec{v}_{21}(\vec{k}',z_2)
+\end{equation}
+
+The autocorrelation is then 
+
+\begin{equation}
+\begin{aligned}
+C_l^{Doppler}(z_1,z_2)=&\frac{1}{c^2}\int \frac{d^2l'}{(2\pi)^2}\left< p_{21}^{Doppler}(\vec{l},z_1) p_{21}^{Doppler}(\vec{l}',z_2) \right>\\
+=&\frac{1}{c^2}\int \frac{d^2k'_{\perp}}{(2\pi)^2} \int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} \chi(z_1)}}{\chi(z_1)^2} \frac{D(z_1)f(z_1)H(z_1)}{(1+z_1)} \frac{\mu_k}{k}\\
+& \int \frac{dk'_{\parallel}}{2\pi}e^{ik'_{\parallel} \chi(z_2)} \frac{D(z_2)f(z_2)H(z_2)}{(1+z_2)} \frac{\mu_k'}{k'}\left< \delta_{21}(\vec{k}) \delta_{21}(\vec{k}') \right>\\
+=&\frac{1}{c^2}\int \frac{d^2k'_{\perp}}{(2\pi)^2} \int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} \chi(z_1)}}{\chi(z_1)^2} \frac{D(z_1)f(z_1)H(z_1)}{(1+z_1)} \frac{\mu_k}{k}\\
+& \int \frac{dk'_{\parallel}}{2\pi}e^{ik'_{\parallel} \chi(z_2)} \frac{D(z_2)f(z_2)H(z_2)}{(1+z_2)} \frac{\mu_k'}{k'}(2\pi)^3 P_{\delta_{21} \delta_{21}}(\vec{k})(\delta^3(\vec{k}-\vec{k}'))
+\end{aligned}
+\end{equation}
+
+Simplifying gives the angular power spectrum
+\begin{equation}
+\begin{aligned}
+C_l^{Doppler}(z_1,z_2)=&\frac{\bar{T}(z_1)\bar{T}(z_2)}{c^2}\int \frac{dk_\parallel}{2\pi}(b_{HI}+f\mu_k^2)\frac{e^{ik_\parallel(\chi(z_1)-\chi(z_2))}}{\chi(z_1)^2}\\ &\frac{D(z_1)D(z_2)f(z_1)f(z_2)H(z_1)H(z_2)}{(1+z_1)(1+z_2)}\frac{\mu_k^2}{k^2}P_m(k)
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+C_l^{21}(z_1=z_2)=&10^{-5} \mu K^2 \int_{10^{-6}}^{10^{3}} \frac{dy}{10^{3}} \frac{\overline{T}^2 }{200^2 \mu K^2 }\frac{(10^{-14})^2Mpc^2 s^{-2}}{c^2}\frac{D^2}{0.5^2}\frac{f^2}{0.5^2}\frac{H^2 }{H_0^2 s^{-2}}\frac{4}{(1+z)^2}\\
+&\frac{[b_{HI}+f\mu_k^2])^2}{(1+0.5\times 0.5^2)^2}\frac{5000^2 Mpc^{2}}{\chi^2}\frac{10^4 Mpc}{r_{\nu}}\frac{\mu_k^2}{0.5^2}\frac{(10^{-2})^2 Mpc^{-2}}{k^2}\frac{P_m(\vec{k}) }{2\times 10^4 Mpc^{3}}
+\end{aligned}
+\end{equation}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl doppler 21 cm kpar 1e-4 to 1e-1 plotted as Cl semilogy scale"}
+	\caption{Angular power spectrum for the 21 cm neutral hydrogen signal velocity field after integrating over all y modes in the range $y=1$ to $y=1000$.}
+	\label{fig:cl-doppler-21-cm-kpar-1e-4-to-1e-1-plotted-as-cl-semilogy-scale}
+\end{figure}
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl doppler 21 cm kpar 1e-4 to 1e-1"}
+	\caption{Angular power spectrum $l(l+1)C_l^{Doppler}/2 \pi$ for the 21 cm neutral hydrogen signal velocity field after integrating over all y modes in the range $y=1$ to $y=1000$.}
+	\label{fig:cl-doppler-21-cm-kpar-1e-4-to-1e-1}
+\end{figure}
+
+\newpage
+\subsection{21 cm Momentum field}
+
+Consider again the 21 cm momentum field,
+\begin{equation}
+p(\vec{\theta})=\frac{-1}{c}\hat{\theta}.q(\vec{x}(\vec{\theta},\chi))
+\end{equation}
+
+%\begin{equation}
+%p_{21}(\vec{l},y;\chi_i)=\frac{q_\perp^{21}(\vec{k}_\perp \chi,k_\parallel r_\nu)}{\chi^2 r_\nu}
+%\end{equation}
+
+
+This can be rewritten as 
+
+\begin{equation}
+p_{21}(\vec{l}_1,z_1)=\frac{-1}{c}\int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi(z_1)}}{\chi(z_1)^2} \hat{\theta}_1.\vec{q}_{21}(\vec{k},z_1)
+\end{equation}
+where 
+\begin{equation}
+\vec{q}_{21}(\vec{k},z_1)=\frac{1}{2}\int \frac{d^3k'}{(2\pi)^3}(\delta_{21}(\vec{k}-\vec{k}',z_1)\vec{v}_{21}(\vec{k}',z_1)+\delta_{21}(\vec{k}',z_1)\vec{v}_{21}(\vec{k}-\vec{k}',z_1))
+\end{equation}
+and 
+
+\begin{equation}
+\delta_{21}(\vec{k},z_1)=\overline{T}(z_1)D(z_1)\delta_m(\vec{k};z=0)[b_{HI}+f\mu_k^2]
+\end{equation}
+
+The autocorrelation is thus 
+
+
+\begin{equation}\label{Cl autocorr 21cm momentum general expression}
+\begin{aligned}
+C_l^{p_{21}p_{21}}(z_1,z_2)=&\frac{1}{2c^2} \int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} (\chi_1-\chi_2)}}{\chi_1^2}D(z_1)^2 D(z_2)^2f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\\ 
+&\int \frac{d^3k'}{(2\pi)^3} ([\hat{\theta}.\hat{k}']^2 P_{v_{21} v_{21}}(k') P_{\delta_{21} \delta_{21}}(K) + [\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}'] P_{\delta_{21} v_{21}}(k') P_{\delta_{21} v_{21}}(K))\\
+=&\frac{\bar{T}(z_1)\bar{T}(z_2)}{2c^2} \int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} (\chi_1-\chi_2)}}{\chi_1^2}[b_{HI}+f\mu_k^2]^2 D(z_1)^2 D(z_2)^2f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\\ 
+&\int \frac{d^3k'}{(2\pi)^3} ([\hat{\theta}.\hat{k}']^2 P_{v_{21} v_{21}}(k') P_{\delta_{21} \delta_{21}}(K) + [\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}'] P_{\delta_{21} v_{21}}(k') P_{\delta_{21} v_{21}}(K))
+\end{aligned}
+\end{equation}
+
+Writing this expression for a single redshift bin of range 0.3 centred at $z_1=z_2=0.95$, gives the equation for the autocorrelation that I am coding
+
+\begin{equation}
+\begin{aligned}
+C_l^{p_{21}p_{21}}(z_1,z_2)&=\frac{\bar{T}(z_1)\bar{T}(z_2)}{16\pi^3c^2}  \frac{H(z_1)}{\chi(z_1)^2(1+z_1)} \frac{H(z_2)}{(1+z_2)} D(z_1)^2 D(z_2)^2 f(z_1) f(z_2)   \\
+&  \int dk_\parallel [b_{HI}+f\mu_k^2]^2\int d\zeta \int dk' k'^2
+P_{\delta_m \delta_m}(k')P_{\delta_m \delta_m}(\sqrt{k^2+k'^2-2kk'\zeta}) 
+I(k,k',\zeta,k_\parallel)
+\end{aligned}
+\end{equation}
+
+where $I(k,k',\zeta,k_\parallel)=\hat{\theta}.\hat{k}'\left[\frac{\hat{\theta}.\hat{k}'}{k'^2}+\frac{\hat{\theta}.\hat{K}}{Kk'}\right]$.
+
+
+
+The diagram shows the vectors for for the density, velocity and momentum fields on the 21 cm signal. Using this diagram we can obtain the expressions for $\hat{\theta}.\hat{k}'$ and $\hat{\theta}.\hat{K}$
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"OneDrive/Pictures/k vec non limber v2"}
+	\caption{Diagram showing the different vectors for the 21 cm density, velocity and momentum fields.}
+	\label{fig:k-vec-non-limber-v2}
+\end{figure}
+
+This diagram gives 
+
+
+\begin{subequations}
+	\begin{equation}\label{k' in los}
+	\hat{\theta}.\hat{k}'=sin(\gamma+\phi)=\mu_k\zeta+\frac{l}{\chi}\frac{1}{k}\sqrt{1-\zeta^2}
+	\end{equation}
+	\begin{equation}
+	\hat{\theta}.\hat{K}=-sin(\alpha-\gamma)=-\left[\frac{k'}{k-k'}\frac{l}{\chi}\frac{1}{k}\sqrt{1-\zeta^2}-\frac{(k-k'\zeta)}{k-k'}\mu_k\right]
+	\end{equation}
+\end{subequations}
+
+
+This is plotted in Figure \ref{fig:cl-21-momentum-auto-z1-and-z2-are-point-95-omission-of-second-term-kpar-1e-10-to-1-giving-kmax-limit-of-5-and-kp-1e-10-to-5} with the second term of $I(k,k',\zeta,k_\parallel)$ omitted.
+
+Writing this equation with units and order of magnitudes gives
+
+\begin{equation}
+\begin{aligned}
+C_l^{p_{21}p_{21}}(z_1=z_2)=&10^{-6} \mu K^2\frac{10^2}{8\pi^3}\frac{\bar{T}^2}{200^2 mK^2}\frac{(10^{-14})^2 Mpc^2 s^{-2}}{c^2}  \frac{H^2}{H_0^2}\frac{D^4}{0.5^4} \frac{f^2}{0.5^2}\frac{5000^2 Mpc^2}{\chi^2} \frac{10^4 Mpc}{r_\nu} \\
+&  \frac{4}{ (1+z)^2}  \int_{10^{-10}}^{10^4} \frac{dy}{10^4} \frac{[b_{HI}+f\mu_k^2]^2}{1+0.5\times 0.5^2)^2}\int_{-1}^1 \frac{d\zeta}{2} \int_{10^{-10}}^{1} \frac{dk'}{1}
+\frac{P_{\delta_m \delta_m}(k')}{2\times 10^4 Mpc^3}\\
+&\frac{P_{\delta_m \delta_m}(\sqrt{k^2+k'^2-2kk'\zeta})}{2\times 10^4 Mpc^3} \frac{\mu_k \zeta}{0.5 \times 0.5}+\frac{l}{10^3}\frac{5000 Mpc}{\chi}\frac{10^{-2}Mpc^{-1}}{k}\frac{\sqrt{1-\zeta^2}}{\sqrt{1-0.5^2}}
+\end{aligned}
+\end{equation}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl 21 momentum auto z1 and z2 are point 95 omission of second term kpar 1e-10 to 1 giving kmax limit of 2 and kp 1e-10 to 2 plotted as Cl semilogy"}
+	\caption{Angular power spectrum of 21 cm momentum field at $z_1=z_2=0.95$ with $k_\parallel$ limits of $10^{-10}$ to $1$, giving $k_{max}=2$, and $k'$ limits of $10^{-10}$ to $2$.}
+	\label{fig:cl-21-momentum-auto-z1-and-z2-are-point-95-omission-of-second-term-kpar-1e-10-to-1-giving-kmax-limit-of-2-and-kp-1e-10-to-2-plotted-as-cl-semilogy}
+\end{figure}
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl 21 momentum auto z1 and z2 are point 95 omission of second term kpar 1e-10 to 1 giving kmax limit of 2 and kp 1e-10 to 2"}
+	\caption{Angular power spectrum, $l(l+1)C_l^{p_{21}}/2\pi$, of 21 cm momentum field at $z_1=z_2=0.95$ with $k_\parallel$ limits of $10^{-10}$ to $1$, giving $k_{max}=2$, and $k'$ limits of $10^{-10}$ to $2$.}
+	\label{fig:cl-21-momentum-auto-z1-and-z2-are-point-95-omission-of-second-term-kpar-1e-10-to-1-giving-kmax-limit-of-5-and-kp-1e-10-to-5}
+\end{figure}
+
+
+\newpage
+\section{kSZ effect}
+So far we have considered the effect of CMB photons scattered off electrons in the intracluster medium. Now, an additional effect arises from the motion of the cluster relative to the CMB. This is the KSZ effect which is simply an expression of the resulting Doppler shift. In the non-relativistic limit, the CMB spectral distortion is given as
+\begin{equation}\label{temp distortion due to ksz}
+\frac{\delta T_{KSZ}}{T_{rad}}=\tau \frac{\nu_r}{c}cos\theta
+\end{equation}
+where $\theta$ is the angle between the observer and the direction of motion of the cluster, and $\nu_r$ is the radial component of the peculiar velocity of the cluster. We can write this in terms of intensity using Planck's radiation formula to obtain 
+\begin{equation}
+\frac{\delta I_{KSZ}}{I}=-x^4 \frac{e^x}{(e^x-1)^2}\tau \frac{\nu_r}{c}cos\theta
+\end{equation}
+Using equation \ref{temp distortion due to ksz} and substituting the expression for optical depth, $\tau$, we have 
+\begin{equation}\label{p(theta) temp distortion ksz}
+p(\vec{\theta})\equiv \frac{\delta T_{KSZ}}{T_{rad}}=\int_{0}^{\eta_0}n_e\sigma_Te^{-\tau}\left[\hat{\theta}.\frac{\vec{v}(\vec{\theta},\chi)}{c}\right]a(\chi)d\chi
+\end{equation}
+where $\vec{v}$ is the bulk velocity at distance $\vec{x}=\chi\vec{\theta}$ and the extra factor of $a(\chi)$ comes from the relation $dt=ad\chi$. 
+The visibility function is the probability of photons scattering off ionised electrons and is given by
+\begin{equation}
+g(\eta)=-\dot{\tau}e^{-\tau} \Rightarrow g(\chi)= \overline{n_e}(\chi) \sigma_Ta(\chi)
+\end{equation} 
+where we have made the approximation that $e^{-\tau} \simeq 1$. The mean electron number density, $\overline{n}_e(z)=(1-(4-N_{He})Y/4)\Omega_{b0}\rho_{c0} x(z)(1+z)^3/m_p$ where $\Omega_{b0}$ is the baryon density today, $m_p$ is the proton mass and $x(z) \approx 1$ is the ionization fraction, which we assume for instantaneous reionization and for the ionization fraction today. 
+Substituting this into equation \ref{p(theta) temp distortion ksz} gives
+\begin{equation}\label{p as a function of theta}
+p(\vec{\theta})=-\frac{1}{c}\int_{0}^{\eta_0} d\chi g(\chi)\hat{\theta}.\vec{q}(\vec{x}(\vec{\theta},\chi))
+\end{equation}
+where $\vec{q}(\vec{x})=(1+\delta_e(\vec{x}))\vec{v}_e(\vec{x})$, the product of the electron and density fields in real space. 
+\noindent We can use Fourier conventions to find $q(\vec{k})$
+
+Substituting equation \ref{IFT of delta m ito l} we have
+\begin{equation}\label{p_kSZ of theta with l}
+p(\vec{\theta})=-\frac{1}{c}\int d\chi \frac{g(\chi )}{\chi ^2}\int \frac{d^2 \vec{l}}{(2\pi)^2} e^{i \vec{l}.\vec{\theta}} \int \frac{dk_\parallel}{2\pi} e^{ik_{\parallel}\chi }\hat{\theta}.\vec{q}(\vec{k_\bot},k_\parallel,\chi )
+\end{equation}
+ 
+By comparing equations \ref{p_kSZ of theta with l} and \ref{FT of kappa of theta}, the equation for $p(\vec{l})$ is given by
+\begin{equation}\label{final p(l) kSZ equation}
+p(\vec{l})=-\frac{1}{c}\int d\chi  \widetilde{g}(\chi ) \int \frac{dk_\parallel}{2\pi} e^{ik_{\parallel}\chi } \hat{\theta}.\vec{q}(\vec{k_\bot},k_\parallel,\chi )
+\end{equation}
+where $\widetilde{g}(\chi)=\frac{g(\chi )}{\chi ^2}$.
+
+\subsection{Doppler kSZ effect}
+The expression for $\vec{q}(\vec{k})$ can be found using the fact that in the linear regime, $\delta_e <<  1$ so that $q(\vec{x})=v_e(\vec{x})\Rightarrow \vec{q}(\vec{k})=\vec{v}_e(\vec{k})$.
+
+%We have also used the fact that k modes parallel to the line of sight do not contribute significantly to anisotropies. This is due to the cancellations of crests and troughs along the line of sight. In the small angle approximation the perpendicular k modes have a maximum contribution. %refer to fig 9.3 in dodelson. possibly put this in paper. 
+%This is called the Limber approximation. As a result of the suppression of Fourier modes parallel to the line of sight, we have $k_\parallel \approx 0$ .
+We can define 
+\begin{equation}
+u(z)=\frac{f(z)H(z)D(z)}{1+z}g(z)
+\end{equation}
+so that $\widetilde{u}(\chi)=\frac{u(\chi)}{\chi^2}$. Now, expressing $f(z)$ in terms of comoving distance, $\chi$ and substituting this into equation \ref{final p(l) equation} gives
+\begin{equation}\label{final p(l) eqn in terms of f}
+p(\vec{l})=-\frac{i}{c}\int d\chi \widetilde{u}(\chi) \int \frac{dk_\parallel}{2\pi} e^{ik_{\parallel}\chi } \frac{\mu_k}{k} \delta{e}(\vec{k})
+\end{equation}
+%where $\mu_k$ was defined earlier. 
+where $\mu_k$ is the angle between the line of sight and $\vec{k}$. This can be rewritten as 
+\begin{equation}\label{final p(l) eqn in terms of f with partial deriv}
+\begin{aligned}
+p(\vec{l})=&-\frac{i}{c}\int d\chi \widetilde{u}(\chi) \frac{\partial e^{ik_{\parallel}\chi }}{\partial \chi} \int \frac{dk_\parallel}{2\pi} \frac{1}{ik_{\parallel}}\frac{\mu_k}{k} \delta{e}(\vec{k})\\
+&=-\frac{i}{c}\int d\chi e^{ik_{\parallel}\chi}f_{\chi} \int \frac{dk_\parallel}{2\pi} \frac{1}{ik_{\parallel}}\frac{\mu_k}{k} \delta{e}(\vec{k})
+\end{aligned}
+\end{equation}
+where $f_1=\frac{\partial \widetilde{u}(\chi)}{\partial \chi}$. The second equality was obtained using integration by parts.
+The angular power spectrum, $C_l^{pp}$, can be computed using equation \ref{final p(l) equation} as follows
+\begin{equation}\label{angular power spec Cl}
+\langle p(\vec{l})p(\vec{l^{'*}})\rangle =(2\pi)^2 \delta^2(\vec{l}-\vec{l'})C_l^{pp} \Rightarrow C_l^{pp}=\int \frac{d^2\vec{l'}}{(2\pi)^2}\langle p(\vec{l})p(\vec{l^{'*}})\rangle 
+\end{equation}
+where the second part of the equation is obtained using the definition of the $\delta$ function, $f(x')=\int f(x)\delta(x-x')$. We can approximate the angular power spectrum to be equal to the 2D power spectrum. 
+%To find the angular power spectrum, $C_l^{pp}$, we need to find the relation between the 2D power spectrum and the angular power spectrum. The angular correlation function is obtained from the Fourier transform of the 2D power spectrum.
+%\begin{equation}
+%\begin{aligned}
+%C(\theta)&=\int \frac{d^2l}{(2\pi)^2}e^{i\vec{l}.\vec{\theta}}P_2(l)\\
+%&=\frac{1}{2\pi}\int ldlJ_0(l\theta)P_p(l)
+%\end{aligned}
+%\end{equation}
+%where the definition of the zero order Bessel function, $J_0$, is used in the second equality. The correlation function can be written in terms of the multipole moments, $C_l$. 
+%\begin{equation}
+%C(\theta)=
+%\end{equation}
+Substituting equation \ref{final p(l) equation} into equation \ref{angular power spec Cl} gives 
+\begin{equation}\label{Cl with delta}
+\begin{aligned}
+C_l^{pp}& =\left(\frac{T_{rad}}{c}\right)^2\int \frac{d^2\vec{l'}}{(2\pi)^2}\int \frac{dk_\parallel}{(2\pi)}e^{ik_\parallel \chi } \int  d\chi e^{ik_{\parallel}\chi}f_1(\chi) \int \frac{dk'_\parallel}{(2\pi)}e^{-ik'_\parallel \chi' }\\&
+\int d\chi' f(\chi')\widetilde{g}(\chi' )\frac{\mu_k}{k}  \frac{\zeta_k}{k'}\langle  \delta{e}(\vec{k})\delta{e}^*(\vec{k}') \rangle\\
+\end{aligned}
+\end{equation}
+Expressing $\langle  \delta{e}(\vec{k})\delta{e}^*(\vec{k}') \rangle$ in terms of the power spectrum gives
+\begin{equation}\label{Cl with Pm(k)}
+\begin{aligned}
+C_l^{pp}&=\left(\frac{T_{rad}}{c}\right)^2\int \frac{d^2\vec{l'}}{(2\pi)^2}\int \frac{dk_\parallel}{(2\pi)}\int d\chi e^{ik_{\parallel}\chi}f_1(\chi) \int \frac{dk'_\parallel}{(2\pi)}e^{-ik'_\parallel \chi' }\frac{1}{ik_{\parallel}}\frac{k_\parallel}{\left|k^2_\parallel+\vec{k}^2_\perp\right|} \frac{k'_\parallel}{\left|k'^2_\parallel+\vec{k'}^2_\perp\right|}\\
+&\int d\chi' \widetilde{u}(\chi') (2\pi)^2 \delta^2(\vec{k_{\bot}}-\vec{k'_\bot})(2\pi)\delta(\vec{k_\parallel}-\vec{k'_\parallel})P(\vec{l}/\chi,k_\parallel)
+\\& =\left(\frac{T_{rad}}{c}\right)^2\int \frac{d^2\vec{k'}_\perp}{(2\pi)^2}\int  \frac{dk_\parallel}{(2\pi)}e^{-ik_\parallel \chi'} \frac{1}{ik_{\parallel}}\frac{k^2_\parallel}{\left|k^2_\parallel+\vec{k}^2_\perp\right|} \frac{1}{\left|k^2_\parallel+\vec{k'}^2_\perp\right|}\int d\chi e^{ik_{\parallel}\chi}f_1(\chi)\\
+&\int d\chi' \widetilde{u}(\chi') \chi'^2 (2\pi)^2 \delta^2(\vec{k_{\bot}}-\vec{k'_\bot})(2\pi)P(\vec{l}/\chi,k_\parallel)
+\\&=\left(\frac{T_{rad}}{c}\right)^2 \int d\chi e^{ik_{\parallel}\chi}f_1(\chi) \int dk_\parallel e^{-ik_\parallel \chi'} \frac{1}{ik_{\parallel}} \left(\frac{\mu_k}{k}\right)^2 \int d\chi'u(\chi') P(\vec{l}/\chi,k_\parallel)\\
+%&=\left(\frac{T_{rad}}{c}\right)^2 (2\pi)^2 \int e^{ik_{\parallel}\chi}f_1(\chi) \int d\chi' e^{-ik_{\parallel}\chi}f_{\chi'}\int dk_\parallel \frac{1}{k^2_{\parallel}} k^2_\parallel\left(\frac{1}{k^2_\parallel+l^2/\chi^2}\right)^2 P(l/\chi,k_\parallel)
+&=\frac{T_{rad^2}}{2\pi}x^2 \left(\frac{\sigma_T \rho_{g0}}{\mu_e mp}\right)^2\int dz_1 \frac{1+z_1}{\chi(z_1)^2}f(z_1) D(z_1) e^{-\tau(z_1)} \\
+&\int dz_2 f(z_2) D(z_2) e^{-\tau(z_2)}(1+z_2)\int dk_\parallel e^{-ik_{\parallel}(\chi(z_1)-\chi(z_2))} \left(\frac{\mu_k}{k}\right)^2 P(k)
+\end{aligned}
+\end{equation}
+where in line 2 we use $\mu_k=cos\theta=\frac{k_\parallel}{k}$ in order to apply the $k_\perp$ and $k_\parallel$ Dirac delta functions. In the last equality, we write the $d\chi'$ integral analogous to equation \ref{final p(l) eqn in terms of f with partial deriv} with $f_2(\chi)=\frac{\partial u(\chi)}{\partial \chi}$. Note that taking the Limber approximation in this expression will give an angular power spectrum of zero. 
+%Now, if the visbility function is assumed to be gaussian, it will have the form
+%\begin{equation}
+%g(\chi)=\frac{1-\exp(-\tau_r)}{\sqrt{2 \pi (\Delta \chi)^2}}\exp\left[-\frac{1}{2}\frac{(\chi-\chi_r)^2}{(\Delta \chi)^2}\right]
+%\end{equation}
+%where $\tau_r$ is the fraction of CMB photons re-scattered, i.e. the optical depth at reionization and $\chi_r$ is the comoving distance at the EoR. The plot of the gaussian $g(\chi)$ is shown.
+
+Rewriting this with units and orders of magnitude gives
+
+\begin{equation}
+\begin{aligned}
+C_l^{Doppler}=&10^{-8}\mu K^2\frac{10}{2\pi}\frac{T_{rad^2}}{10^{13} \mu K^2}\frac{x^2}{1} \frac{\sigma_T^2}{(10^{-74})^2 Mpc^2} \frac{\rho_{g0}^2}{(10^{42})^2 g^2 Mpc^{-6}}\frac{(10^{-24})^2 g^2}{\mu_e^2 mp^2}\int \frac{dz_1}{10} \frac{1+z_1}{10}\\
+& \frac{(10^4)^2 Mpc^2}{\chi(z_1)^2}\frac{f(z_1)}{0.5} \frac{D(z_1)}{0.5}\frac{e^{-\tau(z_1)}}{e^{-\tau_r}} \int \frac{dz_2}{10} \frac{f(z_2)}{0.5} \frac{D(z_2)}{0.5} \frac{e^{-\tau(z_2)}}{e^{-\tau_r}} \frac{1+z_2}{10}\\
+&\int \frac{dk_\parallel}{10^{-1}} \frac{e^{-ik_{\parallel}(\chi(z_1)-\chi(z_2))}}{1} \frac{\mu_k^2}{10^{-2}}\frac{1 Mpc^{-2}}{k^2} \frac{P(k)}{2\times 10^4 Mpc^3}
+\end{aligned}
+\end{equation}
+
+
+
+We can simplify this expression by computing the autocorrelation power spectrum at reionization. Assuming instantaneous reionization at $z_r=10$ simplifies equation \ref{Cl with Pm(k)} to
+\begin{equation}\label{Cl lksz simplified}
+C_l^{pp}=\frac{1}{2 \pi}\left(\frac{T_{rad}}{c}\right)^2 \frac{u^2(z_r)}{\chi^2_r} \int dk_\parallel \left(\frac{1}{k^2_\parallel+l^2/\chi^2_r}\right)^2 P(l/\chi_r,k_\parallel)
+\end{equation}
+%\begin{equation}\label{p(kappa) temp distortion in fourier space}
+%p(\vec{l})=-\int_{0}^{\eta_0} d\chi g(\chi)\int d^2\theta \int \frac{d^3k}{(2\pi)^3} \hat{\theta}.\vec{q}(\vec{k})e^{-i\vec{l}.\vec{\theta}+i\vec{k}.\vec{x}}
+%\end{equation}
+%refer to eqns 9.4 and 9.7 in dodelson if this eqn is unclear to you
+\noindent Now, we can evaluate this expression in the limits of low and high $\vec{l}$. \\
+\begin{itemize}
+\item At low $l$, we can Taylor expand about $l=0$ to give $\left(\frac{1}{k^2_\parallel+l^2/\chi^2}\right) \approx \frac{1}{k^2_\parallel}+\frac{l^2}{k^4_\parallel \chi^2}$.
+%refer to derivation in dodelson, from 9.3 to 9.10. Maybe put this in the paper, maybe appendix.
+Therefore in the low $l$ approximation we have
+\begin{equation}\label{low ell limit}
+\begin{aligned}
+C_l^{pp}&
+\approx\left(\frac{T_{rad}}{c}\right)^2  \int d\chi e^{ik_{\parallel}\chi}f_1(\chi) \int d\chi' e^{-ik_{\parallel}\chi'}f_{\chi'}\int dk_\parallel \left(\frac{1}{k^2_\parallel}+\frac{2l^2}{k^4_\parallel \chi^2} + \frac{l^4}{k^6_\parallel \chi^4}\right) P(l/\chi,k_\parallel)\\&
+\approx\left(\frac{T_{rad}}{c}\right)^2  \int d\chi e^{ik_{\parallel}\chi}f_1(\chi) \int d\chi' e^{-ik_{\parallel}\chi'}f_{\chi'}\int dk_\parallel \frac{1}{k^2_\parallel} P(k_\parallel)\\
+&\approx\left(\frac{T_{rad}}{c}\right)^2  \frac{u^2(z_r)}{\chi^2_r} \int dk_\parallel \frac{P(k_\parallel)}{k^2_\parallel}
+\end{aligned}
+\end{equation}
+where in the last line we use the gaussian visibility function to simplify the expression. %To get order of magnitude estimates, we can explicitly write out the values in the expression. \newline
+\item At high $l$, the large $k_\parallel$ modes will cancel under integration.
+\begin{equation}
+I_1=\lim_{k_\parallel \to \infty, l \to \infty} e^{ik_\parallel (\chi -\chi')}k^2_\parallel\left(\frac{1}{k^2_\parallel+l^2/\chi^2}\right)^2
+\end{equation}
+Substituting so that $x=k_\parallel$ and $y=l/\chi$ gives 
+\begin{equation}
+I_1=\lim_{x \to \infty, y \to \infty} e^{iax} \frac{x^2}{(x^2+y^2)^2}
+\end{equation}
+where $a=\chi-\chi'$. Now, $0\leq e^{iax} \frac{x^2}{(x^2+y^2)^2} \leq e^{iax} \frac{x^2}{x^4}\leq\frac{1}{x^2} \rightarrow 0$ since the exponential\\ $0\leq e^{iax}\leq 1$.
+Thus the signal vanishes at high $l$ for small wavelength perturbations.
+We can also determine what will happen for small $k_\parallel$ modes at high $l$, i.e. compute the limit of the integrand given by
+\begin{equation}
+\begin{aligned}
+I_2&=\lim_{x \to 0, y \to \infty} e^{iax} \frac{x^2}{(x^2+y^2)^2}\\ &\Rightarrow \lim_{x \to 0, \alpha \to 0} e^{iax} \frac{x^2\alpha ^4}{(x^2\alpha ^2+1)^2}
+\end{aligned}
+\end{equation}
+ where $y=1/\alpha$. Now, $x^2\alpha ^2+1\geq 1$ for small $x,\alpha $. Therefore, $\frac{1}{(x^2\alpha ^2+1)^2} \leq 1 \Rightarrow \frac{x^2\alpha ^4e^{iax}}{(x^2\alpha ^2+1)^2} \leq x^2\alpha ^4e^{iax}\rightarrow 0$, since $e^{iax}\rightarrow 1$ for small $x$.
+ Thus, the signal disappears for both long and short wavelength modes along the line of sight at small angles.
+\end{itemize}
+The angular power spectrum was plotted using equation \ref{Cl lksz simplified}, shown in blue, and is compared with the low \textit{l} limit given by equation \ref{low ell limit}, which is plotted in red. It can be seen that the results agree at low \textit{l}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{"Downloads/doppler kSZ"}
+	\caption{Angular power spectrum for the doppler kSZ plotted in blue and the results plotted for the low $l$ limit in red.}
+	\label{fig:doppler-ksz}
+\end{figure}
+
+
+\subsection{Linear kSZ effect (Ostriker-Vishniac effect)}
+Referring back to equation \ref{p as a function of theta}, we have $\delta_e > 1$ in the non-linear regime, giving $\vec{q}(\vec{x})\approx\delta_e(\vec{x})\vec{v}_e(\vec{x})$. This is commonly referred to as the Ostriker-Vishniac term. In Fourier space this gives
+
+\begin{equation}\label{q(k)}
+\vec{q}(\vec{k},z_1)= \int \frac{d^3\vec{k}'}{(2\pi^3)}[\delta_e(\vec{k}',z_1)\vec{v_e}(\vec{k}-\vec{k'},z_1)]
+\end{equation}
+%where the different arguments account for the different possible modes of the velocity and density perturbations 
+Using the expression for $p(\vec{l})$ from equation we have
+
+\begin{equation}
+\begin{aligned}
+p(\vec{l}_1)=&-\frac{1}{2c}\int d\chi_1 \widetilde {g}(\chi_1) \int \frac{dk_{1\parallel}}{2\pi}e^{ik_{1\parallel} \chi_1}\hat{\theta}_1.\int \frac{d^3k'}{(2\pi)^3}[\delta_e(\vec{k}',z_1)\vec{v}_e(\vec{k_1}-\vec{k}',z_1)+\delta_e(\vec{k_1}-\vec{k}',z_1)\vec{v}_e(\vec{k}',z_1)]\\
+=&-\frac{if\dot{a}}{2c}\int d\chi_1 \widetilde {g}(\chi_1) \int \frac{dk_{1\parallel}}{2\pi}e^{ik_{1\parallel} \chi_1}\hat{\theta}_1.\int \frac{d^3k'}{(2\pi)^3}\delta_e(\vec{k}',z_1)\delta_e(\vec{k_1}-\vec{k}',z_1)\left(\frac{\vec{k_1}-\vec{k}'}{|\vec{k_1}-\vec{k}'|^2} +\frac{\vec{k}'}{k'^2}\right)
+\end{aligned}
+\end{equation}
+
+
+
+
+%Need to change eqn 24. This v eqn is actually from the peculiar velocity eqn in dodelson.
+%Eqn 28, maybe rewrite k in terms of k perp and k parallel and then apply dirac delta functions and then re express ito k thereafter, just to explain why k'=k, which we just sort of assume in equality 2 of eqn 28.
+%messed up which variables had primes in eqn 31
+
+
+
+
+
+Computing the four point correlation with 
+
+\begin{equation}\label{p kSZ of l2}
+p(\vec{l}_2)=-\frac{if\dot{a}}{2c}\int d\chi_1 \widetilde {g}(\chi_1) \int \frac{dk_{1\parallel}}{2\pi}e^{ik_{1\parallel} \chi_1}\hat{\theta}_1.\int \frac{d^3k'}{(2\pi)^3}\delta_e(\vec{k}'',z_2)\delta_e(\vec{k_2}-\vec{k}'',z_2)\left(\frac{\vec{k_2}-\vec{k}''}{|\vec{k_2}-\vec{k}''|^2} +\frac{\vec{k}''}{k''^2}\right)
+\end{equation}
+gives 
+
+\begin{equation}\label{Cl lin kSZ ito delta and v}
+\begin{aligned}
+C_l=&\left(\frac{T_{rad}}{2c}\right)^2\int \frac{d^2l_2}{(2\pi)^2}\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 \widetilde {g}(\chi_2) \int \frac{dk_{1\parallel}}{2\pi}e^{ik_{1\parallel} \chi_1}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi_2}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\hat{\theta}_1.\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}\hat{\theta}_2.\int\frac{d^2k''_\perp}{(2\pi)^2}\frac{dk''_\parallel}{2\pi}
+\left(\frac{\vec{k_1}-\vec{k}'}{|\vec{k_1}-\vec{k}'|^2} +\frac{\vec{k}'}{k'^2}\right) 
+\left(\frac{\vec{k_2}-\vec{k}''}{|\vec{k_2}-\vec{k}''|^2} +\frac{\vec{k}''}{k''^2}\right)\\
+&\left<\delta_e(\vec{k}')\delta_e(\vec{k_1}-\vec{k}')\delta_e(\vec{k_2}-\vec{k}'')\delta_e(\vec{k}'')\right>
+\end{aligned}
+\end{equation}
+
+%Let's consider the integrand, omitting redshift dependance for now. 
+
+%\begin{equation}
+%\begin{aligned}
+%&\left<\hat{\theta}_1.(\delta_e(\vec{k}',z_1)v_e(\vec{k_1}-\vec{k}',z_1)+\delta_e(\vec{k_1}-\vec{k}',z_1)v_e(\vec{k}',z_1))  \hat{\theta}_2.(\delta_e(\vec{k}'',z_2)v_e(\vec{k_2}-\vec{k}'',z_2)
+%+\delta_e(\vec{k_2}-\vec{k}'',z_2)v_e(\vec{k}''),z_2)\right>\\
+%&=\hat{\theta}_1.\delta_e(\vec{k}',z_1)v_e(\vec{k_1} \hat{\theta}_2.(\delta_e(\vec{k}'',z_2)+\hat{\theta}_1.\delta_e(\vec{k}',z_1)v_e(\vec{k_1}\hat{\theta}_2.\delta_e(\vec{k_2}-\vec{k}'',z_2)v_e(\vec{k}''),z_2)\\
+%&+\hat{\theta}_1.\delta_e(\vec{k_1}-\vec{k}',z_1)v_e(\vec{k}',z_1)\hat{\theta}_2.\delta_e(\vec{k_2}-\vec{k}'',z_2)v_e(\vec{k}''),z_2)+\theta_1.\delta_e(\vec{k_1}-\vec{k}',z_1)v_e(\vec{k}',z_1)\hat{\theta}_2.\delta_e(\vec{k_2}-\vec{k}'',z_2)v_e(\vec{k}''),z_2)
+%\end{aligned}
+%\end{equation}
+
+%Now, Wicks theorem for the 3-dimensional density field correlation is as follows:
+%\begin{equation}\label{Wicks thm for density field}
+%\begin{aligned}
+%<\delta(\vec{k_1}-\vec{k}')\delta(\vec{k}')\delta^*(\vec{k_2}-\vec{k}'')\delta^*(\vec{k}'')>&=(2\pi)^6 P(|\vec{k_1}-\vec{k}'|)P(k')[\delta^3(\vec{k_2}-\vec{k}''+\vec{k}')\delta^3(\vec {k_1}'-\vec{k}'+\vec{k}'')\\&
+%+\delta^3(\vec {k_1}-\vec{k}'+\vec{k_2}-\vec{k}'')\delta^3(\vec{k}'+\vec{k}'')]
+%\end{aligned}
+%\end{equation}
+
+
+
+Now, we apply Wick's theorem for gaussian fields.
+%The negative sign in the Cl expression below comes from replacing k_2 with -k_1 and k'' with -k' which only introduces a negative sign in the \left[\frac{\vec{k_2}-\vec{k}''}{|\vec{k_2}-\vec{k}''|^2}+\frac{\vec{k}''}{|\vec{k}''|^2}\right] term. This gives an overall negative to the equation which cancels with another negative due to the spherical coord transform, check eqn \ref{F spherical coord transform}
+\begin{equation}
+\begin{aligned}
+C_l=&\left(\frac{T_{rad}}{2c}\right)^2\int \frac{d^2k_{2\perp}}{(2\pi)^2}\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 \widetilde {g}(\chi_2) \chi_2^2\int \frac{dk_{1\parallel}}{2\pi}e^{ik_{1\parallel} \chi_1}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi_2}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\hat{\theta}_1.\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}\hat{\theta}_2.\int\frac{d^2k''_\perp}{(2\pi)^2}\frac{dk''_\parallel}{2\pi}\left(\frac{\vec{k_1}-\vec{k}'}{|\vec{k_1}-\vec{k}'|^2} +\frac{\vec{k}'}{k'^2}\right) 
+\left(\frac{\vec{k_2}-\vec{k}''}{|\vec{k_2}-\vec{k}''|^2} +\frac{\vec{k}''}{k''^2}\right)\\
+&(2\pi)^6  P_{\delta_e \delta_e}(k') P_{\delta_e \delta_e}(|\vec{k_1}-\vec{k}'|)(\delta^3(\vec{k}'-\vec{k}_2+\vec{k}'')\delta^3(\vec{k}_1-\vec{k}'-\vec{k}'')+\delta^3(\vec{k}'-\vec{k}'')\delta^3(\vec{k}_1-\vec{k}'-\vec{k}_2+\vec{k}''))\\
+&=\left(\frac{T_{rad}}{2c}\right)^2\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 g(\chi_2) \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_1-\chi_2)}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\int \frac{d^3k'}{(2\pi)^3}\left(\frac{\hat{\theta}.(\hat{k}-\hat{k}')}{|\vec{k}-\vec{k}'|} +\frac{\hat{\theta}.\hat{k}'}{k'}\right)^2 P_{\delta_e \delta_e}(k') P_{\delta_e \delta_e}(|\vec{k}-\vec{k}'|)\\
+\end{aligned}
+\end{equation}
+
+Expanding this equation gives
+
+\begin{equation}
+\begin{aligned}
+C_l=&\left(\frac{T_{rad}}{2c}\right)^2\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 g(\chi_2) \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_1-\chi_2)}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\int \frac{d^3k'}{(2\pi)^3}\left(\frac{[\hat{\theta}.K]^2}{K^2} +\frac{[\hat{\theta}.\hat{k}']^2}{k'^2}+\frac{2[\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}']}{K k'}\right)\\
+& P_{\delta_e \delta_e}(k') P_{\delta_e \delta_e}(K)\\
+&=\left(\frac{T_{rad}}{2c}\right)^2\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 g(\chi_2) \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_1-\chi_2)}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\int \frac{d^3k'}{(2\pi)^3}\left(\frac{[\hat{\theta}.\hat{k}']^2}{k'^2}+\frac{[\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}']}{K k'}+[k'\leftrightarrow K]\right) P_{\delta_e \delta_e}(k') P_{\delta_e \delta_e}(K)\\
+&=\frac{1}{2}\left(\frac{T_{rad}}{c}\right)^2\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 g(\chi_2) \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_1-\chi_2)}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\int \frac{d^3k'}{(2\pi)^3}\left(\frac{[\hat{\theta}.\hat{k}']^2}{k'^2}+\frac{[\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}']}{K k'}\right) P_{\delta_e \delta_e}(k') P_{\delta_e \delta_e}(K)\\
+\end{aligned}
+\end{equation}
+
+where $\vec{K}=\vec{k}-\vec{k}'$. And finally, we can rewrite this in the preferred form
+
+\begin{equation}\label{Cl autocorr kSZ general expression}
+\begin{aligned}
+C_l=&\frac{1}{2}\left(\frac{T_{rad}}{c}\right)^2\int d\chi_1 \widetilde {g}(\chi_1) \int d\chi_2 g(\chi_2) \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_1-\chi_2)}D(z_1)^2 D(z_2)^2\\ 
+&f(z_1)\dot{a}(z_1)f(z_2)\dot{a}(z_2)\int \frac{d^3k'}{(2\pi)^3} ([\hat{\theta}.\hat{k}']^2 P_{v_e v_e}(k') P_{\delta_e \delta_e}(K) + [\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}'] P_{\delta_e v_e}(k') P_{\delta_e v_e}(K))
+\end{aligned}
+\end{equation}
+
+
+Now, let's consider a diagram showing these vectors and their corresponding angles in the Limber approximation
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"OneDrive/Pictures/k vector diagram"}
+	\caption{Diagram showing the different vectors with the line of sight directed upwards.}
+	\label{fig:k-vector-diagram}
+\end{figure}
+
+First, we use the fact that $k_\parallel=0$ in the Limber approximation to write $P(K)=P(\sqrt{k_\perp^2+k'^2-2k_\perp k'\zeta} )$ which allows us to apply the delta function and collapse $z_1$ and $z_2$. 
+
+\begin{equation}
+\begin{aligned}
+C_l=&\frac{1}{2}\left(\frac{T_{rad}}{c}\right)^2\int d\chi \frac{g(\chi)^2}{\chi^2} D(z)^4 f(z)^2\dot{a}(z)^2\\ 
+&\int \frac{d^3k'}{(2\pi)^3} ([\hat{\theta}.\hat{k}']^2 P_{v_e v_e}(k') P_{\delta_e \delta_e}(K) + [\hat{\theta}.\hat{K}][\hat{\theta}.\hat{k}'] P_{\delta_e v_e}(k') P_{\delta_e v_e}(K))
+\end{aligned}
+\end{equation}
+
+Using the relation $\zeta=\hat{k}.\hat{k}'$, we have $\hat{\theta}.\hat{k}'=\sqrt{1-\zeta^2}$ and $\hat{\theta}.\hat{K}=-\frac{\sqrt{1-\zeta^2}k'}{|K|}$.
+Using these relations gives the expression
+
+\begin{equation}
+F(k)=\int \frac{d^3k'}{(2\pi)^3}(1-\zeta^2)\left[P_{\delta_e \delta_e}(\vec{K})P_{v_ev_e}(\vec{k}')-\frac{k'}{|K|}P_{\delta_e v_e}(\vec{K})P_{\delta_e v_e}(\vec{k}')\right]
+\end{equation}
+Note that the expression $\left[P_{\delta_e \delta_e}(\vec{k}')P_{v_ev_e}(\vec{K})-\frac{k'}{|K|}P_{\delta_e v_e}(\vec{K})P_{\delta_e v_e}(\vec{k}')\right]$ gives zero contribution to the autocorrelation power spectrum in the Limber approximation.
+We use the relations
+
+\begin{subequations}
+	\begin{equation}
+	P_{vv}=\left(\frac{f\dot{a}}{k}\right)^2P_{\delta \delta}
+	\end{equation}
+	\begin{equation}
+	P_{\delta v}=\frac{f\dot{a}}{k}P_{\delta \delta}
+	\end{equation}
+\end{subequations}
+which we obtain from equation \ref{v(k)}.
+Substituting these expressions gives the final equation 
+
+\begin{equation}
+F(k)=\dot{a}^2 D(z)^4 \int \frac{d^3k'}{(2\pi)^3}f^2P_{\delta_e \delta_e}(\vec{k}')P_{\delta_e \delta_e}(\vec{K})I(\vec{k},\vec{k}')
+\end{equation}
+where 
+\begin{equation}\label{I for limber}
+I(\vec{k},\vec{k}')=\frac{k(k-2k'\zeta)(1-\zeta^2)}{k'^2(k'^2+k^2-2kk'\zeta)}
+\end{equation}
+
+
+In the Limber approximation, we have the expression for the angular power spectrum
+
+\begin{equation}
+C_l=\frac{1}{2}\frac{T_{rad}^2}{c^2}\int d\chi \frac{g(\chi)^2}{\chi^2}F(l/\chi)
+\end{equation}
+
+This can be written in the more familiar form
+
+\begin{equation}\label{lin kSZ OV eqn}
+C_l=\frac{8 \pi^2}{(2l+1)^3}\left(\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\right)^2\int_0^{z_{re}}\frac{dz}{c}(1+z)^4 x^2 \Delta_B^2(l/\chi)e^{-2\tau(z)}\frac{\chi(z)}{H(z)}
+\end{equation}
+
+where the dimensionless power spectrum is 
+
+\begin{equation}
+\Delta_B^2(k)=\frac{k^3}{2\pi^2}F(k)
+\end{equation}
+
+
+The expression that I coded is
+
+\begin{equation}
+\begin{aligned}
+C_l&=\frac{1}{8\pi^2}T_{rad}^2 x^2 \left(\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\right)^2  \frac{1}{c} \int_{10^{-4}}^{10} \int_{10^{-4}}^{10} \int_{-1}^1 f(z)^2 D(z)^4\\ &P_{\delta_e \delta_e}(k')P_{\delta_e \delta_e}(|k-k'|)\frac{k(k-2k'\zeta)(1-\zeta^2)}{k'^2+k^2-2kk'\zeta}(1+z)^2e^{-2\tau(z)}\frac{H(z)}{\chi(z)^2} d\zeta dk'dz 
+\end{aligned}
+\end{equation}
+where $k=l/\chi(z)$, we use $\dot{a}=H(z)/(1+z)$. I also rewrite $d^3k'=2\pi k'^2 dk' d\zeta$.
+
+Writing this with units and orders of magnitude gives
+
+\begin{equation}
+\begin{aligned}
+C_l&=10^{-6}\mu K^2 \frac{100}{8\pi^2} \frac{T_{rad^2}}{10^{13} \mu K^2}\frac{x^2}{1} \frac{\sigma_T^2}{(10^{-74})^2 Mpc^2} \frac{\rho_{g0}^2}{(10^{42})^2 g^2 Mpc^{-6}}\frac{(10^{-24})^2 g^2}{\mu_e^2 mp^2}  \frac{10^{-14} Mpcs^{-1}}{c}\\ &\int_{10^{-4}}^{10} \frac{dz}{10} \frac{(1+z)^2}{10^2}\frac{e^{-2\tau(z)}}{e^{-2\tau_r}}\frac{H(z)}{H_0 s^{-1}}\frac{5000^2 Mpc^2}{\chi(z)^2} \frac{f(z)^2}{0.5^2} \frac{D(z)^4}{0.5^4}\\ 
+& \int_{10^{-4}}^{10} \frac{dk'}{10 Mpc^{-1}}\int_{-1}^1 \frac{d\zeta}{2} \frac{P_{\delta_e \delta_e}(k')}{2\times 10^4 Mpc^3} \frac{P_{\delta_e \delta_e}(|k-k'|)}{2\times 10^4 Mpc^3}\\
+&\frac{k(k-2k'\zeta)(1-\zeta^2)}{10(10-2\times10^{-2}\times 0.5)(1-0.5^2)Mpc^{-2}}\frac{10^{-4}+10^2-2\times 10\times 10^{-2}\times 0.5 Mpc^{-2}}{k'^2+k^2-2kk'\zeta}  
+\end{aligned}
+\end{equation}
+
+
+%Using the specific coordinate transformation given previously
+%\begin{equation}
+%\begin{aligned}
+%C_l&=T_{rad}^2 x^2 \left(\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\right)^2  \frac{1}{c}\frac{2\pi}{2(2\pi)^{3/2}} \int_{10^{-4}}^{10} \int_{10^{-4}}^{10} \int_{-1}^1 f(z)^2 D(z)^4\\ &P(kx)P(k\sqrt{1+x^2-2\zeta x})\frac{k(1-2\zeta x)(1-\zeta^2)}{1+x^2-2\zeta x}(1+z)^2e^{-2\tau(z)}\frac{H(z)}{\chi(z)^2} d\zeta dk'dz 
+%\end{aligned}
+%\end{equation}
+%where I use $x=k'/k$.
+
+	
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl OV power spec"}
+	\caption{Linear kSZ power spectrum}
+	\label{fig:cl-ov-power-spec}
+\end{figure}	
+	
+\newpage
+\subsubsection{Linear kSZ angular power spectrum without assuming Limber}
+
+We can also consider the non-Limber case by substituting expressions for $\hat{\theta}.\hat{k}'$ and $\hat{\theta}.\hat{K}$ from the diagram showing the vectors for $k_\parallel \neq 0$. 
+
+
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"OneDrive/Pictures/k vec non limber v2"}
+	\caption{Diagram showing the different vectors in the non-Limber case.}
+	\label{fig:k-vec-non-limber-v2}
+\end{figure}
+
+This diagram gives 
+
+
+\begin{subequations}
+\begin{equation}\label{k' in los}
+\hat{\theta}.\hat{k}'=sin(\gamma+\phi)=\frac{k_\parallel}{k}\zeta+\frac{l}{\chi}\frac{1}{k}sin(arccos\zeta)
+\end{equation}
+\begin{equation}
+\hat{\theta}.\hat{K}=-sin(\alpha-\gamma)=-\left[\frac{k'}{k-k'}\frac{l}{\chi}\frac{1}{k}sin(arccos\zeta)-\frac{(k-k'\zeta)}{k-k'}\frac{k_\parallel}{k}\right]
+\end{equation}
+\end{subequations}
+
+Substituting these expressions in equation \ref{Cl autocorr kSZ general expression} gives
+
+\begin{equation}\label{I non limber}
+\begin{aligned}
+I(k,k',\zeta,k_\parallel)=&\left(\frac{k_\parallel \zeta}{k}+\frac{l}{\chi k}\sqrt{1-\zeta^2}\right)\\&\left[\left(k_\parallel \zeta +\frac{l}{\chi}\sqrt{1-\zeta^2}\right)\left(\frac{k-2k'\zeta}{k'^2(k^2+k'^2-2kk'\zeta)}\right)+\frac{k_\parallel}{k'(k^2+k'^2-2kk'\zeta)}\right]
+\end{aligned}
+\end{equation}
+%This above equation has units of Mpc^{2} which is correct 
+This reduces to the expression given in equation \ref{I for limber} for $k_\parallel=0$. The expression for the angular power spectrum in the non-Limber case is thus
+
+\begin{equation}
+\begin{aligned}
+C_l=&\frac{1}{2}\left(\frac{T_{rad}}{c}\right)^2\int d\chi_1 \tilde{g}(\chi_1)\int d\chi_2\chi_2^2 \tilde{g}(\chi_2) \int \frac{dk_\parallel}{2\pi}e^{ik_\parallel(\chi_1-\chi_2)} \dot{a}(z_1) \dot{a}(z_2) \\
+&D(z_1)^2D(z_2)^2 f(z_1)f(z_2) 
+\int \frac{d^3k'}{(2\pi)^3}P_{\delta_e \delta_e}(k')P_{\delta_e \delta_e}(|\vec{k}-\vec{k}'|)I(k,k',\zeta,k_\parallel)
+\end{aligned}
+\end{equation}
+where $k=\sqrt{k_\parallel^2+l^2/\chi^2}$. 
+
+The exact expression that I am coding up is
+
+\begin{equation}\label{Cl non limber that I am coding}
+\begin{aligned}
+C_l&=10^{-7}\mu K^2 \frac{100}{16\pi^3}\frac{T_{rad}^2}{10^{13}\mu K^2}\frac{x^2}{1} \frac{\sigma_T^2}{(10^{-74})^2 Mpc^4} \frac{\rho_{g0}^2}{(10^{42})^2 g^2 Mpc^{-6}}\frac{(10^{-24})^2 g^2}{\mu_e^2 m_p^2}  \int \frac{dk_\parallel}{10 Mpc^{-1}}  \int \frac{dz_1}{10} \int \frac{dz_2}{10}   \\
+& \int \frac{d\zeta}{2} \int \frac{dk'}{10^{-2}Mpc^{-1}}\frac{k'^2}{10^{-4} Mpc^{-2}}  \frac{(1+z_1)}{10} \frac{e^{-\tau(z_1)}}{e^{-\tau_r}} \frac{D(z_1)^2}{0.5^2} \frac{D(z_2)^2}{0.5^2} \frac{f(z_1)}{0.5} \frac{f(z_2)}{0.5} 
+\frac{1+z_2}{10}  \frac{e^{-\tau(z_2)}}{e^{-\tau_r}} \frac{5000^2}{\chi(z_1)^2} \\
+&\frac{P_{\delta_e \delta_e}(k')}{2\times 10^4 Mpc^3}\frac{P_{\delta_e \delta_e}(\sqrt{k^2+k'^2-2kk'\zeta})}{2\times 10^4 Mpc^3} \left(\frac{\mu_k\zeta}{10^{-5}}+\frac{l}{10^3}\frac{5000 Mpc}{\chi}\frac{10 Mpc^{-1}}{ k}\frac{\sqrt{1-\zeta^2}}{\sqrt{1-0.5^2}}\right)\\&
+\left[\frac{k_\parallel}{10^{-4}Mpc^{-1}} \frac{\zeta}{0.5} +\frac{l}{10^3}\frac{5000 Mpc}{\chi}\frac{\sqrt{1-\zeta^2}}{\sqrt{1-0.5^2}}\frac{k-2k'\zeta}{10 Mpc^{-1}}\frac{1 Mpc^{-2}}{k'^2(k^2+k'^2-2kk'\zeta)}+\right.\\
+&\left.\frac{k_\parallel}{10^{-4}Mpc^{-1}}\frac{1 Mpc^{-1}}{k'(k^2+k'^2-2kk'\zeta)}\right]
+\end{aligned}
+\end{equation}
+
+where we used $g(\chi)=\left(\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\right) (1+z)^2 x(z) e^{-\tau(z)}$, $\dot{a}=H(z)/(1+z)$ and $d\chi=\frac{c}{H(z)}dz$
+
+%\textbf{My explanation of why I think 5 integrals is enough}:
+%Referring to the diagram, this shows $\vec{k}$ and $\vec{k}-\vec{k}'$ vectors for a certain redshift, say $z_1$. Starting with a given $l$, we compute $k_\perp=l/\chi(z_1)$ and integrate over $z_1$ to consider all possible $k_\perp$. We also integrate over $k_\parallel$. Together these two components give all possible lengths of $\vec{k}$ and all possible orientations (i.e. the angle of inclination or declination of the vector). We also integrate over all possible angular separations between vectors $\vec{k}$ and $\vec{k}'$. There is also the integral over the length of vector $\vec{k}'$. We do not need to integrate over all possible angles of inclination (for orientation) of $\vec{k}'$ given that we have already accounted for the angular inclination of $\vec{k}$ and the angle between the two vectors. I think that the geometric representation of vectors $\vec{k}$ and $\vec{k}'$ is sufficiently accounted for with four integrals, viz. $\zeta, \vec{k}', k_\parallel$ and $z_1$. There are also density and velocity fields for $z_2$ thus we integrate over a second redshift, giving a total of 5 integrals. 
+
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl OV non limber everything half z1 half z2 with chi_z2"}
+%	\caption{The non limber power spectrum plot $l(l+1)C_l$ using in equation \ref{Cl non limber that I am coding} with all integrals}
+%	\label{fig:cl-ov-non-limber-everything-half-z1-half-z2-with-chiz2}
+%\end{figure}
+
+
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{".spyder-py3/non limber angular power spec great shape amp off by 5"}
+%	\caption{The non limber power spectrum plot $l(l+1)C_l$ using in equation \ref{Cl non limber that I am coding} with all integrals and with a better shape and amp than the plot from last week}
+%	\label{fig:non-limber-angular-power-spec-great-shape-amp-off-by-5}
+%\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/comparison of limber and non-limber OV"}
+	\caption{Comparison of limber and non-limber OV angular power spectra integrating up to $k'=10^{-2}$ Mpc$^{-1}$. The results are in close agreement for the \textit{k} modes considered.}
+	\label{fig:comparison-of-limber-and-non-limber-ov}
+\end{figure}
+
+
+\newpage
+\subsubsection{Redshift dependence of the kSZ signal}
+Below are plots showing the redshift dependance of the signal for the linear kSZ
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl OV integrand"}
+	\caption{The integrand of the linear kSZ power spectrum which is integrated over k' and $\zeta$ only.}
+	\label{fig:cl-ov-integrand}
+\end{figure}
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl OV integral redshift bins"}
+	\caption{Linear kSZ power spectrum plotted for different redshift bins, with each bin integrated until $z=6$.}
+	\label{fig:cl-ov-integral-redshift-bins}
+\end{figure}
+
+
+I have plotted the power spectrum integrating over all $k'$, but plotting as a function of $l$ and $z$ for different redshift bins in Figure \ref{fig:cl-ov-integrand}. I have also plotted the power spectrum as a function of $l$ with integrations over different redshift bins \ref{fig:cl-ov-integral-redshift-bins}. Please refer to equation \ref{lin kSZ OV eqn}, which is plotted in Figure \ref{fig:cl-ov-integral-redshift-bins}, while varying the upper limit of integration for redshift. The integrand is plotted in Figure \ref{fig:cl-ov-integrand}
+
+
+
+\section{21cm-linear kSZ Cross-correlation}
+
+The 21-cm momentum field is defined as
+
+\begin{equation}
+p(\vec{\theta})=\frac{-1}{c}\hat{\theta}.q(\vec{x}(\vec{\theta},\chi))
+\end{equation}
+
+%\begin{equation}
+%p_{21}(\vec{l},y;\chi_i)=\frac{q_\perp^{21}(\vec{k}_\perp \chi,k_\parallel r_\nu)}{\chi^2 r_\nu}
+%\end{equation}
+
+
+This can be rewritten as 
+
+\begin{equation}
+p_{21}(\vec{l}_1,z_i)=\frac{-1}{c}\int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi(z_i)}}{\chi(z_i)^2} \hat{\theta}_1.\vec{q}_{21}(\vec{k},z_i)
+\end{equation}
+where 
+\begin{equation}
+\vec{q}_{21}(\vec{k},z_i)=\frac{1}{2}\int \frac{d^3k'}{(2\pi)^3}(\delta_{21}(\vec{k}-\vec{k}',z_i)\vec{v}_{21}(\vec{k}',z_i)+\delta_{21}(\vec{k}',z_i)\vec{v}_{21}(\vec{k}-\vec{k}',z_i))
+\end{equation}
+and 
+
+\begin{equation}
+\delta_{21}(\vec{k},z_i)=\overline{T}(z_i)D(z_i)\delta_m(\vec{k};z=0)[b_{HI}+f\mu_k^2]
+\end{equation}
+
+Combining this with equation \ref{p kSZ of l2} for the kSZ momentum, $p_{kSZ}$ and applying Wick's theorem, we get
+
+%\begin{equation}
+%\begin{aligned}
+%C_l^{p_{21}p_e}=&\frac{T_{rad}}{(2c)^2}\int \frac{d^2l_2}{(2\pi)^2} \int d\chi \widetilde {g}(\chi) \int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi_i}}{\chi_i^2}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\int \frac{d^3k'}{(2\pi)^3}\int\frac{d^3k''}{(2\pi)^3}\\ 
+%&<\hat{\theta}_1.(\delta_{21}(\vec{k_1}-\vec{k}',z_i)\vec{v}_{21}(\vec{k}',z_i)+\delta_{21}(\vec{k}',z_i)\vec{v}_{21}(\vec{k}-\vec{k}',z_i))  \hat{\theta}_2.(\delta_e(\vec{k}'',z)\vec{v}_e(\vec{k_2}-\vec{k}'',z)+\delta_{e}(\vec{k}',z_i)\vec{v}_{e}(\vec{k}-\vec{k}',z_i))>
+%&=-\frac{T_{rad}}{c}\frac{\bar{T}(z_i)D(z_i)(b+f\mu_k^2)}{\chi^2(z_i)r_\nu(z_i)}\left(\frac{a(z_i)\dot{D}(z_i)D(z_i)}{2{D_0}^2}\right)\int \frac{d^2k_{2\perp}}{(2\pi)^2} \int d\chi \chi^2 \widetilde {g}(\chi) \left(\frac{a(\chi)\dot{D}(\chi)D(\chi)}{2{D_0}^2}\right)\\ 
+%&\int \frac{dk_{1\parallel}}{2\pi}e^{ik_{1\parallel} \chi(z_i)}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+%\int \frac{d^2k''_\perp}{(2\pi)^2}\frac{dk''_\parallel}{2\pi} \left<\delta_0(\vec{k}')\delta_0(\vec{k_1}-\vec{k}')  \delta_0^*(\vec{k}'')\delta_0^*(\vec{k_2}-\vec{k}'')\right>\\
+%&\hat{\theta}_1.\left[\frac{\vec{k}_1-\vec{k'}}{|\vec{k}_1-\vec{k}'|^2}+\frac{\vec{k}'}{|\vec{k}'|^2}\right]\hat{\theta}_2.\left[\frac{\vec{k_2}-\vec{k}''}{|\vec{k_2}-\vec{k}''|^2}+\frac{\vec{k}''}{|\vec{k}''|^2}\right]
+%\end{aligned}
+%\end{equation}
+
+\begin{equation}\label{cross corr non limber}
+\begin{aligned}
+C_l^{p_{21}p_e}(z_i)=&\frac{1}{2}\frac{T_{rad}}{c^2}\int d\chi \widetilde {g}(\chi) \chi^2\int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} (\chi_i-\chi)}}{\chi_i^2} \dot{a}(z_i) \dot{a}(z) 
+D(z_i)^2D(z)^2 f(z_i)f(z)\\
+&\int\frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+([\hat{\theta}.\hat{k}'][\hat{\theta}.\hat{k}']P_{\delta_{21} \delta_e}(K)P_{v_{21}v_e}(k')+[\hat{\theta}.\hat{k}'][\hat{\theta}.\hat{K}]P_{\delta_e v_{21}}(k')P_{\delta_{21} v_e}(K))
+\end{aligned}
+\end{equation}
+
+
+%\begin{equation3
+%\begin{aligned}
+%C_l=&\frac{T_{rad}}{c}\frac{\bar{T}(z_i)D(z_i)(b+f\mu_k^2)}{\chi^2(z_i)r_\nu(z_i)}\left(\frac{a(z_i)\dot{D}(z_i)D(z_i)}{2{D_0}^2}\right)\int d\chi_2 {g}(\chi_2) \left(\frac{a(\chi_2)\dot{D}(\chi_2)D(\chi_2)}{2{D_0}^2}\right)\\
+%&\int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi(z_i)-\chi_2)}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+%P(k')P(|\vec{k}-\vec{k}'|)\left(\hat{\theta}.\left[\frac{\vec{k}-\vec{k'}}{|\vec{k}-\vec{k}'|^2}+\frac{\vec{k}'}{|\vec{k}'|^2}\right]\hat{\theta}.\left[\frac{\vec{k}-\vec{k'}}{|\vec{k}-\vec{k}'|^2}+\frac{\vec{k}'}{|\vec{k}'|^2}\right]\right)\\
+%&=\frac{T_{rad}}{c}\frac{\bar{T}(z_i)D(z_i)(b+f\mu_k^2)}{\chi^2(z_i)r_\nu(z_i)}\left(\frac{a(z_i)\dot{D}(z_i)D(z_i)}{2{D_0}^2}\right)\int d\chi_2 {g}(\chi_2) \left(\frac{a(\chi_2)\dot{D}(\chi_2)D(\chi_2)}{2{D_0}^2}\right)\\
+%&\int \frac{dy}{2\pi r_\nu}e^{iy (\chi(z_i)-\chi_2)/r_\nu}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+%P(k')P(|\vec{k}-\vec{k}'|)\left(\hat{\theta}.\left[\frac{\vec{k}-\vec{k'}}{|\vec{k}-\vec{k}'|^2}+\frac{\vec{k}'}{|\vec{k}'|^2}\right]\hat{\theta}.\left[\frac{\vec{k}-\vec{k'}}{|\vec{k}-\vec{k}'|^2}+\frac{\vec{k}'}{|\vec{k}'|^2}\right]\right)
+%\end{aligned}
+%\end{equation}
+
+The $d^3k'$ integral is the familiar $F(k)$ expression which we have come across in the linear kSZ calculation.
+
+Writing this with units and orders of magnitude
+
+\begin{equation}\label{Cl cross corr that I am coding}
+\begin{aligned}
+C_l^{p_{21}p_e}(z_i)&=\frac{100}{16 \pi^3} \frac{T_{rad}}{10^6 \mu K}\frac{10^{-14}Mpc s^{-1}}{c} \frac{x}{1}\frac{\sigma_T}{(10^{-74}) Mpc^2} \frac{\rho_{g0}}{(10^{42}) g Mpc^{-3}}\frac{(10^{-24}) g}{\mu_e m_p}  \\
+& \int \frac{dz}{10}  \frac{H(z_i)}{H_0 s^{-1}} \frac{D(z_i)^2}{0.5^2} \frac{D(z)^2}{0.5^2} \frac{f(z_i)}{0.5} \frac{f(z)}{0.5}
+\frac{(1+z)}{10} \int \frac{d\zeta}{2} \int \frac{dk'}{10 Mpc^{-1}} \\
+& \int \frac{dk_\parallel}{10^{-4} Mpc^{-1}}\frac{k'^2}{10^2 Mpc^{-1}}\frac{e^{-\tau(z)}}{e^{-\tau_r}}   \frac{P_{\delta_{21} \delta_e}(k')}{2\times 10^4 Mpc^3}\frac{P_{\delta_{21} \delta_e}(\sqrt{k^2+k'^2-2kk'\zeta})}{2\times 10^4 Mpc^3}\\&
+\frac{cos(k_\parallel(\chi_i-\chi))}{1}\frac{5000 Mpc^2}{\chi_i^2}\left(\frac{\mu_k\zeta}{10^{-5}}+\frac{l}{10^3}\frac{5000 Mpc}{\chi}\frac{10 Mpc^{-1}}{ k}\frac{\sqrt{1-\zeta^2}}{\sqrt{1-0.5^2}}\right)\\
+&\left[\frac{k_\parallel}{10^{-4}Mpc^{-1}} \frac{\zeta}{0.5} +\frac{l}{10^3}\frac{5000 Mpc}{\chi}\frac{\sqrt{1-\zeta^2}}{\sqrt{1-0.5^2}}\frac{k-2k'\zeta}{10 Mpc^{-1}}\frac{1 Mpc^{-2}}{k'^2(k^2+k'^2-2kk'\zeta)}+\right.\\
+&\left.\frac{k_\parallel}{10^{-4}Mpc^{-1}}\frac{1 Mpc^{-1}}{k'(k^2+k'^2-2kk'\zeta)}\right]
+%=C_l^{p_{21}p_e}&=\frac{1}{16 \pi^3} T_{rad} x \bar{T}(b_{HI}+f\mu_k^2)\left(\frac{\sigma_T \rho_{c0}}{\mu_e m_p}\right) \int dk_\parallel \int \frac{dz}{H(z)} \int d\zeta \int k'^2 dk'  \left(\frac{H(z_i)}{1+z_i}\right)\left(\frac{H(z)}{1+z}\right) D(z_i)^2\\
+%& D(z)^2 f(z_i) f(z) 
+%(1+z)^2  e^{-\tau(z)}   P_{\delta_{21} \delta_e}(k')P_{\delta_{21} \delta_e}(\sqrt{k^2+k'^2-2kk'\zeta})I(k,k',\zeta,k_\parallel)cos(k_\parallel(\chi(z_i)-\chi(z)) 
+\end{aligned}
+\end{equation}
+
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{".spyder-py3/cross corr up to k' of 1e-2 and kpar of 2e-4"}
+%	\caption{Cross correlation of 21 cm and OV spectra integrating up to $k'=10^{-2}$ Mpc$^{-1}$.}
+%	\label{fig:cross-corr-up-to-k-of-1e-2-and-kpar-of-2e-4}
+%\end{figure}
+
+
+%Now, let's refer to equation \ref{cross corr non limber}. The expression in the first term $P_{\delta_{21} \delta_e}(\vec{K})P_{v_{21}v_e}(\vec{k}')=\frac{P_{\delta_{21} \delta_e}(\vec{K})P_{\delta_{21} \delta_e}(\vec{k}')}{k'^2}$ while the second term gives
+%$P_{\delta_e v_{21}}(\vec{k}')P_{\delta_{21} v_e}(\vec{K})=\frac{P_{\delta_{21} \delta_e}(\vec{k}')P_{\delta_{21} \delta_e}(\vec{K})}{k'(|\vec{k}-\vec{k}'|)}$. Now, $\vec{k}'$ is the low k mode of the velocity field, $v_{21}$, whereas $\vec{k}-\vec{k}'$ is the high k mode of the density field, $\delta_{21}$. Thus, the second term in equation \ref{cross corr non limber} can be omitted. 
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{".spyder-py3/cross corr up to k' of 1e-2 and kpar of 2e-4 partial (without second term)"}
+%	\caption{Cross correlation of 21 cm and OV spectra integrating up to $k'=10^{-2}$ Mpc$^{-1}$ after omission of the second term of equation \ref{cross corr non limber}.}
+%	\label{fig:cross-corr-up-to-k-of-1e-2-and-kpar-of-2e-4-partial-without-second-term}
+%\end{figure}
+\newpage
+
+\textbf{Squeezed limit}
+
+In the squeezed limit, we assume that $k'\ll k, K$. The amplitude of $\vec{K}$ is simplified as
+
+\begin{equation}
+|\vec{k}-\vec{k}'|=\sqrt{k^2+k'^2-2\vec{k}.\vec{k}'}=k\sqrt{1-\frac{2\vec{k}.\vec{k}'}{k^2}+\frac{k'^2}{k^2}}\simeq k\left(1-\frac{\vec{k}.\vec{k}'}{k^2}\right)
+\end{equation}
+where the last equality comes from the use of the taylor expansion.
+Using this amplitude, the corresponding power spectrum is
+
+\begin{equation}
+P(|\vec{k}-\vec{k}'|)\simeq P(k-\frac{\vec{k}.\vec{k}'}{k}) \simeq P(k)-\frac{\vec{k}.\vec{k}'}{k}\frac{dP(k)}{dk}=P(k)\left(1-\frac{\vec{k}.\vec{k}'}{k^2}\frac{dlnP(k)}{dlnk}\right)
+\end{equation}
+
+Let's consider the bispectrum and apply the squeezed limit.
+
+\begin{equation}
+\begin{aligned}
+C_l^{p_{21}p_e}(z_i)=&\frac{T_{rad}}{c^2}\int \frac{d^2l_2}{(2\pi)^2} \int d\chi \widetilde {g}(\chi) \int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi_i}}{\chi_i^2}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\hat{\theta}_1.\int \frac{d^3k'}{(2\pi)^3}\hat{\theta}_2.\int\frac{d^3k''}{(2\pi)^3} \\ 
+& D(z_i)^2  D(z)^2<\delta_{21}(\vec{k_1}-\vec{k}')\vec{v}_{21}(\vec{k}')  \delta_e(\vec{k_2}-\vec{k}'')\vec{v}_e(\vec{k}'')>\\
+=&\frac{T_{rad}}{c^2}\int \frac{d^2l_2}{(2\pi)^2} \int d\chi \widetilde {g}(\chi) \int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi_i}}{\chi_i^2}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\int \frac{d^3k'}{(2\pi)^3}\int\frac{d^3k''}{(2\pi)^3}\\ 
+&f(z_i)\dot{a}(z_i)f(z) \dot{a}(z)D(z_i)^2  D(z)^2<\delta_{21}(\vec{k_1}-\vec{k}')\delta_{21}(\vec{k}')  \delta_e(\vec{k_2}-\vec{k}'')\delta_e(\vec{k}'')>\frac{[\hat{\theta}_1.\hat{k}']}{k'}\frac{[\hat{\theta}_2.\hat{k}'']}{k''}\\
+=&\frac{T_{rad}}{c^2}\int \frac{d^2{k_{2\perp}}}{(2\pi)^2} \int d\chi \widetilde {g}(\chi) \chi^2\int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi_i}}{\chi_i^2}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\int \frac{d^3k'}{(2\pi)^3}\int\frac{d^3k''}{(2\pi)^3}\\ 
+&f(z_i)\dot{a}(z_i)f(z) \dot{a}(z)D(z_i)^2  D(z)^2\frac{[\hat{\theta}_1.\hat{k}']}{k'}\frac{[\hat{\theta}_2.\hat{k}'']}{k''} (2\pi)^6 P_{\delta_{21} \delta_e}(k') P_{\delta_{21} \delta_e}(|\vec{k_1}-\vec{k}'|)\\
+&(\delta^3(\vec{k}'-\vec{k}_2+\vec{k}'')\delta^3(\vec{k}_1-\vec{k}'-\vec{k}'')+\delta^3(\vec{k}'-\vec{k}'')\delta^3(\vec{k}_1-\vec{k}'-\vec{k}_2+\vec{k}''))
+%&=-\frac{T_{rad}}{c^2}\frac{\bar{T}(z_i)D(z_i)(b+f\mu_k^2)}{\chi^2(z_i)r_\nu(z_i)}\left(\frac{a(z_i)\dot{D}(z_i)D(z_i)}{2{D_0}^2}\right)\int \frac{d^2k_{2\perp}}{(2\pi)^2} \int d\chi \chi^2 \widetilde {g}(\chi) \left(\frac{a(\chi)\dot{D}(\chi)D(\chi)}{2{D_0}^2}\right)\\ 
+%&\int \frac{dk_{1\parallel}}{2\pi}\frac{e^{ik_{1\parallel} \chi_i}}{\chi_i^2}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+%\int \frac{d^2k''_\perp}{(2\pi)^2}\frac{dk''_\parallel}{2\pi} \left<\delta_0(\vec{k}')\delta_0(\vec{k_1}-\vec{k}')  \delta_0^*(\vec{k}'')\delta_0^*(\vec{k_2}-\vec{k}'')\right>\\
+%&\hat{\theta}_1.\left[\frac{\vec{k}_1-\vec{k'}}{|\vec{k}_1-\vec{k}'|^2}+\frac{\vec{k}'}{|\vec{k}'|^2}\right]\hat{\theta}_2.\left[\frac{\vec{k_2}-\vec{k}''}{|\vec{k_2}-\vec{k}''|^2}+\frac{\vec{k}''}{|\vec{k}''|^2}\right]
+\end{aligned}
+\end{equation}
+
+
+Applying Wicks theorem we get
+
+\begin{equation}
+\begin{aligned}
+C_l=&\frac{T_{rad}}{c^2} \int d\chi g(\chi) \int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} (\chi_i-\chi)}}{\chi_i^2} \int \frac{d^3k'}{(2\pi)^3}\\ 
+&f(z_i)\dot{a}(z_i)f(z) \dot{a}(z)D(z_i)^2  D(z)^2\frac{[\hat{\theta}.\hat{k}']}{k'}\frac{[\hat{\theta}.\hat{k}']}{k'} P_{\delta_e \delta_e}(k') P_{\delta_e \delta_e}(|\vec{k}-\vec{k}'|)\\
+&=\frac{T_{rad}}{c^2} \int d\chi g(\chi) \int \frac{dk_{\parallel}}{2\pi}\frac{e^{ik_{\parallel} (\chi_i-\chi)}}{\chi_i^2} \int \frac{d^3k'}{(2\pi)^3}\\ 
+&f(z_i)\dot{a}(z_i)f(z) \dot{a}(z)D(z_i)^2  D(z)^2[\hat{\theta}.\hat{k}']^2 P_{v_{21} v_e}(k') P_{\delta_{21} \delta_e}(|\vec{k}-\vec{k}'|)
+\end{aligned}
+\end{equation}
+
+Applying the squeezed limit gives
+
+\begin{equation}
+\begin{aligned}
+C_l=&\frac{1}{(2\pi)^2}\frac{T_{rad}}{c^2}\frac{f(z_i)\dot{a}(z_i)D(z_i)^2}{\chi_i^2} \int d\chi g(\chi) f(z) \dot{a}(z)  D(z)^2 \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_i-\chi)} P_{\delta_{21} \delta_e}(k) \\
+& \int d\zeta [\hat{\theta}.\hat{k}']^2\int dk' k'^2
+P_{v_{21} v_e}(k') \left(1-\frac{\zeta k'}{k}\frac{dlnP_{\delta_{21} \delta_e}(k)}{dlnk}\right)\\
+&=\frac{1}{(2\pi)^2}\frac{T_{rad}}{c}\frac{f(z_i)H(z_i)D(z_i)^2}{\chi_i^2(1+z_i)}x\left(\frac{\sigma_T \rho_{c0}}{\mu_e m_p}\right) \int \frac{dz}{H(z)}f(z) \frac{H(z)}{1+z}  D(z)^2 (1+z)^2 e^{-\tau(z)}\\
+& \int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_i-\chi)} P_{\delta_{21} \delta_e}(k)\int d\zeta [\hat{\theta}.\hat{k}']^2\int dk' k'^2
+P_{v_{21} v_e}(k') \left(1-\frac{\zeta k'}{k}\frac{dlnP_{\delta_{21} \delta_e}(k)}{dlnk}\right)\\
+\end{aligned}
+\end{equation}
+where 
+\begin{equation}
+\hat{\theta}.\hat{k}'=\frac{k_\parallel}{k}\zeta+\frac{l}{\chi}\frac{1}{k}\sqrt{1-\zeta^2}
+\end{equation}
+
+Let's assume that $\chi_i-\chi \ll \frac{1}{k_\parallel}$ and split the HIRAX redshift range into bins of redshift range $0.3$. We choose the redshifts to be at the midpoint of the redshift range $0.8-1.1$, so that $z_i=z=0.95$. This simplifies the expression to
+
+\begin{equation}
+\begin{aligned}
+C_l(z_i=z=0.95)=&\frac{1}{(2\pi)^2}\frac{T_{rad}}{c}\frac{f(z_i)H(z_i)D(z_i)^2}{\chi_i^2(1+z_i)}x\left(\frac{\sigma_T \rho_{c0}}{\mu_e m_p}\right) \Delta z f(z) D(z)^2 (1+z) e^{-\tau(z)}\\
+& \int \frac{dk_{\parallel}}{2\pi} P_{\delta_{21} \delta_e}(k)\int d\zeta [\hat{\theta}.\hat{k}']^2\int dk' k'^2
+P_{v_{21} v_e}(k') \left(1-\frac{\zeta k'}{k}\frac{dlnP_{\delta_{21} \delta_e}(k)}{dlnk}\right)
+\end{aligned}
+\end{equation}
+
+The exact expression that I am coding up is
+
+\begin{equation}
+\begin{aligned}
+C_l(z_i=z=0.95)=&10^{-7} \mu K^2\frac{10}{(2\pi)^3}\frac{T_{rad}}{10^{6}\mu K}\frac{10^{-14}Mpc s^{-1}}{c}\frac{\bar{T}}{200 \mu K}\frac{f(z_i)}{0.5}\frac{H(z_i)}{H_0 s^{-1}}\frac{D(z_i)^2}{0.5^2}\frac{5000^2 Mpc^2}{\chi_i^2}\frac{2}{1+z_i} \frac{x}{1}
+\\&\frac{\sigma_T}{(10^{-74}) Mpc^2} \frac{\rho_{g0}}{(10^{42}) g Mpc^{-3}}\frac{(10^{-24}) g}{\mu_e m_p} \frac{\Delta z}{10} \frac{f(z)}{0.5} \frac{D(z)^2}{0.5^2} \frac{(1+z)}{10} \frac{e^{-\tau(z)}}{e^{-\tau_r}}\int \frac{dk_{\parallel}}{10^{-4}Mpc^{-1}}\\
+&  \frac{(b_{HI}+f(z_i)\mu_k^2)}{1+0.5\times 10^{-5}}\int \frac{d\zeta}{2}\left[ \frac{\mu_k\zeta}{10^{-5}\times 0.5}+\frac{l}{10^3}\frac{5000 Mpc}{\chi}\frac{10 Mpc^{-1}}{k}\frac{\sqrt{1-\zeta^2}}{\sqrt{1-0.5^2}}\right]\\
+&\int \frac{dk'}{10^{-2}}
+\frac{P_{\delta_{e} \delta_e}(k')}{2\times 10^4 Mpc^3} \frac{P_{\delta_{e} \delta_e}(k)}{2\times 10^4 Mpc^3}-\frac{\zeta}{0.5} \frac{k'}{10 Mpc^{-1}}\frac{dP_{\delta_{e} \delta_e}(k)}{2\times 10^4 Mpc^3}\frac{10 Mpc^{-1}}{dk}
+\end{aligned}
+\end{equation}
+where $\mu_k=\frac{k_\parallel}{k}$.\\ 
+Plotting this gives
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{".spyder-py3/cross corr up to k' of 1e-2 and kpar of 2e-4 squeezed limit"}
+%	\caption{Cross correlation of 21 cm and OV spectra integrating up to $k'=10^{-2}$ Mpc$^{-1}$ in the squeezed limit.}
+%	\label{fig:cross-corr-up-to-k-of-1e-2-and-kpar-of-2e-4-squeezed-limit}
+%\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl crosscorr squeezed lim one bin deltaz=point 3,zi=z=point 95"}
+	\caption{Crosscorrelation of the 21 cm signal and OV signal in the squeezed limit, plotted for $z_i=z=0.95, \Delta_z=0.3$.}
+	\label{fig:cl-crosscorr-squeezed-lim-one-bin-deltazpoint-3zizpoint-95}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{".spyder-py3/Cl crosscorr squeezed lim one bin deltaz=point 3,zi=z=point 95 semilogy"}
+	\caption{Crosscorrelation of the 21 cm signal and OV signal in the squeezed limit, plotted for $z_i=z=0.95, \Delta_z=0.3$ in semilogy scale.}
+	\label{fig:cl-crosscorr-squeezed-lim-one-bin-deltazpoint-3zizpoint-95-semilogy}
+\end{figure}
+
+
+\end{document}
+
+
+
+
+\subsubsection{Cross correlation calculation}
+The cross correlation angular power spectrum between 21 cm emission and KSZ effect is computed as follows
+\begin{equation}
+\begin{aligned}
+&\langle  \delta T_{21}(\vec{l},y;z_i)p^*(\vec{l}')\rangle  =(2\pi)^2\delta^2(\vec{l}-\vec{l}')C_l^{21-p}(y;z_i)\\&
+\Rightarrow C_l^{21-p}(y;z_i)=\int \frac{d^2\vec{l'}}{(2\pi)^2} \langle  \delta T_{21}(\vec{l},y;z_i) p^*(\vec{l'})\rangle  
+\end{aligned}
+\end{equation}
+Substituting equations \ref{delta 21 ito y and l final eqn} and \ref{final p(l) eqn in terms of f} gives
+\begin{equation}
+\begin{aligned}
+C_l^{21-p}(y;z_i)&=-\frac{T_{rad}}{c} \int \frac{d^2\vec{l'}}{(2\pi)^2}\frac{\overline{T}(z_i)D(z_i)[b_{HI}(z_i)+f(z_i)\mu_k^2]}{\chi ^2r_\nu(z_i)}\int d\chi' f_1(\chi')  \\&\int \frac{dy'}{2\pi r_\nu(\chi')} e^{-iy'\chi'/r(\chi')} \frac{\mu_k'}{k'} \langle \delta_{e}(\vec{k})\delta_{21}^*(\vec{k}')\rangle\\&
+=-\frac{T_{rad}}{c} \int \frac{d^2\vec{k}'_\bot}{(2\pi)^2}\frac{\overline{T}(z_i)D(z_i)[b_{HI}(z_i)+f(z_i)\mu_k^2]}{\chi ^2r_\nu(z_i)}\int d\chi' f_2(\chi') \\
+& \int \frac{dy'}{2\pi r(\chi')} e^{-iy'\chi'/r(\chi')} \frac{1}{|y^2/r^2_\nu(\chi')+\vec{k}'^2_\perp|}(2 \pi)^3 \delta^2(\vec{k}_{\bot}-\vec{k}'_\bot)\delta(y-y')P(\vec{k}_{\bot},y/r_\nu(\chi))\\&
+=-\frac{T_{rad}}{c} \frac{\overline{T}(z_i)D(z_i)[b_{HI}(z_i)+f(z_i)\mu_k^2]}{\chi ^2r_\nu(z_i)}\int d\chi f_2(\chi)  |\cos({y\chi/r(\chi)})|\\ &\frac{1}{|y^2/r^2_\nu(\chi)+\vec{l}^2/\chi^2|}P(\vec{l}/\chi,y/r(\chi))
+\end{aligned}
+\end{equation}
+where in the last line we took only the real part of the power spectrum.  
+%Note that the expression for $T_{rad}$ must be in units of $\mu K$ since the expression for $\bar{T}$ in equation \ref{mean 21 cm temp} is in units of $\mu K$.
+\begin{equation}
+\begin{aligned}
+C_l^{21-p}(y;z_i)&=\frac{T_{rad}}{c} \frac{\overline{T}(z_i)D(z_i)[b_{HI}(z_i)+f(z_i)\mu_k^2]}{\chi^2(z_i) r_\nu(z_i)}u(z_r)|\cos({y\chi/r(\chi)})|\\
+&\frac{1}{|y^2/r^2_\nu(\chi_r)+\vec{l}^2/\chi_r^2|}P(\vec{l}/\chi_r,y/r(\chi_r))\\
+&
+\end{aligned}
+\end{equation}
+%\begin{figure}[h!]
+% \centering
+% \includegraphics[width=0.7\linewidth]{"Desktop/Cl cross corr 21 cm lksz"}
+% \caption{Angular power spectrum of the cross correlation between the 21 cm signal and the linear KSZ effect is shown for $y=2$ at $z=1$ and $z=z_r$ (redshift at EoR).}
+% \label{fig:cl-cross-corr-21-cm-lksz}
+%\end{figure}
+
+
+
+
+%21cm-Expressing as a function of frequency
+We can express the angular power spectrum as a function of frequency as well using the fourier relation
+\begin{equation}\label{nu fourier of l}
+\delta T_{21}(\vec{l},\tilde{\nu};z_i)=\int \frac{dy}{2\pi}e^{iy\tilde{\nu}}\delta T_{21}(\vec{l},y;z_i)
+\end{equation}
+where $\tilde{\nu}=\frac{\nu}{1420 MHz}$ is the dimensionless frequency. Equation \ref{Cl 21 relation to autocorrelation} is expressed in terms of $\tilde{\nu}$ as
+\begin{equation}\label{Cl 21 cm ito nu}
+\begin{aligned}
+&\langle  \delta T_{21}(\vec{l},\tilde{\nu};z_i) \delta T_{21}^*(\vec{l'},\tilde{\nu}';z_i)\rangle  =(2 \pi)^2\delta^2(\vec{l}-\vec{l'})C_l^{21}(y;z_i)
+\\&
+\Rightarrow C_l^{21}(\tilde{\nu},\tilde{\nu}';z_i)=\int \frac{d^2\vec{l'}}{(2\pi)^2} \langle  \delta T_{21}(\vec{l},\tilde{\nu};z_i) \delta T_{21}^*(\vec{l'},\tilde{\nu}';z_i)\rangle  
+\end{aligned}
+\end{equation}
+This becomes
+\begin{equation}
+\begin{aligned}
+C_l^{21}(\tilde{\nu},\tilde{\nu}';z_i)&=\int \frac{d^2\vec{l'}}{(2\pi)^2} \int \frac{dy}{2\pi}e^{iy\tilde{\nu}}\int \frac{dy'}{2\pi}e^{iy'\tilde{\nu}'}\langle  \delta T_{21}(\vec{l},y;z_i)\delta T_{21}(\vec{l'},y';z_i)\rangle  
+\\&=\int \frac{d^2\vec{l'}}{(2\pi)^2} \int \frac{dy}{2\pi}e^{iy\tilde{\nu}}\int \frac{dy'}{2\pi}e^{iy'\tilde{\nu}'}(2 \pi)^3\delta_D^2(\vec{l}-\vec{l'})\delta_D(y-y')C_l^{21}(y;z_i)
+\\&=\int \frac{dy}{2\pi}e^{iy(\tilde{\nu}-\tilde{\nu}')}C_l^{21}(y;z_i)
+\end{aligned}
+\end{equation}
+
+
+
+
+Now, applying this to the $d^3k'$ integral in equation \ref{cross corr non limber} gives
+
+\begin{equation}
+\begin{aligned}
+F=&\int\frac{d^3k'}{(2\pi)^3}
+([\hat{\theta}.\hat{k}'][\hat{\theta}.\hat{k}']P_{\delta_{21} \delta_e}(K)P_{v_{21}v_e}(k')+[\hat{\theta}.\hat{k}'][\hat{\theta}.\hat{K}]P_{\delta_e v_{21}}(k')P_{\delta_{21} v_e}(K))\\
+&=\int\frac{d^3k'}{(2\pi)^3}P_{\delta_{21} \delta_e}(k)P_{\delta_{21} \delta_e}(k')[\hat{\theta}.\hat{k}']\left[1-\frac{\zeta k'}{k}\frac{dlnP_{\delta_{21} \delta_e}(k)}{dlnk}\right] \left[ \frac{[\hat{\theta}.\hat{k}']}{k'^2} + \frac{[\hat{\theta}.\hat{K}]}{kk'} \left(1+\frac{\zeta k'}{k}\right)\right]
+\end{aligned}
+\end{equation}
+We substitute $\hat{\theta}.\hat{k}'$ from equation \ref{k' in los}. The expression $\hat{\theta}.\hat{K}=-sin\alpha cos\phi+cos\alpha sin\phi$ can be simplified in the squeezed limit using
+
+
+\begin{subequations}
+	\begin{equation}
+	sin\alpha=\frac{k'}{|\vec{k}-\vec{k}'|}\sqrt{1-\zeta^2}\simeq\frac{k'\sqrt{1-\zeta^2})}{k}\left(1+\frac{\zeta k'}{k}\right)
+	\end{equation}
+	\begin{equation}
+	cos\alpha=\frac{k-k'\zeta}{|\vec{k}-\vec{k}'|}\simeq\frac{k-k'\zeta}{k}\left(1+\frac{k'\zeta}{k}\right)= 1-\left(\frac{k'\zeta}{k}\right)^2 \simeq 1
+	\end{equation}
+\end{subequations}
+This gives the result
+
+\begin{equation}
+\hat{\theta}.\hat{K}=-\frac{k'}{k}\sqrt{1-\zeta^2}\left(1+\frac{\zeta k'}{k}\right)\frac{l}{\chi k} +\frac{k_\parallel}{k}
+\end{equation}
+Putting this together gives
+
+\begin{equation}
+\begin{aligned}
+F=&\int\frac{d^3k'}{(2\pi)^3}P_{\delta_{21} \delta_e}(k)P_{\delta_{21} \delta_e}(k')\left[\frac{k_\parallel \zeta}{k}+\frac{l}{\chi k}\sqrt{1-\zeta^2}\right]\left[1-\frac{\zeta k'}{k}\frac{dlnP_{\delta_{21} \delta_e}(k)}{dlnk}\right]\left(-\frac{\sqrt{1-\zeta^2}}{k^2}\right.\\ &\left.-\frac{k'\zeta\sqrt{1-\zeta^2}}{k^4}\frac{l}{\chi}+\frac{k_\parallel}{k^2 k'} -\frac{k'\zeta\sqrt{1-\zeta^2}}{k^3} -\frac{k'^2 \zeta^2 \sqrt{1-\zeta^2}}{k^5}\frac{l}{\chi} +\frac{\zeta k_\parallel}{k^3} +\frac{k_\parallel \mu}{k k'^2} + \frac{l\sqrt{1-\zeta^2}}{\chi k k'^2}\right)
+\end{aligned}
+\end{equation}
+
+
+
+
+
+
+
+I am plotting this in python for the non-Limber case
+
+\begin{equation}
+\begin{aligned}
+C_l&=10^{12} T_{rad}^2 x^2\left(\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\right)^2(1+z_i)(1+z)e^{-\tau(z_i)}e^{-\tau(z)}f(z_i)f(z)D_1(z_i)^2D_1(z)^2/\chi_i^2\\ &cos(k_\parallel(chi(z_i)-chi(z))F(\sqrt{k_\parallel^2+l^2/\chi^2} )
+\end{aligned}
+\end{equation}
+with 
+
+\begin{equation}
+F(k)=\int \frac{dk'}{(2\pi)^3}P_{\delta \delta}(k')P_{\delta \delta}(|\vec{k}-\vec{k}'|)I(\vec{k},\vec{k}')
+\end{equation}
+
+where 
+\begin{equation}
+I(\vec{k},\vec{k}')=\frac{k(k-2k'\zeta)(1-\zeta^2)}{(k'^2+k^2-2kk'\zeta)}
+\end{equation}
+
+
+Now, the 21-cm and kSZ signals are assumed to be in different radial directions. We can again write $\vec{a}=\vec{k}'$ and $\vec{b}=\vec{k}-\vec{k}'$. Omitting all constants and $\chi$ integrals for now, we apply the line of sight directions which gives
+
+\begin{equation}
+\begin{aligned}
+F(l/\chi)&=\int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_i-\chi)}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+P(k')P(|\vec{k}-\vec{k}'|)\left(\frac{a_{z_i}}{a^2}+\frac{b_{z_i}}{b^2}\right)\left(\frac{a_{z}}{a^2}+\frac{b_{z}}{b^2}\right)\\
+&=\int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_i-\chi)}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+P(k')P(|\vec{k}-\vec{k}'|)\left(\frac{k_{z_i}'}{a^2}+\frac{k_{z_i}-k_{z_i}'}{b^2}\right)\left(\frac{k_{z}'}{a^2}-\frac{k_{z}'}{b^2}\right)\\
+&=\int \frac{dk_{\parallel}}{2\pi}e^{ik_{\parallel} (\chi_i-\chi)}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+P(k')P(|\vec{k}-\vec{k}'|)\left(\frac{k_{z_i}'}{a^2}+\frac{k_{z_i}-k_{z_i}'}{b^2}\right){k'\sqrt{1-\zeta_2^2}}\left(\frac{b^2-a^2}{a^2b^2}\right)
+\end{aligned}
+\end{equation}
+where $a_{z}=k_z'$ and $b_z=k_z-k_z'$. Note that the large redshift range for the kSZ signal allows us to use the Limber approximation, giving $b_{z}=-k_{z}'$. However, the Limber approximation cannot be applied to the small redshift range of the 21 cm signal which HIRAX will focus on. 
+%\printbibliography
