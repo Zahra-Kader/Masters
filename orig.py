@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Created on Sun Sep 30 21:25:18 2018
 
-This is a temporary script file.
+@author: zahra
 """
 
 import scipy as sp
@@ -15,15 +15,12 @@ import density as den
 import constants as cc
 import reionization as cr
 from decimal import Decimal
-import alvarez_2006 as av
 
 cosmo=uf.cosmo
 
 Mps_interpf=uf.Mps_interpf
 
 n_points=uf.n_points
-
-z_r=9.9
 
 x_e=1.
 
@@ -38,8 +35,6 @@ sigma_T=cc.sigma_T_Mpc
 tau_r=0.055
 
 T_rad=2.725 #In Kelvin
-
-chi_r = uf.chi(z_r)
 
 chi_m = uf.chi(1100)
 
@@ -173,9 +168,8 @@ print (C_l)
 
 
 
-kp=np.linspace(k_min,k_max,n_points)
+K=np.linspace(k_min,k_max,n_points)
 
-kp_norm=np.linalg.norm(kp)
 
 ell=np.linspace(1e-2,1e4,n_points)
 
@@ -193,38 +187,35 @@ def chi_check(z):
 
 min_k=1e-2
 def Delta_b(k,z):
+    k,kp=np.meshgrid(K,K)
+    #mu=kk/i
 
-    Delta_b=np.array([]) 
+    #mu=(i**2+kk**2-(np.abs(i-kk))**2)/(2*i*kk)
 
-    for i in k:
+    #print (mu)
 
-        #mu=kk/i
+    #I=i**2/(kk**2*(i**2+kk**2))
+    #k_inp=np.linspace(min_k,i,n_points)
+    #print (k_inp)
+    k_norm=np.linalg.norm(k)
+    kp_norm=np.linalg.norm(kp)
 
-        #mu=(i**2+kk**2-(np.abs(i-kk))**2)/(2*i*kk)
+    #print (k_norm,'knorm')
 
-        #print (mu)
+    mu=np.dot(k,kp)/(k_norm*kp_norm)
 
-        #I=i**2/(kk**2*(i**2+kk**2))
-        #k_inp=np.linspace(min_k,i,n_points)
-        #print (k_inp)
-        k_norm=np.linalg.norm(k)
-        #print (k_norm,'knorm')
+    #print (mu,'mu')
 
-        mu=np.dot(i,kp)/(k_norm*kp_norm)
+    I=k*(k-2*kp*mu)*(1-mu**2)/(k**2+kp**2-2*k*kp*mu)
+    #print (I,'I')
+    constants=k**3/((2*np.pi**2)*(2*np.pi)**3)
 
-        #print (mu,'mu')
+    delta_sq=constants*uf.f(z)**2*uf.D_1(z)**4*Mps_interpf(kp)*Mps_interpf(np.abs(k-kp))*I/(1+z)**2
 
-        I=i*(i-2*kp*mu)*(1-mu**2)/(i**2+kp**2-2*i*kp*mu)
-        #print (I,'I')
-        constants=i**3/((2*np.pi**2)*(2*np.pi)**3)
+    Integral=sp.integrate.trapz(delta_sq,K)
+    #print (Delta_b_sqrt)
 
-        delta_sq=constants*uf.f(z)**2*uf.D_1(z)**4*Mps_interpf(kp)*Mps_interpf(np.abs(i-kp))*I/(1+z)**2
-
-        Integral=sp.integrate.trapz(delta_sq,kp)
-        Delta_b=np.append(Delta_b,Integral)
-        #print (Delta_b_sqrt)
-
-    return Delta_b
+    return Integral
 
 
 
@@ -233,9 +224,9 @@ k=np.linspace(min_k,10,n_points)
 
 print ((np.sqrt(Delta_b(k,z=0))*k).min(),'min')
 print ((np.sqrt(Delta_b(k,z=4))*k).min(),'min')
-plt.loglog(k,2*np.sqrt(Delta_b(k,z=0))*k,'b')
+plt.loglog(k,np.sqrt(Delta_b(k,z=0))*k,'b')
 
-plt.loglog(k,2*np.sqrt(Delta_b(k,z=4))*k,'r')
+plt.loglog(k,np.sqrt(Delta_b(k,z=4))*k,'r')
 
 
 
@@ -250,42 +241,27 @@ plt.xlabel('k [h/Mpc]')
 plt.show()
 
 
-k_Mps=np.linspace(1e-4,10,10000)
-print (k_Mps[Mps_interpf(k_Mps).argmax()])
-plt.loglog(k_Mps,Mps_interpf(k_Mps))
-
-plt.show()
-
-
-'''
-def R_d():
-    const=8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2
-
-    integrand=[const*(1+z)**2*uf.f(z)**2*uf.H(z)*uf.chi(z)*np.exp(-2*tau(z))]
-    Redshift_dep=sp.integrate.trapz(integrand,z)
-    return Redshift_dep
-'''
-
 def C_l(ell,z_min):
-    z=np.linspace(z_min,z_r,n_points)
+    z=np.linspace(z_min,10,n_points)
     C_l=np.array([])
-    for i in ell:      
-        const=1e12*8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2/(2*np.pi)
+    for i in ell:     
+        const=1e12*8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2/(2*i+1)**3
         integrand=const*(1+z)**4*uf.H(z)*chi(z)*np.exp(-2*tau(z))*Delta_b(i/chi(z),z)
         #print (np.shape(integrand))
-    
+   
         #integrand=np.resize(integrand,(n_points+1))
-    
+   
         #print (np.shape(integrand))
         Redshift_dep=sp.integrate.trapz(integrand,z)
-        C_l=np.append(C_l,Redshift_dep)   
+        C_l=np.append(C_l,Redshift_dep)  
     return C_l
+
 
 '''
 def C_l_single_ell(ell,z_max):
-    
+   
     z=np.linspace(1e-2,z_max,n_points)
-        
+       
     const=1e12*8*np.pi**2*T_rad**2*x**2/cc.c_light_Mpc_s*(sigma_T*rho_g0/(mu_e*m_p))**2/(2*np.pi)
 
     integrand=const*(1+z)**4*uf.H(z)*uf.chi(z)*np.exp(-2*tau(z))*Delta_b(ell/chi(z),z)
@@ -329,35 +305,13 @@ def C_l(ell):
 
     return C_l
 '''
-plt.plot(ell,ell*(ell+1)*C_l(ell,1e-2)/(2*ell+1)**3)
-plt.ylim(0,5)
+plt.semilogy(ell,ell*(ell+1)*C_l(ell,1e-4)/(2*np.pi))
+#plt.ylim(0,5)
 plt.xlabel('l')
-plt.ylabel(r'$\rm{Cl^{OV}}/(2 \pi)[\mu K^2]$')
+plt.ylabel(r'$\rm{l(l+1)Cl^{OV}}/(2 \pi)[\mu K^2]$')
 plt.show()
 
-ell1=np.linspace(0,1e5,10000)
-#plt.plot(ell1,av.Cl_patchy(ell1,10,10))
 
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,1e-2)/(2*ell+1)**3,'b')
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,0.8)/(2*ell+1)**3,'g')
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,1.6)/(2*ell+1)**3,'r')
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,2.5)/(2*ell+1)**3,'k')
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,3.5)/(2*ell+1)**3,'m')
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,4.5)/(2*ell+1)**3,'y')
-plt.semilogy(ell,ell*(ell+1)*C_l(ell,5.5)/(2*ell+1)**3,'c')
-plt.xlabel('l')
-plt.ylabel(r'$\rm{Cl^{OV}}/(2 \pi)[\mu K^2]$')
-blue_patch = mpatches.Patch(color='blue', label='z>0')
-green_patch = mpatches.Patch(color='green', label='z>0.8')
-red_patch = mpatches.Patch(color='red', label='z>1.6')
-black_patch = mpatches.Patch(color='black', label='z>2.5')
-magenta_patch = mpatches.Patch(color='magenta', label='z>3.5')
-yellow_patch = mpatches.Patch(color='yellow', label='z>4.5')
-cyan_patch = mpatches.Patch(color='cyan', label='z>5.5')
-plt.legend(handles=[blue_patch,green_patch,red_patch,black_patch,magenta_patch,yellow_patch,cyan_patch])
-
-plt.ylim(1e-5,2)
-plt.show()
 '''
 plt.plot(np.linspace(1e-2,1,n_points),C_l_single_ell(3000,1)[1])
 plt.plot(np.linspace(1e-2,2,n_points),C_l_single_ell(3000,2)[1])

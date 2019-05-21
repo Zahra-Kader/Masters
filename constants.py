@@ -1,15 +1,17 @@
-"""Various constants used by CosmoloPy code.
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 22 12:56:10 2018
 
+@author: zahra
+"""
+
+"""Various constants used by CosmoloPy code.
 Unit abreviations are appended to the name, but powers are not
 specified. For instance, the gravitational constant has units "Mpc^3
 msun^-1 s^-2", but is called "G_const_Mpc_Msun_s".
-
 Most of these numbers are from google calculator.
-
 Constants are:
-
 ::
-
 """
 
 ### If you add a constant, make sure to add a description too. ###
@@ -88,5 +90,3 @@ gamma = 0.55
 
 
 __doc__ += "\n".join(sorted(doc.split("\n")))
-
-

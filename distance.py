@@ -1,9 +1,8 @@
-"""Cosmological distance measures. 
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 22 12:55:03 2018
 
-Mostly follows David Hogg's pedagogical paper arXiv:astro-ph/9905116v4 .
-
-Distance units are Mpc, time units are seconds.
-
+@author: zahra
 """
 
 import math
@@ -18,11 +17,8 @@ import constants as cc
 
 def get_omega_k_0(**cosmo):
     """'Spatial curvature density' omega_k_0 for a cosmology (if needed).
-
     If omega_k_0 is specified, return it. Otherwise return:
-
       1.0 - omega_M_0 - omega_lambda_0
-
     """
  
     if 'omega_k_0' in cosmo:
@@ -37,7 +33,6 @@ def set_omega_k_0(cosmo):
     
     Note that cosmo is not passed as \*\*cosmo for once. This function
     modifies the dictionary in place and returns the result.
-
     """
     if 'omega_k_0' in cosmo:
         return cosmo
@@ -50,12 +45,9 @@ def set_omega_k_0(cosmo):
 
 def e_z(z, **cosmo):
     """The unitless Hubble expansion rate at redshift z.
-
     In David Hogg's (arXiv:astro-ph/9905116v4) formalism, this is
     equivalent to E(z), defined in his eq. 14.
-
     Modified (JBJ, 29-Feb-2012) to include scalar w parameter
-
     """
 
     if 'w' in cosmo:
@@ -70,12 +62,9 @@ def e_z(z, **cosmo):
 
 def hubble_z(z, **cosmo):
     """The value of the Hubble constant at redshift z.
-
     Units are s^-1
-
     In David Hogg's (arXiv:astro-ph/9905116v4) formalism, this is
     equivalent to H_0 * E(z) (see his eq. 14).
-
     """
     H_0 = cosmo['h'] * cc.H100_s
 
@@ -83,13 +72,10 @@ def hubble_z(z, **cosmo):
 
 def hubble_distance_z(z, **cosmo):
     """The value of the Hubble distance at redshift z.
-
     Units are Mpc.
-
     In David Hogg's (arXiv:astro-ph/9905116v4) formalism, this is
     equivalent to D_H / E(z) = c / (H_0 E(z)) [see his eq. 14], which
     appears in the definitions of many other distance measures.
-
     """
     H_0 = cosmo['h'] * cc.H100_s
     
@@ -109,9 +95,7 @@ def _comoving_integrand(z, omega_M_0, omega_lambda_0, omega_k_0, h, w=-1.):
 
 def comoving_integrand(z, **cosmo):
     """The derivative of the comoving distance with redshift: dd_c/dz.
-
     See equation 15 of David Hogg's arXiv:astro-ph/9905116v4
-
     Units are Mpc.
     
     """
@@ -128,29 +112,22 @@ def comoving_integrand(z, **cosmo):
 
 def comoving_distance(z, z0 = 0, **cosmo):
     """The line-of-sight comoving distance (in Mpc) to redshift z.
-
     See equation 15 of David Hogg's arXiv:astro-ph/9905116v4
-
     Units are Mpc.
-
     Optionally calculate the integral from z0 to z.
-
     Returns
     -------
     
     d_co: ndarray
        Comoving distance in Mpc.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
     >>> d_co = cd.comoving_distance(6., **cosmo)
     >>> print ("Comoving distance to z=6 is %.1f Mpc" % (d_co))
     Comoving distance to z=6 is 8017.8 Mpc
-
     """
 
     #cosmo = set_omega_k_0(cosmo)
@@ -175,45 +152,34 @@ def comoving_distance(z, z0 = 0, **cosmo):
 
 def proper_motion_distance(z, **cosmo):
     """Returns comoving_distance_transverse.
-
     Units are Mpc.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
     >>> d_M = cd.proper_motion_distance(6., **cosmo)
     >>> print ("Transverse comoving distance to z=6 is %.1f Mpc" % (d_M))
     Transverse comoving distance to z=6 is 8017.8 Mpc
-
     """
     return comoving_distance_transverse(z, **cosmo)
 
 def comoving_distance_transverse(z, **cosmo):
     """The transverse comoving distance (in Mpc) to redshift z.
-
     This is also called the proper motion distance, D_M.
-
     See equation 16 of David Hogg's arXiv:astro-ph/9905116v4
-
     Units are Mpc.
-
     This is the distance d_m, such that the comoving distance between
     two events at the same redshift, but separated on the sky by some
     angle delta_theta is d_m * delta_theta.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
     >>> d_M = cd.comoving_distance_transverse(6., **cosmo)
     >>> print ("Transverse comoving distance to z=6 is %.1f Mpc" % (d_M))
     Transverse comoving distance to z=6 is 8017.8 Mpc
-
     """
 
     d_c = comoving_distance(z, 0.0, **cosmo)
@@ -240,21 +206,16 @@ def angular_diameter_distance(z, z0 = 0, **cosmo):
     
     Optionally find the angular diameter distance between objects at
     z0 and z (only implemented for omega_k_0 >= 0).
-
     See equations 18-19 of David Hogg's arXiv:astro-ph/9905116v4
-
     Units are Mpc.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
     >>> d_a = cd.angular_diameter_distance(6., **cosmo)
     >>> print ("Angular diameter distance = %.1f Mpc" % (d_a))
     Angular diameter distance = 1145.4 Mpc
-
     """
 
     omega_k = numpy.atleast_1d(get_omega_k_0(**cosmo))
@@ -280,25 +241,18 @@ def luminosity_distance(z, **cosmo):
     """The luminosity distance to redshift z.
     
     Units are Mpc.
-
     See, for example, David Hogg's arXiv:astro-ph/9905116v4
-
     """
     da = angular_diameter_distance(z, **cosmo)
     return da * (1+z)**2.
 
 def diff_comoving_volume(z, **cosmo):
     """The differential comoving volume element dV_c/dz/dSolidAngle.
-
     Dimensions are volume per unit redshift per unit solid angle.
-
     Units are Mpc**3 Steradians^-1.
-
     See David Hogg's arXiv:astro-ph/9905116v4, equation 28.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
@@ -314,27 +268,21 @@ def diff_comoving_volume(z, **cosmo):
 
 def comoving_volume(z, **cosmo):
     """The comoving volume out to redshift z.
-
     See David Hogg's arXiv:astro-ph/9905116v4, equation 29.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
     >>> Vc = cd.comoving_volume(6.0, **cosmo)
     >>> print ("Vc = %.3g Mpc**3" % (Vc))
     Vc = 2.16e+12 Mpc**3
-
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.0, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
     >>> Vc = cd.comoving_volume(6.0, **cosmo)
     >>> print ("Vc = %.3g Mpc**3" % (Vc))
     Vc = 1.68e+12 Mpc**3
-
     """
 
     dm = comoving_distance_transverse(z, **cosmo)
@@ -389,11 +337,8 @@ def _lookback_integrand(z, omega_M_0, omega_lambda_0, omega_k_0, h):
 
 def lookback_integrand(z, **cosmo):
     """The derivative of the lookback time with redshift: dt_L/dz.
-
     See equation 30 of David Hogg's arXiv:astro-ph/9905116v4
-
     Units are seconds.
-
     """
     return _lookback_integrand(z,
                                cosmo['omega_M_0'],
@@ -403,19 +348,13 @@ def lookback_integrand(z, **cosmo):
 
 def lookback_time(z, z0 = 0.0, **cosmo):
     """The lookback time (in s) to redshift z.
-
     See equation 30 of David Hogg's arXiv:astro-ph/9905116v4
-
     Units are s.
-
     Optionally calculate the integral from z0 to z.
-
     Returns
     -------
-
     t_look: ndarray
        Lookback time in seconds.
-
     """
 
     #cosmo = set_omega_k_0(cosmo)
@@ -434,16 +373,12 @@ def lookback_time(z, z0 = 0.0, **cosmo):
 
 def age(z, use_flat=True, **cosmo):
     """The age of the universe as seen at redshift z.
-
     Age at z is lookback time at z'->Infinity minus lookback time at z.
     
     See also: lookback_time.
-
     Units are s.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> import cosmolopy.constants as cc
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
@@ -451,7 +386,6 @@ def age(z, use_flat=True, **cosmo):
     >>> t = cd.age(6.0, **cosmo)
     >>> print ("age at z=6.0 = %.3g Gyr" % (t/cc.Gyr_s))
     age at z=6.0 = 0.892 Gyr
-
     """
     if use_flat and numpy.all(get_omega_k_0(**cosmo) == 0):
         return age_flat(z, **cosmo)
@@ -464,12 +398,9 @@ def age_flat(z, **cosmo):
     """The age of the universe assuming a flat cosmology.
     
     Units are s.
-
     Analytical formula from Peebles, p. 317, eq. 13.2.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> import cosmolopy.constants as cc
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
@@ -477,7 +408,6 @@ def age_flat(z, **cosmo):
     >>> t = cd.age_flat(6.0, **cosmo)
     >>> print ("age at z=6.0 is %.3g Gyr" % (t/cc.Gyr_s))
     age at z=6.0 is 0.892 Gyr
-
     """
 
     omega_k = get_omega_k_0(**cosmo)
@@ -498,30 +428,21 @@ def quick_distance_function(function, zmax = 20., zmin = 0., zstep = 0.001,
                             **cosmo):
     """Return an interpolation function that will give distance as a
     funtion of z
-
     If return_inverse is True, will also return a function giving z as
     a function of distance.
-
     Inputs
     ------
-
     function -- the distance function to interpolate (can be any
     callable that takes a redshift argument plus cosmology keywords).
-
     k -- spline order (`scipy.interpolate.InterpolatedUnivariateSpline`)
-
     Returns
     -------
-
     distfunc
-
     or
     
     distfunc, zfunc
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> import cosmolopy.constants as cc
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
@@ -533,7 +454,6 @@ def quick_distance_function(function, zmax = 20., zmin = 0., zstep = 0.001,
     '-2e-16'
     >>> "%.1g" % (z/6.3333 - 1.0)
     '0'
-
     """
     z = numpy.linspace(zmin, zmax, math.ceil((zmax-zmin)/zstep))
     dists = function(z, **cosmo)
@@ -548,24 +468,17 @@ def quick_age_function(zmax = 20., zmin = 0., zstep = 0.001,
                        return_inverse=False,
                        **cosmo):
     """Return an interpolation function that will give age as a funtion of z
-
     Units are s.
-
     If return_inverse is True, will also return a function giving z as
     a function of age.
-
     Returns
     -------
-
     agefunc
-
     or
     
     agefunc, redfunc
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> import cosmolopy.constants as cc
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
@@ -574,7 +487,6 @@ def quick_age_function(zmax = 20., zmin = 0., zstep = 0.001,
     >>> t = agefunc(6.0)
     >>> print ("age at z=6.0 is %.3g Gyr" % (t/cc.Gyr_s))
     age at z=6.0 is 0.892 Gyr
-
     
     """
     z = numpy.arange(zmin, zmax, zstep)
@@ -589,17 +501,12 @@ def quick_age_function(zmax = 20., zmin = 0., zstep = 0.001,
 def quick_redshift_age_function(zmax = 20., zmin = 0., zstep = 0.001, **cosmo):
     """Return an interpolation function giving z as a funtion of age
     of the universe.
-
     Units of time are s.
-
     Returns
     -------
-
     redfunc
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> import cosmolopy.constants as cc
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
@@ -608,7 +515,6 @@ def quick_redshift_age_function(zmax = 20., zmin = 0., zstep = 0.001, **cosmo):
     >>> z = redfunc(1.0 * cc.Gyr_s)
     >>> print ("When age=1.0Gyr z=%.2f" % (z))
     When age=1.0Gyr z=5.49
-
     """
     z = numpy.arange(zmin, zmax, zstep)
     z = z[::-1]
@@ -617,12 +523,9 @@ def quick_redshift_age_function(zmax = 20., zmin = 0., zstep = 0.001, **cosmo):
     
 def light_travel_distance(z, z0 = 0, **cosmo):
     """The light travel distance to redshift z.
-
     Units are Mpc.
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
     >>> cosmo = cd.set_omega_k_0(cosmo)
@@ -636,12 +539,9 @@ def light_travel_distance(z, z0 = 0, **cosmo):
 
 def redshift_d_light(dl, z_guess = 6.0, fmin_args={}, **cosmo):
     """The redshift corresponding to a given light travel distance.
-
     Units are the same as light_travel_distance (Mpc).
-
     Examples
     --------
-
     >>> import cosmolopy.distance as cd
     >>> import cosmolopy.constants as cc
     >>> cosmo = {'omega_M_0' : 0.3, 'omega_lambda_0' : 0.7, 'h' : 0.72}
@@ -653,7 +553,6 @@ def redshift_d_light(dl, z_guess = 6.0, fmin_args={}, **cosmo):
              Function evaluations: 52
     >>> print ("Redshift for a lookback time of 10Gyr is z=%.3f" % (z))
     Redshift for a lookback time of 10Gyr is z=2.025
-
     """
     
     dl_diff = lambda z: abs(dl - light_travel_distance(z, **cosmo)[0])

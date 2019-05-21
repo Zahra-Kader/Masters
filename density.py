@@ -1,5 +1,10 @@
-"""Cosmological densities like matter density, baryon density, etc.
+# -*- coding: utf-8 -*-
 """
+Created on Sat Sep 22 12:55:36 2018
+
+@author: zahra
+"""
+
 import math
 
 import numpy
@@ -13,13 +18,10 @@ from distance import get_omega_k_0, set_omega_k_0
 
 def omega_M_z(z, **cosmo):
     """Matter density omega_M as a function of redshift z.
-
     Notes
     -----
-
     From Lahav et al. (1991, MNRAS 251, 128) equations 11b-c. This is
     equivalent to equation 10 of Eisenstein & Hu (1999 ApJ 511 5).
-
     """
     if get_omega_k_0(**cosmo) == 0:
         return 1.0 / (1. + (1. - cosmo['omega_M_0'])/
@@ -30,11 +32,9 @@ def omega_M_z(z, **cosmo):
 
 def cosmo_densities(**cosmo):
     """The critical and mean densities of the universe.
-
     Returns
     -------
     rho_crit and rho_0 in solar masses per cubic Megaparsec.
-
     """
 
     omega_M_0 = cosmo['omega_M_0']
@@ -50,9 +50,7 @@ def cosmo_densities(**cosmo):
 
 def get_X_Y(**cosmo):
     """The fraction of baryonic mass in hydrogen and helium.
-
     Assumes X_H + Y_He = 1.
-
     You must specify either 'X_H', or 'Y_He', or both.
     """
     if 'X_H' in cosmo and 'Y_He' not in cosmo:
@@ -68,21 +66,15 @@ def get_X_Y(**cosmo):
     
 def baryon_densities(**cosmo):
     """Hydrogen number density at z=0.
-
     Parameters
     ----------
-
     cosmo: cosmological parameters
-
     parameters used: 'omega_b_0', 'X_H' and/or 'Y_He', plus those
     needed by cosmo_densities.
        
-
     Returns
     -------
-
     rho_crit, rho_0, n_He_0, n_H_0
-
     The first two are in units of solar masses per cubic
     Megaparsec. The later two are in number per cubic Megaparsec.
     

@@ -1,5 +1,11 @@
-"""A Saveable class with methods to save and restore.
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 22 13:06:23 2018
 
+@author: zahra
+"""
+
+"""A Saveable class with methods to save and restore.
 Saveable is designed to be subclassed to create new types of objects
 that can easily be pickled and reloaded.
 """
@@ -8,10 +14,8 @@ import pickle
 
 class NullWriter:
     """Dummy file-like object that does nothing.
-
     From
     http://stackoverflow.com/questions/1809958/hide-stderr-output-in-unit-tests
-
     Used in Saveable.
     """
     def write(self, s):
@@ -28,7 +32,6 @@ def loadSaveable(filename):
 
 class Saveable(object):
     """An object with methods to save and restore.
-
     Unpickleable attributes will simply be deleted from the object.
     """
 
@@ -53,7 +56,6 @@ class Saveable(object):
 
     def dumb_pickle_filter(self):
         """Filter out attributes that can't be pickled.
-
         Returns a copy of dict with 
         """
         picfile = NullWriter()

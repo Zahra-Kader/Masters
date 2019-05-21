@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 22 13:06:15 2018
+
+@author: zahra
+"""
+
 """Some utilities used by various CosmoloPy modules.
 """
 import warnings
@@ -73,32 +80,22 @@ class Extrapolate1d:
                  npoints = [2, 2],
                  **interpargs):
         """
-
         Parameters
         ----------
-
         x, y:
-
           sequences of data. Will be sorted by x value before use.
-
         bound_behavior:
-
           length-2 sequence specifying behavior below the lower and
           above the upper boungs of the data, respectively. Each
           element can be 'extrapolate', 'constant', or a numerical
           value.
-
         npoints:
-
           Linear extrapolation uses the slope between x[0] and
           x[npoints-1] or x[-npoints] and x[-1]. Note: this is not a
           linear fit over that range. It Ignores points within the
           interval
-
         interpargs:
-
           Extra keywords passed to scipy.interpolate.interp1d.
-
         """
         order = numpy.argsort(numpy.nan_to_num(x))
         self.x = x[order]
@@ -174,34 +171,22 @@ class Extrapolate1d:
 
 class PiecewisePowerlaw(object):
     """A piecewise powerlaw function.
-
     You can specify the intervals and power indices, and this class
     will figure out the coefficients needed to make the function
     continuous and normalized to unit integral.
-
     Notes
     -----
-
     Intervals are defined by an array l
-
     Powerlaw indicies by and array p
-
     a_n are the coefficients.
     
     f(x) = a_n x^{p_n} for l_{n-1} <= x < l_n
-
     Recursion relation for continuity:
-
     a_n = a_{n-1} l_n^{p_{n-1} - p_n}
-
     Integral of a piece:
-
     I_n = a_n p_n (l_{n+1}^{p_n - 1} - l_n^{p_n - 1})
-
     Total integral:
-
     I_tot = Sum_0^N I_n
-
     """
 
     def __init__(self, limits, powers,
@@ -209,41 +194,30 @@ class PiecewisePowerlaw(object):
                  externalval=0.0,
                  norm=True):
         """Defined a piecewise powerlaw.
-
         If coefficients is None then the coefficients are determined
         by requiring the function to be continuous and normalized to
         an integral of one.
-
         The function is composed of N powerlaws, where N = len(powers).
-
         len(limits) must be one greated than len(powers)
-
         Parameters
         ----------
-
         limits: array (length n+1)
             boundaries of the specified powerlaws. Must be one greater in
             length than coefficents and powers. Specify -numpy.infty for
             the first limit or numpy.infty for the last limit for
             unbounded powerlaws.
-
         coefficients: optional array (length n)
             values of the coefficient a_i
-
         powers: array (length n)
             values of the powerlaw indices p_i
-
         externalval: scalar
             Value to return outside the defined domain. None
             correspons to 'NaN'.
-
         norm: boolean
             Whether to normalize the integral of the function over the
             defined domain to unity.
-
         The resulting function takes a single, one-dimensional array of
         values on which to operate.
-
         """
 
         limits = numpy.atleast_1d(limits)
@@ -300,9 +274,7 @@ class PiecewisePowerlaw(object):
 
     def integrate(self, low, high, weight_power=None):
         """Integrate the function from low to high.
-
         Optionally weight the integral by x^weight_power.
-
         """
         limits = self._limits.flatten()
         coefficients = self._coefficients.flatten()
@@ -384,23 +356,16 @@ class PiecewisePowerlaw(object):
 
 def ccumulate(function, x, max=None, **kwargs):
     """Integrate a function from x to max, where x can be an array.
-
     Parameters
     ----------
-
     function: callable
-
     x: array-like
-
     max: float
         defaults to max(x)
-
     Notes
     -----
-
     This can be used to find the complementary cumulative distribution
     function (CCDF) given the probability distribution function (PDF).
-
     Unlike integrate_piecewise, the x values don't have to be in
     order, though a warning will be issued if any are greater than
     max, if max is specified.
@@ -444,28 +409,21 @@ def ccumulate(function, x, max=None, **kwargs):
 def integrate_piecewise(function, x, method='romberg', return_pieces=False,
                         **kwargs):
     """Integrate function and return the integral at a sequence of points.
-
     Useful when you want to efficiently calculate a cumulative integral.
-
     Also useful for piecewise-defined functions where discontinuities
     or critical points cause quadrature routines to complain or become
     inaccurate.
-
     Integration methods available are: quad, romberg. 
-
     Parameters
     ----------
     function : callable
         User defined function. Should take a single vector argument
         and return q vector of the same shape.
-
     x : array_like
         Array of points at which to evaluate the integral. 
-
     method : str, optional
         Name of the method to use to integrate each segment. 'quad' or
         'romberg'.
-
     return_pieces : bool, optional
         Return the individual segments rather than the sum of all
         preceding segments.
@@ -540,7 +498,6 @@ def _logquad(function, low, high, **kwargs):
 
 def logquad(function, low, high, **kwargs):
     """Integrate a function from low to high using a log transform (vectorized).
-
     The log transform is applied to the variable over which the
     integration is being performed.
     
@@ -549,9 +506,7 @@ def logquad(function, low, high, **kwargs):
 
 class Normalize:
     """A decorator that normalizes a function.
-
     Only works for functions of a single variable.
-
     The new function is normalized over the interval from min to max,
     i.e. the integral of the new function from low to high is one.
     """
@@ -578,5 +533,3 @@ class Normalize:
         newfunction.min = self.min
         newfunction.max = self.max
         return newfunction
-
-

@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Sep 22 12:57:19 2018
+
+@author: zahra
+"""
+
 """Perturbation theory and the power spectrum routines.
-
 This module relies largely on power.c from Eisenstein & Hu (1999 ApJ 511 5)
-
   http://background.uchicago.edu/~whu/transfer/transferpage.html
-
 See notes in `cosmolopy.EH`.
-
 """
 
 import math
@@ -48,10 +51,8 @@ def _vec_transfer_func(k,baryonic_effects=False):
         return (power.TFmdm_onek_mpc(k), power.cvar.tf_cbnu)
 def transfer_function_EH(k, **cosmology):
     """The transfer function as a function of wavenumber k.
-
     Parameters
     ----------
-
     cosmology : dict 
        Specify the cosmological parameters with the keys 'omega_M_0',
        'omega_b_0', 'omega_n_0', 'N_nu', 'omega_lambda_0', 'h' and
@@ -59,29 +60,21 @@ def transfer_function_EH(k, **cosmology):
     
     k : array
        Wavenumber in Mpc^-1.
-
     Returns
     -------
-
     If baryonic_effects is true, returns a tuple of arrays matching 
     the shape of k:
       
       (the transfer function for CDM + Baryons with baryonic effects,
        the transfer function for CDM + Baryons without baryonic effects)
-
     Otherwise, returns a tuple of arrays matching the shape of k:
-
       (the transfer function for CDM + Baryons,
       the transfer function for CDM + Baryons + Neutrinos).
-
     Notes
     -----
-
     Uses transfer function code power.c from Eisenstein & Hu (1999 ApJ 511 5).
     For baryonic effects, uses tf_fit.c from Eisenstein & Hu (1997 ApJ 496 605).
-
       http://background.uchicago.edu/~whu/transfer/transferpage.html
-
     """
     baryonic_effects = cosmology['baryonic_effects']
     if baryonic_effects:
@@ -152,7 +145,6 @@ def fgrowth(z, omega_M_0, unnormed=False):
     Approximate forumla from Carol, Press, & Turner (1992, ARA&A, 30,
     499), "good to a few percent in regions of plausible Omega_M,
     Omega_Lambda".
-
     This is proportional to D_1(z) from Eisenstein & Hu (1999 ApJ 511
     5) equation 10, but the normalization is different: fgrowth = 1 at
     z = 0 and ``D_1(z) = \frac{1+z_\mathrm{eq}}{1+z}`` as z goes
@@ -163,15 +155,11 @@ def fgrowth(z, omega_M_0, unnormed=False):
     ::
     
         D_1(z) = (1+z_\mathrm{eq}) \mathtt{fgrowth}(z,\Omega_{M0}, 1)
-
     (see \EH\ equation 1 for z_eq).
-
     ::
     
         \mathtt{fgrowth} = \frac{D_1(z)}{D_1(0)}
-
     Setting unnormed to true turns off normalization.
-
     Note: assumes Omega_lambda_0 = 1 - Omega_M_0!
     
     """
@@ -192,18 +180,14 @@ def fgrowth(z, omega_M_0, unnormed=False):
 
 def w_tophat(k, r):
     r"""The k-space Fourier transform of a spherical tophat.
-
     Parameters
     ----------
     
     k: array
       wavenumber
-
     r: array
        radius of the 3-D spherical tophat
-
     Note: k and r need to be in the same units.
-
     Returns
     -------
     
@@ -216,18 +200,14 @@ def w_tophat(k, r):
 
 def w_gauss(k, r):
     r"""The k-space Fourier transform of an isotropic three-dimensional gaussian
-
     Parameters
     ----------
     
     k: array
       wavenumber
-
     r: array
        width of the 3-D gaussian
-
     Note: k and r need to be in the same units.
-
     Returns
     -------
     
@@ -295,24 +275,18 @@ def _sigmasq_r_scalar(r,
                       n, deltaSqr, omega_M_0, omega_b_0, omega_n_0, N_nu, 
                       omega_lambda_0, h, baryonic_effects):
     """sigma_r^2 at z=0. Works only for scalar r. 
-
     Used internally by the sigma_r function.
-
     Parameters
     ----------
     
     r : array
        radius in Mpc.
-
     n, omega_M_0, omega_b_0, omega_n_0, N_nu, omega_lambda_0, h, baryonic_effecs:
        cosmological parameters, specified like this to allow this
        function to be vectorized (see source code of sigma_r).
-
     Returns
     -------
-
     sigma^2, error(sigma^2)
-
     """
     # r is in Mpc, so k will also by in Mpc for the integration.
 
@@ -343,27 +317,20 @@ def _sigmasq_j_scalar(r, j,
                       n, deltaSqr, omega_M_0, omega_b_0, omega_n_0, N_nu, 
                       omega_lambda_0, h, baryonic_effects):
     """sigma_j^2(r) at z=0. Works only for scalar r. 
-
     Used internally by the sigma_j function.
-
     Parameters
     ----------
     
     r : array
        radius in Mpc.
-
     j : array
        order of sigma statistic.
-
     n, omega_M_0, omega_b_0, omega_n_0, N_nu, omega_lambda_0, h:
        cosmological parameters, specified like this to allow this
        function to be vectorized (see source code of sigma_r).
-
     Returns
     -------
-
     sigma^2, error(sigma^2)
-
     """
     # r is in Mpc, so k will also by in Mpc for the integration.
 
@@ -391,7 +358,6 @@ _sigmasq_j_vec = numpy.vectorize(_sigmasq_j_scalar)
 
 def sigma_j(r, j, z, **cosmology):
     r"""Sigma statistic of order j for gaussian field of variancea r at redshift z.
-
     Returns sigma and the error on sigma.
     
     Parameters
@@ -402,26 +368,20 @@ def sigma_j(r, j, z, **cosmology):
     
     j : array
        order of the sigma statistic (0, 1, 2, 3, ...)
-
     z : array
        redshift
-
     Returns
     -------
-
     sigma:
        j-th order variance of the field smoothed by gaussian with with r
     
     error:
        An estimate of the numerical error on the calculated value of sigma.
-
     Notes
     -----
     :: Eq. (152) of Matsubara (2003)
-
       \sigma_j(R,z) = \sqrt{\int_0^\infty \frac{k^2}{2 \pi^2}~P(k, z)~k^{2j}
       \tilde{w}_k^2(k, R)~dk} = \sigma_j(R,0) \left(\frac{D_1(z)}{D_1(0)}\right)
-
     """
     omega_M_0 = cosmology['omega_M_0']
     
@@ -464,7 +424,6 @@ def sigma_j(r, j, z, **cosmology):
 
 def sigma_r(r, z, **cosmology):
     r"""RMS mass fluctuations of a sphere of radius r at redshift z.
-
     Returns sigma and the error on sigma.
     
     Parameters
@@ -472,26 +431,20 @@ def sigma_r(r, z, **cosmology):
     
     r : array
        radius of sphere in Mpc
-
     z : array
        redshift
-
     Returns
     -------
-
     sigma:
        RMS mass fluctuations of a sphere of radius r at redshift z.
     
     error:
        An estimate of the numerical error on the calculated value of sigma.
-
     Notes
     -----
     ::
-
       \sigma(R,z) = \sqrt{\int_0^\infty \frac{k^2}{2 \pi^2}~P(k, z)~
       \tilde{w}_k^2(k, R)~dk} = \sigma(R,0) \left(\frac{D_1(z)}{D_1(0)}\right)
-
     """
     omega_M_0 = cosmology['omega_M_0']
     
@@ -534,9 +487,7 @@ def sigma_r(r, z, **cosmology):
 
 def norm_power(**cosmology):
     """Normalize the power spectrum to the specified sigma_8.
-
     Returns the factor deltaSqr.
-
     """
     cosmology['deltaSqr'] = 1.0
     deltaSqr = (cosmology['sigma_8'] / 
@@ -559,14 +510,11 @@ def norm_power(**cosmology):
 
 def power_spectrum(k, z, **cosmology):
     r"""The matter power spectrum P(k,z).
-
     Uses equation 25 of Eisenstein & Hu (1999 ApJ 511 5).
-
     Parameters
     ----------
     
     k should be in Mpc^-1
-
     Cosmological Parameters
     -----------------------
     
@@ -574,24 +522,16 @@ def power_spectrum(k, z, **cosmology):
     transfer_function_EH, 'omega_M_0', 'omega_b_0', 'omega_n_0',
     'N_nu', 'omega_lambda_0', and 'h'.
     
-
     Notes
     -----
-
     ::
-
       P(k,z) = \delta^2 \frac{2 \pi^2}{k^3} \left(\frac{c k}{h
       H_{100}}\right)^{3+n} \left(T(k,z) \frac{D_1(z)}{D_1(0)}\right)^2
-
     Using the non-dependence of the transfer function on redshift, we can
     rewrite this as
-
     ::
-
       P(k,z) = P(k,0) \left( \frac{D_1(z)}{D_1(0)} \right)^2
-
     which is used by sigma_r to the z-dependence out of the integral. 
-
     """
 
     omega_M_0 = cosmology['omega_M_0']
@@ -625,22 +565,16 @@ def power_spectrum(k, z, **cosmology):
 
 def volume_radius_dmdr(mass, **cosmology):
     """The volume, radius, and dm/dr for a sphere of the given mass.
-
     Uses the mean density of the universe.
-
     Parameters
     ----------
-
     mass: array
        mass of the sphere in Solar Masses, M_sun. 
-
     Returns
     -------
-
     volume in Mpc^3
     radius in Mpc
     dmdr in Msun / Mpc
-
     """
     rho_crit, rho_0 = cden.cosmo_densities(**cosmology)
 
@@ -653,20 +587,15 @@ def volume_radius_dmdr(mass, **cosmology):
 
 def mass_to_radius(mass, **cosmology):
     """The radius in Mpc of a sphere of the given mass.
-
     Parameters
     -----------
     
     mass in Msun
-
     Returns
     -------
-
     radius in Mpc
-
     Notes
     -----
-
     This is a convenience function that calls volume_radius_dmdr and
     returns only the radius.
     
@@ -676,9 +605,7 @@ def mass_to_radius(mass, **cosmology):
 
 def radius_to_mass(r, **cosmology):
     """The mass of a sphere of radius r in Mpc.
-
     Uses the mean density of the universe.
-
     """
     volume = (4./3.) * math.pi * r**3.
     
@@ -693,26 +620,19 @@ def radius_to_mass(r, **cosmology):
 
 def virial_temp(mass, z, mu=None, **cosmology):
     r"""The Virial temperature for a halo of a given mass.
-
     Calculates the Virial temperature in Kelvin for a halo of a given
     mass using equation 26 of Barkana & Loeb.
-
     The transition from neutral to ionized is assumed to occur at temp
     = 1e4K. At temp >= 10^4 k, the mean partical mass drops from 1.22
     to 0.59 to very roughly account for collisional ionization.
-
     Parameters
     ----------
-
     mass: array
        Mass in Solar Mass units.
-
     z: array
        Redshift.
-
     mu: array, optional
        Mean mass per particle.
-
     """
 
     omega_M_0 = cosmology['omega_M_0']
@@ -746,34 +666,26 @@ def virial_temp(mass, z, mu=None, **cosmology):
 
 def virial_mass(temp, z, mu=None, **cosmology):
     r"""The mass of a halo of the given Virial temperature.
-
     Uses equation 26 of Barkana & Loeb (2001PhR...349..125B), solved
     for T_vir as a function of mass.
-
     Parameters
     ----------
     
     temp: array
        Virial temperature of the halo in Kelvin.
-
     z: array
        Redshift.
-
     Returns
     -------
     
     mass: array
        The mass of such a halo in Solar Masses.
-
     Notes
     -----
-
     At temp >= 10^4 k, the mean partical mass drops from 1.22 to 0.59
     to very roughly account for collisional ionization.
-
     Examples
     --------
-
     >>> cosmo = {'omega_M_0' : 0.27, 
     ...          'omega_lambda_0' : 1-0.27, 
     ...          'omega_b_0' : 0.045, 
@@ -789,7 +701,6 @@ def virial_mass(temp, z, mu=None, **cosmology):
     Mass = 1.68e+08 M_sun
     >>> print round(temp, 4)
     10000.0
-
     """
     if mu is None:
         t_crit = 1e4
@@ -801,46 +712,34 @@ def virial_mass(temp, z, mu=None, **cosmology):
 def virial_temp_HB(mass, z):
     """Virial temperature from halo mass according to Haiman & Bryan
     (2006ApJ...650....7).
-
     z is the redshift.
-
     Units are Msun and kelvin.
-
     """
     return 1800. * (mass/1e6)**(2./3.) * (1.+z)/21
 
 def virial_mass_HB(temp, z):
     """Halo mass from Virial temperature according to Haiman & Bryan
     (2006ApJ...650....7).
-
     z is the redshift.
-
     Units are Msun and kelvin.
-
     """
     return 1e6 * (21. * temp / (1800 * (1+z)))**(3./2.)
 
 def sig_del(temp_min, z, mass=None, passed_min_mass = False, **cosmology):
     """Convenience function to calculate collapse fraction inputs.
-
     Parameters
     ----------
-
     temp_min:
        Minimum Virial temperature for a halo to be counted. Or minimum
        mass, if passed_min_mass is True.
-
     z:
        Redshift.
-
     mass: optional
        The mass of the region under consideration. Defaults to
        considering the entire universe.
-
     passed_min_mass: boolean
        Indicates that the first argument is actually the minimum mass,
        not the minimum Virial temperature.
-
     """
 
     if passed_min_mass:
@@ -863,50 +762,36 @@ def sig_del(temp_min, z, mass=None, passed_min_mass = False, **cosmology):
 
 def collapse_fraction(sigma_min, delta_crit, sigma_mass=0, delta=0):
     r"""Fraction of mass contained in collapsed objects.
-
     Use sig_del to conveniently obtain sigma_min and delta_crit. See
     Examples velow.
-
     Parameters
     ----------
-
     sigma_min: 
        The standard deviatiation of density fluctuations on the scale
        corresponding to the minimum mass for a halo to be counted.
-
     delta_crit:
        The critical (over)density of collapse.
-
     sigma_mass:
        The standard deviation of density fluctuations on the scale
        corresponding to the mass of the region under
        consideration. Use zero to consider the entire universe.
-
     delta: 
        The overdensity of the region under consideration. Zero
        corresponds to the mean density of the universe.
-
     Notes
     -----
-
     The fraction of the mass in a region of mass m that has already
     collapsed into halos above mass m_min is:
-
     ::
-
       f_\mathrm{col} = \mathrm{erfc} \left[ \frac{\delta_c - \delta(m)}
       { \sqrt {2 [\sigma^2(m_\mathrm{min}) - \sigma^2(m)]}} \right]
-
     
     The answer isn't real if sigma_mass > sigma_min.
-
     Note that there is a slight inconsistency in the mass used to
     calculate sigma in the above formula, since the region deviates
     from the average density.
-
     Examples
     --------
-
     >>> import numpy
     >>> import perturbation as cp
     >>> cosmo = {'omega_M_0' : 0.27, 
