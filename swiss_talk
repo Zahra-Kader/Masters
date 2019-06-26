@@ -1,0 +1,235 @@
+\documentclass{beamer}
+\usetheme{default}
+
+\title{Redundant Calibration}
+\author{Zahra Kader}
+\begin{document}
+\begin{frame}[plain]
+    \maketitle
+\end{frame}
+\begin{frame}{Basic Introduction}
+	
+
+\begin{itemize}
+\item The relation between the measured signal, $s_i$, the complex gain factor, $g_i$, the true sky signal, $x_i$ and the noise, $n_i$
+\begin{equation}
+s_i=g_ix_i+n_i
+\end{equation}
+\item The measured visibilities are the correlation between the two signals which is
+\begin{equation}
+c_{ij}=g^*_i g_j y_{ij}+n_{ij}
+\end{equation}
+where $c_{ij}$ are the measured visibilities and $y_{ij}$ are the true sky visibilities 
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Logarithmic calibration}
+	\begin{itemize}
+\item The gain is expressed as an exponential with both amplitude and phase contributions, 
+
+\begin{equation}
+g_i=exp(\eta_i+i\theta_i)
+\end{equation}
+\item Logarithmic calibration used to recover gain amplitude and phase separately
+
+\item \begin{equation}
+In|c_{ij}|=\eta_i + \eta_j +In|y_{i-j}| +Re {w_{ij}}
+\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Simulations of redundant calibration}
+\begin{itemize}
+\item Using simulations to compute the redundant calibration
+%using draco which does an expand products since driftscan only computes visibilities for the unique baselines
+\item Redundant calibration assumes that the same baselines receive the same sky signal
+%Driftscan assumes that NE and NW baselines are not redundant
+\item Equation is solvable when the number of measured correlations is larger than the sum of the true visibilities and gains
+%where gains equals number of dishes, we're considering single feed dishes atm so no autocorrelations are taken into account
+\item Four extra degeneracies are required to recover unique gain solutions
+\item Constrain the sum of gain amplitudes and phase
+\item Constraining the sum of the products of the antenna position and phase %to account for degeneracies due to tilts of the entire telescope in x and y 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Recovering visibilities using a 3 by 3 array}
+
+%compute the linear equation d=Ax and compare the true visibilities to the original timestream before you added gains
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../PIPELINE/example_3by3_array/rec_true_vis}
+	\caption{Log of the simulated and recovered visibilities}
+	\label{fig:rectruevis}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Recovering visibilities using a 5 by 5 array}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../PIPELINE/example_5by5_array/rec_vs_sim_visibilities}
+	\caption{Log of the simulated and recovered visibilities}
+	\label{fig:recvssimvisibilities}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Recovering gains}
+	\begin{itemize}
+%if the gains followed a random distribution then the more points you had for a particular distribution, the better you would be able to recover the gains
+\item Random scatter in the recovered gains
+\item Each solution recovers the measured visibilities 
+\item Implies that the degeneracy cannot be broken sufficiently
+	\end{itemize}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../PIPELINE/example_5by5_array/rec_vs_sim_timechannel_100}
+	\caption{Recovered vs simulated gains for a specific time channel}
+	\label{fig:recvssimtimechannel100}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Recovered gains after averaging}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../PIPELINE/example_5by5_array/avg_rec_vs_avg_sim}
+	\caption{Average recovered vs average simulated gains}
+	\label{fig:avgrecvsavgsim}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Correlation calibration}
+	\begin{itemize}
+\item Quasi-redundant technique developed by Prof Jon Sievers
+\item Two assumptions made in traditional calibration are:
+
+\item Same sky approximation
+%same sky approximation assumes a sky with a point source is as likely as a sky without point sources
+\item Explicit redundancy
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+\item The sky approximation is broken by including the sky in the noise
+\item The explicit redundancy of baselines is broken by constructing covariance matrices for redundant baselines
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Future plans with Corrcal}
+\begin{itemize}
+\item Implement Corrcal into HIRAX simulations using sky covariance matrices in the current pipeline
+\end{itemize}
+\end{frame}
+
+\begin{frame}{21 cm-kSZ bispectrum}
+\begin{itemize}
+	\item CMB photons scatter off ionized electrons causing a doppler shifting of the cmb spectrum
+\item The kSZ momentum is 
+\begin{equation}\label{p(theta) temp distortion ksz}
+p(\vec{\theta})\equiv \frac{\delta T_{KSZ}}{T_{rad}}=\int_{0}^{\eta_0}n_e\sigma_Te^{-\tau}\left[\hat{\theta}.\frac{\vec{v}(\vec{\theta},\chi)}{c}\right]a(\chi)d\chi
+\end{equation}
+\item The angular power spectrum for the kSZ signal is
+
+\begin{figure}
+	\includegraphics[width=0.6\linewidth]{"../python_scripts/kSZ_21cm_signal/Cl OV power spec"}
+	\caption{Linear kSZ power spectrum}
+	\label{fig:cl-ov-power-spec}
+\end{figure}
+\end{itemize}
+%briefly mention limber here and why it doesnt apply to us, say that this is an assumption being made
+\end{frame}
+
+\begin{frame}{Redshift of kSZ signal}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../python_scripts/kSZ_21cm_signal/Cl OV integral redshift bins"}
+	\caption{Redshift dependence of the kSZ signal}
+	\label{fig:cl-ov-integral-redshift-bins}
+\end{figure}
+\end{frame}
+
+\begin{frame}{21 cm signal}
+	\begin{itemize}
+\item The angular power spectrum for the 21 cm density is well known
+\item We compute a 21 cm velocity reconstruction
+\item The 21 cm momentum is computed and plotted
+	\end{itemize}
+
+
+\begin{figure}
+	\includegraphics[width=0.6\linewidth]{../python_scripts/kSZ_21cm_signal/Cl_21momentum_microK_to_power_4_diff_y_z_1}
+	\caption{21 cm momentum signal plotted for different y at $z=1$.}
+	\label{fig:cl21momentummicroktopower4diffyz1}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Computing the bispectrum}
+	\begin{itemize}
+\item We correlate the 3 fields, $\delta_{21}$, $v_{21}$ and $p_{kSZ}$ 
+\item Can be thought of as a trispectrum
+\item Consider the squeezed limit for long wavelength $v_{21}$
+	\end{itemize}
+
+\begin{figure}
+	\includegraphics[width=0.7\linewidth]{"../python_scripts/kSZ_21cm_signal/k vec non limber v2"}
+	\caption{Vector diagram with $v=v(\vec{k}')$, $\delta=\delta(\vec{k})$ and $p_{kSZ}=p_{kSZ}(\vec{k}-\vec{k}')$}
+	\label{fig:k-vec-non-limber-v2}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Squeezed bispectrum signal}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/squeezed_bispec_OV_21_cm_z_1_deltaz_pt3}
+	\caption{The amplitude of the squeezed bispectrum is equal to the product of the square roots of the other two signals. Note that the OV spectrum is in units of $\mu K^2$, the 21 cm momentum has units $\mu K^4$ and the squeezed bispectrum is in $\mu K^3$. }
+	\label{fig:squeezedbispecov21cmz1deltazpt3}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{kSZ signal and noise}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/CMB_noise/OV_and_CMB_noise_prelim}
+	\caption{The full OV signal is plotted with the CMB spectrum, $C_l^{TT}$ and the CMB noise, $N_l^{TT}$.}
+	\label{fig:ovandcmbnoiseprelim}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{HIRAX and SKA noise}
+	
+\begin{figure}
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/noise_hirax_ska_dish_interferom_total_redshiftbin_pt1_z_1pt26}
+	\caption{Plot of HIRAX vs SKA total, which combines the SKA dish and interferometer}
+	\label{fig:noisehiraxskadishinterferomtotalredshiftbinpt1z1pt26}
+\end{figure}
+\end{frame}
+%\small{Credit to Warren for the noise codes and files}
+
+
+\begin{frame}{HIRAX S/N}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../Pictures/Screenshot from 2019-06-27 01-25-29"}
+	\caption{Distribution of pixelated signal to noise integrated over 0.03 size $k_{perp}$ and $k_{par}$. The beam cuts us off at $k_{perp}\simeq 0.7$}
+	\label{fig:screenshot-from-2019-06-27-01-25-29}
+\end{figure}
+\end{frame}
+
+\begin{frame}{SKA S/N}
+\begin{figure}
+	\includegraphics[width=0.7\linewidth]{"../Pictures/Screenshot from 2019-06-27 01-32-29"}
+	\caption{Distribution of pixelated signal to noise integrated over 0.03 size $k_{perp}$ and $k_{par}$.}
+	\label{fig:screenshot-from-2019-06-27-01-32-29}
+\end{figure}
+%Appears to be more signal after the beam cuts off, so we consider larger dish separations so that the kperp at which the beam cut off increases and we can recover the same s/n distribution
+\end{frame}
+
+\end{document}
