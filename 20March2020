@@ -1,0 +1,543 @@
+\chapter{Calibration} % Main chapter title
+
+\label{Chapter4} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+%HI intensity mapping with HIRAX presents us with the problem of foreground contamination in our data, which is significantly larger than the HI signal in which we are interested. Foreground removal and high precision calibration are necessary 
+
+In Chapter 3 we presented forecasts of HI-kSZ cross-correlation detections with the HIRAX telescope. In practice, HIRAX first aims to make a direct detection of the weak HI signal which is heavily contaminated by foregrounds. Extracting the HI signal does not only require foreground removal, as discussed in Chapter 3, but also necessitates a well calibrated telescope. Calibration solves for the complex gain factors which feature in the data, thereby allowing us to recover the best estimate of the true sky signal from the measured visibilities.
+% as a result of receivers converting antenna voltage to a correlated signal
+
+%Although the HI signal has been detected in cross-correlations, it has not been detected on its own
+
+
+In this chapter we solve for the gain fluctuations on a feed by feed basis using two different formalisms: Logarithmic redundant calibration (Logcal) and Quasi-redundant correlation calibration (Corrcal). We will begin by introducing redundant calibration and discuss the effects of noise and gain scatter on the gain uncertainty using Logcal and thereafter look at the calibratability of different array layouts. 
+After assuming perfect baseline redundancy, the effect of a perturbed array is investigated using Logcal. 
+
+We then discuss the Corrcal formalism which is structured to easily include sky information and account for a range of realistic array perturbations. We first present results using the redundant Corrcal case and then assume a quasi-redundant array with known sky information. Thereafter, we compare results obtained Corrcal and Logcal. 
+
+
+\section {Redundant baseline calibration}
+
+We begin by explaining the redundant calibration formalism which has been discussed in \cite{Liu_2010} \cite{Dillon_2016} \cite{Ali_2015}. 
+Let's consider a true sky signal, $x_i$, where $i$ is the antenna index. The signal which we measure with the antennae is then written with dependencies on the complex gain factor, $g_i$, and instrumental noise, $n_i$. 
+
+Thus, we have the equation 
+
+\begin{equation}\label{measured and true signal one antenna}
+s_i = g_i x_i + n_i
+\end{equation}
+
+Each baseline of an interferometer measures the correlated signals from two respective antennae. This gives the relation between the measured and true visibilities,
+
+\begin{equation}\label{measured vis eqn}
+\begin{aligned}
+c_{ij} & = \left< s_i s_j \right>\\
+& = g^*_i g_j \left< x^*_i x_j \right> + g^*_i \left< x^*_i n_j \right> + g_j \left< x_j n^*_i \right> + \left< n^*_i n_j \right> \\
+& = g^*_i g_j y_{i-j} + n_{ij},
+\end{aligned}
+\end{equation}
+
+where we have combined the last three terms in the second line and set this equal to the noise level which we label as the telescope noise, $n_{ij}$, obtained using the radiometer equation, $T_{sys}/\sqrt{\tau \Delta \nu}$, with system temperature, $T_{sys}$, integration time, $\tau$ and frequency bandwidth, $\Delta \nu$. The correlation of two sky signals gives us the true visibilities, $y_{i-j}$, where the subscript $i-j$ signifies the dependence of the true visibility on the relative difference between two antenna positions. This is because we can assume that redundant baselines observe the same sky. The measured visibilities, $c_{ij}$, will be different for each baseline due to the different noise and complex antenna gains of each antenna. 
+
+We can determine the minimum size array with more known measured correlations than unknown gain and sky parameters. The noise is not a quantity for which we solve, but is instead a systematic effect which we try to minimize. Now, the complex gains are expressed as $g_i = e^{\eta_i + i \phi_i}$ with gain amplitude, $\eta_i$ and a gain phase, $\phi_i$ for a single antenna, if we assume a single feed for each antenna, thus giving $2N$ unknowns. HIRAX contains dual feed polarisation however, we account only for the x polarisation of each antenna. For $N$ dishes we have $N(N-1)/2$ measured visibilities, where we have excluded auto-correlations because they contribute a higher, correlated noise than that of the cross-correlation noise measurements. 
+
+The measured correlations can be used to solve for the gains and sky if we have a sufficient number of unique baselines. This will depend on the number of antennae and their layout. For dishes arranged in the north-south and east-west directions, we find that a $2 \times 3$ array is the smallest size that ensures a solvable system of equations. For such an array, we have 30 knowns (obtained from the real and imaginary components of the 15 measured visibilities) which are used to solve for 6 $\eta$'s and 6 $\phi$'s, as well as 14 values from the 7 complex true visibilities. The unique baselines are shown on the diagram and are chosen with the assumption that the north-east and south-west baselines do not see the same sky signal, which is true for an asymmetric sky signal. Altogether, 30 knowns are used to solve for 26 unknowns. Using the diagram, we write out one equation for each of the unique baselines as 
+ 
+ \begin{subequations}\label{first:main}
+	\begin{equation*}
+	c_{1,2} = exp [(\eta_1 + \eta_2) + i(\phi_2 - \phi_1)] y_1 + n_{1,2}
+	\end{equation*}
+	\begin{equation*}
+	c_{1,3} = exp [(\eta_1 + \eta_3) + i(\phi_3 - \phi_1)] y_2 + n_{1,3}
+	\end{equation*}
+	\begin{equation*}
+	c_{1,4} = exp [(\eta_1 + \eta_4) + i(\phi_4 - \phi_1)] y_3 + n_{1,4}
+	\end{equation*}
+	\begin{equation*}
+	c_{1,5} = exp [(\eta_1 + \eta_5) + i(\phi_5 - \phi_1)] y_{\sqrt{10}, NE} + n_{1,5}
+	\end{equation*}
+	\begin{equation*}
+	c_{2,4} = exp [(\eta_2 + \eta_4) + i(\phi_4 - \phi_2)] y_{\sqrt{10},SW} + n_{2,4}
+	\end{equation*}
+	\begin{equation*}
+	c_{1,6} = exp [(\eta_1 + \eta_6) + i(\phi_6 - \phi_1)] y_{\sqrt{13},NE} + n_{1,6}
+	\end{equation*}
+	\begin{equation}
+	c_{3,4} = exp [(\eta_3 + \eta_4) + i(\phi_4 - \phi_3)] y_{\sqrt{13},SW} + n_{3,4} \tag{\ref*{first:main}}.
+	\end{equation}
+\end{subequations}
+
+The baselines have varying degrees of redundancy, with the $1$ m baseline giving the highest redundancy of 4. 
+ 
+\iffalse
+ \begin{subequations}
+ \begin{equation*}
+c_{1,2} = exp [(\eta_1 + \eta_2) + i(\phi_2 - \phi_1)] y_1 + n_{1,2}
+\end{equation*}
+ \begin{equation*}
+c_{2,3} = exp [(\eta_2 + \eta_3) + i(\phi_3 - \phi_2)] y_1 + n_{2,3}
+\end{equation*}
+($c_{45}$ and $c_{56}$ the same baseline of 1 with true visibility $y_1$)
+ \begin{equation*}
+c_{1,3} = exp [(\eta_1 + \eta_3) + i(\phi_3 - \phi_1)] y_2 + n_{1,3}
+\end{equation*}
+($c_{46}$ has the same baseline of 2 with true visibility $y_2$)
+ \begin{equation*}
+c_{1,4} = exp [(\eta_1 + \eta_4) + i(\phi_4 - \phi_1)] y_3 + n_{1,4}
+\end{equation*}
+($c_{25}$ and $c_{36}$ the same baseline of 2 with true visibility $y_3$)
+ \begin{equation*}
+c_{1,5} = exp [(\eta_1 + \eta_5) + i(\phi_5 - \phi_1)] y_{\sqrt{10}, NE} + n_{1,5}
+\end{equation*}
+($c_{26}$ has the same NE baseline of ${\sqrt{10}}$  with true visibility $y_{\sqrt{10}, NE}$)
+\begin{equation*}
+c_{2,4} = exp [(\eta_2 + \eta_4) + i(\phi_4 - \phi_2)] y_{\sqrt{10},SW} + n_{2,4}
+\end{equation*}
+($c_{35}$ has the same SW baseline of ${\sqrt{10}}$ with true visibility $y_{\sqrt{10}, SW}$)
+\begin{equation*}
+c_{1,6} = exp [(\eta_1 + \eta_6) + i(\phi_6 - \phi_1)] y_{\sqrt{13},NE} + n_{1,6}
+\end{equation*}
+\begin{equation*}
+c_{3,4} = exp [(\eta_3 + \eta_4) + i(\phi_4 - \phi_3)] y_{\sqrt{13},SW} + n_{3,4}
+\end{equation*}
+ \end{subequations}
+\fi
+
+\subsection {Logarithmic Calibration}\label{section:logcal}
+
+The set of equations in \ref{first:main} can be treated as a linear system if we take the logarithm of each side. We rewrite equation \ref{measured vis eqn} as 
+
+\begin{equation}
+c_{ij} = g^*_i g_j y_{i-j} \left( 1 + \frac{n_{ij}}{ g^*_i g_j y_{i-j}} \right), 
+\end{equation}
+
+where $ g^*_i g_j = exp[(\eta_i + \eta_j +i(\phi_j - \phi_i))]$
+
+Taking the log of each side then gives
+
+\begin{equation}
+In c_{ij} = \eta_i + \eta_j +i(\phi_j - \phi_i) + In y_{i-j} + w_{ij},
+\end{equation}
+
+where $w_{ij} = In\left( 1 + \frac{n_{ij}}{ g^*_i g_j y_{i-j}} \right)$. We can then separate the real and imaginary components. 
+ The two equations are
+
+\begin{subequations}
+\begin{equation}\label{amplitude calibration}
+In |c_{ij}| = \eta_i + \eta_j + In |y_{i-j}| + Re w_{i,j}
+\end{equation}
+\begin{equation}
+arg|c_{ij}| = \phi_j - \phi_i + arg |y_{i-j}| + Im w_{i,j}
+\end{equation}
+\end{subequations}
+
+The amplitude calibration in equation \ref{amplitude calibration}  is written in matrix form as 
+
+\begin{equation}\label{linear lstsq eqn}
+\textbf{d} = \textbf{A x} + Re\textbf{w},
+\end{equation}
+
+where \textbf{d} represents the known $In |c_{ij}|$, \textbf{A} is the array configuration matrix and \textbf{x} is the matrix of unknowns consisting of the gain amplitude and unique baselines. These matrices are given as follows,
+
+\iffalse
+
+\begin{equation}
+\setcounter{MaxMatrixCols}{13}
+\begin{pmatrix} In |c_{1,2}|  \\ In |c_{2,3}|\\ In |c_{4,5}|\\In |c_{5,6}|\\In |c_{1,3}|\\
+In |c_{4,6}|\\In |c_{1,4}|\\ In |c_{2,5}|\\.\\.\\In |c_{1,6}|\\In |c_{3,4}|
+ \end{pmatrix}
+=
+\begin{pmatrix}
+1&1&0&0&0&0&1&0&0&0&0&0&0\\
+0&1&1&0&0&0&1&0&0&0&0&0&0\\
+0&0&0&1&1&0&1&0&0&0&0&0&0\\
+0&0&0&0&1&1&1&0&0&0&0&0&0\\
+1&0&1&0&0&0&0&1&0&0&0&0&0\\
+0&0&0&1&0&1&0&1&0&0&0&0&0\\
+1&0&0&1&0&0&0&0&1&0&0&0&0\\
+0&1&0&0&1&0&0&0&1&0&0&0&0\\
+&&&.&&&.&&&.\\
+&&&.&&&.&&&.\\
+1&0&0&0&0&1&0&0&0&0&0&1&0\\
+0&0&1&1&0&0&0&0&0&0&0&0&1\\
+\end{pmatrix}
+\begin{pmatrix}
+\eta_1\\\eta_2\\\eta_3\\\eta_4\\\eta_5\\\eta_6\\y_{1}\\y_2\\y_3\\y_{\sqrt{10},NE}\\y_{\sqrt{10},SW}\\y_{\sqrt{13},NE}\\y_{\sqrt{13},SW}
+\end{pmatrix}
++
+\begin{pmatrix}
+Rew_{1,2}\\Rew_{2,3}\\Rew_{4,5}\\Rew_{5,6}\\Rew_{1,3}\\Rew_{4,6}\\Rew_{1,4}\\Rew_{2,5}\\.\\.\\Rew_{1,6}\\Rew_{3,4}
+\end{pmatrix}
+\end{equation}\\
+
+\fi
+
+\begin{equation}\label{least sq eqn with dAx}
+\setcounter{MaxMatrixCols}{13}
+\begin{pmatrix} In |c_{1,2}|  \\ In |c_{2,3}|\\ In |c_{4,5}|\\In |c_{5,6}|\\In |c_{1,3}|\\
+In |c_{4,6}|\\.\\.\\In |c_{1,6}|\\In |c_{3,4}|
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1&0&0&0&0&1&0&0&0&0&0&0\\
+0&1&1&0&0&0&1&0&0&0&0&0&0\\
+0&0&0&1&1&0&1&0&0&0&0&0&0\\
+0&0&0&0&1&1&1&0&0&0&0&0&0\\
+1&0&1&0&0&0&0&1&0&0&0&0&0\\
+0&0&0&1&0&1&0&1&0&0&0&0&0\\
+&&&.&&&.&&&.\\
+&&&.&&&.&&&.\\
+1&0&0&0&0&1&0&0&0&0&0&1&0\\
+0&0&1&1&0&0&0&0&0&0&0&0&1\\
+\end{pmatrix}
+\begin{pmatrix}
+\eta_1\\.\\.\\\eta_6\\y_{1}\\y_2\\y_3\\y_{\sqrt{10},NE}\\y_{\sqrt{10},SW}\\y_{\sqrt{13},NE}\\y_{\sqrt{13},SW}
+\end{pmatrix}
++
+\begin{pmatrix}
+Rew_{1,2}\\Rew_{2,3}\\Rew_{4,5}\\Rew_{5,6}\\Rew_{1,3}\\Rew_{4,6}\\.\\.\\Rew_{1,4}\\Rew_{3,4}
+\end{pmatrix}.
+\end{equation}
+
+Note that \textbf{A} would be slightly different for the phase calibration, with the first $1$ in each row changed to a negative $1$. 
+
+This set of equations has no unique solution even in the noiseless case, due to degeneracies which can be understood by considering equation \ref{measured and true signal one antenna}. If we were to multiply the antenna gain by a factor, $\alpha$, and divide the true sky signal by the same factor, the signal measured will remain the same. This degeneracy is broken by constraining the sum of the gain amplitudes. 
+
+The same constraint applies for the phase calibration. However, there are two additional constraints required for phase calibration. If we were to rotate the sky clockwise by a degree, $\phi_{rot}$, and rotate the antennae by the same degree anti-clockwise, the gain phase would remain the same. We thus constrain the product of the phase and antenna position, for both x and y positions. 
+
+
+The least squares equation is then used to solve for the set of equations, presented here in its familiar form,
+
+\begin{equation}\label{lstsq estimator}
+\textbf{x} = [\textbf{A}^t \textbf{N}^{-1} \textbf{A}]^{-1}\textbf{A}^t \textbf{N}^{-1}\textbf{d},
+\end{equation}
+ 
+
+where the noise covariance matrix is expressed as $\textbf{N} = \left< Re \textbf{w} Re \textbf{w}^t \right>$ for the amplitude calibration, with the imaginary components taking the same form for the phase calibration. The constraints required to break degeneracies are then added as extra rows in the \textbf{A},\textbf{N} and \textbf{d} matrices. We maintain diagonality of the noise matrix when adding the constraints, and simply set the diagonal values of the additional rows of the matrix to be 1 in order to weight the constraints. 
+
+We will first consider amplitude and phase recovery in the noiseless case, using a compact, square $8 \times 8$ array with the dishes placed edge-to-edge. The complex gains are modeled as perturbations about the gain value of 1, so that a complete lack of antennae gain scatter is obtained by setting $\eta, \phi = 0$. In figure \ref{fig:amp_phase_noiseless_8by8} we plot the recovered amplitude versus input amplitude, assuming antennae gain scatter with a Gaussian random distribution on the order of $0.1$. Although this is a large scatter we obtain perfect amplitude recovery in the noiseless case, which shows that the degeneracy is broken. For phase calibration we tested two gain scatter levels of $0.001$ and $0.1$ radians. In this plot we see that the large phases do not give accurate phase recovery even in the absence of noise. This is due to another degeneracy resulting from the additions and subtractions of $2\pi$ that do not alter the gain factor, $g_i$, but do affect the recovered output phase. This is referred to as phase wrapping \cite{Liu_2010} and as seen in the right panel of figure \ref{fig:amp_phase_noiseless_8by8}, this recovery of antennae with scatter on the order of $0.1$ radians, while the phase recovery is accurate when the small gain scatter of $0.001$ radians is modeled. 
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/noiseless_recgains_vs_simgains_logcal_8by8_pt1gainfluc}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/scatplot_pt1gainfluc_and_pt001gainfluc_phase_noiseless_8by8}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{(Left) Recovered versus simulated $\eta$ plotted in the noiseless case for an $8\times 8$ array, assuming gain scatter of $0.1$. The plot shows perfect amplitude recovery with all points lying on the green y=x line. (Right) Recovered versus simulated $\phi$ plotted in the noiseless case for an $8\times 8$ array, for both large and small antennae gain scatter on the order of $0.1$ and $0.001$ radians, respectively. %The $0.1$ radian gain scatter is plotted in black with the left and bottom axes, while the $0.001$ radian gain scatter is in blue with top and right axes. 
+		From the plot we see that large phases are not accurately recovered due to phase wrapping, while phases close to 0 are unaffected by this.}
+	\label{fig:amp_phase_noiseless_8by8}
+\end{figure}
+
+
+\subsubsection*{Effect of Array Size and Layout on Gain Error}
+
+The least squares error is computed as the two dimensional matrix,
+
+\begin{equation}\label{least sq eqn}
+\mathbf{\Sigma} = [\textbf{A}^t \textbf{N}^{-1} \textbf{A}]^{-1},
+\end{equation}
+
+where \textbf{N} is the noise covariance matrix. The errors for each antenna are equal to the square root of the diagonal of $\mathbf{\Sigma}$. 
+
+In order to test only the effect that the number and distribution of dishes has on the gain error, we can take the simplest case and assume that all baselines measure the same sky signal, which is a valid approximation in the presence of a bright point source \cite{Dillon_2016}. We can also assume that all antennae have the same noise level and low gain scatter, thereby reducing the error equation to \cite{Dillon_2016}
+
+\begin{equation}\label{least sq eqn constant noise}
+\mathbf{\Sigma} = \frac{1}{\left(S/N\right)^2}[\textbf{A}^t \textbf{A}]^{-1}.
+\end{equation}
+
+We explain the derivation of equation \ref{least sq eqn constant noise} in the next section when discussing the weighted noise covariance. For now, we quote the expression and assume a signal-to-noise of 1. This simple expression cannot be evaluated by taking the direct inverse, $[\textbf{A}^t \textbf{A}]^{-1}$, since \textbf{A} is never a square matrix and is therefore not invertible. This is true for any \textbf{A} matrix if we hope to find unique gain solutions. As a result, we must compute the pseudoinverse of $[\textbf{A}^t \textbf{A}]$.
+
+We consider the change in gain error due to an increased number of dishes in figure \ref{fig:lstsq_error_10by10_15by15_16by16} for two different array sizes, viz. $10 \times 10$ and $16 \times 16$. These arrays still maintain a compact square grid, as was used to generate the plots in figure \ref{fig:amp_phase_noiseless_8by8}. The figure shows a discernible pattern in the gain amplitude errors. We can expect the corner dishes to have the highest error and the lowest errors to be situated in a ring around the central dishes. This arrangement is determined by the dishes which contribute to the largest number of baselines. Although it may be expected that the absolute central dishes would be the easiest to calibrate, it is actually the dishes surrounding the centre that are involved in a larger number of baselines \cite{Dillon_2016}. 
+
+
+
+%gain errors we would expect if each visibility had the same amplitude and were
+%measured with a foreground S/N of 1, Dillon 2016
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../PIPELINE/example_nosims_square/colour_scatterplot_10by10_identity_matrix}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../PIPELINE/example_nosims_square/square_colour_scatterplot_16by16_identity_matrix_amp}
+	\end{subfigure}
+	\caption{The least squares error is plotted for arrays of size $10 \times 10$ and $16 \times 16$, with the 6 m dishes placed edge-to-edge, using a constant signal-to-noise of 1 for all antennae. The pattern of the errors is due to the baseline redundancies, although the scales on which the errors differ is small within a given array. The number of dishes has a greater impact on gain error.}
+	\label{fig:lstsq_error_10by10_15by15_16by16}
+\end{figure}
+
+
+Although the antennae locations do affect gain recovery, the colour scale of the plots show that the errors do not vary much. There is a higher dependence of gain error on the number of antennae in the array. We can expect error to scale as $\Delta \eta \sim 1/\sqrt{N}$ \cite{Liu_2010}. Thus, we expect the gain error for the $10 \times 10$ to be $\sim 0.1$ while the scales of the $16 \times 16$ have lower values of $\sim 0.063$, which is what we obtain. 
+
+Figure \ref{fig:lstsq_error_10by10_15by15_16by16} considers only an increase in dish size while maintaining the same layout. This is because the baseline redundancy was not altered by the addition of more dishes. However, if outlier dishes were added which introduce more unique baselines without increasing their redundancy, the maximum gain error may increase \cite{Dillon_2016}. We will now investigate the effect that different array layouts have on calibratability. Further work on array layouts has been undertaken by the HIRAX collaboration and the discussion in this chapter only serves as a test of the antennae gain errors. 
+
+ We present simulations for 4 array designs in figure \ref{fig:nosims4arrayssubfigs} which were considered for HIRAX. There are of course many factors to consider when choosing a design for an interferometer but a detailed discussion on array layouts is out of the scope of this thesis. When comparing the gain errors for the various arrays, we once more assume an identity noise covariance matrix, so that the errors depend only on \textbf{A}. Four layouts are considered as alternatives to the square grid introduced in figure \ref{fig:lstsq_error_10by10_15by15_16by16}. The first is a hex grid which has 16 rows and columns of dishes placed edge-to-edge, just like the $16 \times 16$ square grid and contains 256 dishes in total. However, every second row in the hex is offset by $3$ m so that any given dish has a hexagonal distribution of dishes around it, except for the outer dishes which have a slightly higher error as a result, as seen in the top left panel of figure \ref{fig:nosims4arrayssubfigs}. The alternating grid has 8 rows and columns of blocks, each consisting of 4 dishes placed edge-to-edge, with a distance of 2 m between the edges of the dishes in the separate blocks. The third is a subgrid with 2 rows and columns of blocks, each of which is a compact $8 \times 8$ square grid, with a 3 m separation between the blocks. The last array is a HERA-like grid consisting of three components, viz. two slanted squares and a separate diamond, each containing 81 dishes with 6 m separation between the edges of the dishes in adjacent components. Thus, the total number of dishes is 243. The HERA-like array is therefore the only one which contains fewer than $256$ dishes. The simulated layout plotted here is a modified version of the full 331-dish HERA layout presented in \cite{Dillon_2016} which consists of a different number of dishes in each component of the array. 
+ 
+ \begin{figure}
+ 	\centering
+ 	\includegraphics[width=0.9\linewidth]{../PIPELINE/nosims_4arrays_subfigs}
+ 	\caption{Gain amplitude errors for four array layouts are presented. The top left (hex), bottom left (alternating) and bottom right (subgrid) have 256 dishes while the top right (HERA-like) has 243 dishes. These four can be compared with the 256 dish square grid in the right panel of figure \ref{fig:lstsq_error_10by10_15by15_16by16}. From the plot we can see that the HERA-like layout has the lowest error while the alternating and subgrid have equal scales of gain errors.}
+ 	\label{fig:nosims4arrayssubfigs}
+ \end{figure}
+ 
+ The scales on which the errors differ across the 5 arrays is on the order of $0.002$, assuring us that no particular layout is much less calibratable than any other. However, we can analyze the discrepancies in gain errors and compare these to the baseline redundancy plot in Figure \ref{fig:baselineredundancy5arrays} so as to find the relation between baseline-redundancy and gain error. 
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../corrcal2/Baseline_redundancy_5_arrays}
+	\caption{Plot showing the unique baselines and their corresponding redundancies for five different array layouts. We can see that the two subgrids have the exact same baseline-redundancy relation. The square, hex and HERA grids are very similar but the HERA has the highest maximum redundancy of 247 and a 512 unique baselines. The square and hex both have maximum redundancy of 240 but the hex has more unique baselines, which means fewer redundancies per unique baseline.}
+	\label{fig:baselineredundancy5arrays}
+\end{figure}
+
+The alternating grid and subgrid have the same baseline-redundancy dependence, with 1012 unique baselines and a maximum redundancy of 224. Thus, we obtain the exact same scales of gain errors for these two arrays in figure \ref{fig:nosims4arrayssubfigs}. The subgrids have the most unique baselines from all 5 arrays. However, the reduced redundancy results in the highest maximal gain error, with their least calibratable dishes expecting 2\% higher error than that of the other arrays. With regards to the hex and square grids, we notice that the baseline-redundancy plot is very similar for both. However, the square grid does have slightly fewer unique baselines than the hex, which indicates a higher maximal baseline redundancy. The arrangement of antennae in the square grid is therefore better suited for redundant gain calibration than that of the hex grid. The HERA-like grid has a slightly higher redundancy than the other arrays, and more unique baselines than the square and hex grids. This array has the best baseline-redundancy relation, and as a result has the lowest gain errors despite having the least number of dishes.
+
+
+
+\subsubsection*{Weighted Noise Covariance Matrix}
+
+For the rest of the chapter, we continue to assume that the HIRAX layout consists of a compact, square grid.
+
+Let us now return to equation \ref{least sq eqn} and examine the noise covariance matrix in more detail, following the calculation in \cite{Liu_2010}. As expressed in section \ref{section:logcal}, \textbf{N} is written as $\textbf{N} = \left< Re \textbf{w} Re \textbf{w}^t \right>$ with $w_{ij} = In\left( 1 + \frac{n_{ij}}{ g^*_i g_j y_{i-j}} \right)$. If we assume a large signal-to-noise, the simplification of $y_{i-j} \gg n_{ij}$ would allow us to write  $w_{ij} \sim \frac{n_{ij}}{ g^*_i g_j y_{i-j}}$. Replacing $c_{ij}$ from equation \ref {measured vis eqn}, we have 
+
+\begin{equation}
+w_{ij} \sim \frac{e^{-i\phi}}{|c_{ij}|} (n_r + in_i),
+\end{equation}
+
+where we have used $c_{ij} = |c_{ij}| e^{i\phi}$ with $\phi = arg(c_{ij})$, and separated $n_{ij}$ into its real and imaginary components, $n_r$ and $n_i$, respectively. The real component of $w_{ij}$ can then be expressed as
+
+\begin{equation}\label{Re w}
+Re (w_\alpha) = \frac{1}{|c_\alpha|} (n_r cos\phi + n_i sin\phi),
+\end{equation}
+
+where $\alpha$ is the baseline index which replaces the subscript $ij$ by assigning a value of $\alpha$ to the baselines formed between each pair of antennae. The expression for the noise covariance is then
+
+\begin{equation}
+N_{\alpha \alpha} = \frac{1}{|c_\alpha|^2}(\left< n_r n_r \right> cos^2\phi + 2\left<n_r n_i \right> cos\phi sin\phi + \left< n_i n_i\right> sin^2\phi).
+\end{equation}
+
+We can assume Gaussian noise with independent real and imaginary components distributed with a standard deviation, $\sigma$, such that $\left<n_r n_r \right> = \sigma^2 = \left<n_i n_i \right>$ and $\left<n_r n_i \right> = 0$. This gives the final, weighted expression for the diagonal matrix,
+
+\begin{equation}\label{weighted noise cov}
+N_{\alpha \alpha} = \frac{\sigma^2}{|c_\alpha|^2}.
+\end{equation}
+
+where we have set $N_{\alpha \beta} = 0$ under the assumption of uncorrelated noise for different baselines. 
+
+The simplified expression, $\textbf{N} = \frac{1}{S/N}\times \textbf{I}$ which was used in equation \ref{least sq eqn constant noise} now follows easily from equation \ref{weighted noise cov} if equal signal is assumed across all baselines. However, if the sky signal is not constant, the $\frac{1}{|c|^2}$ factor takes into account which baselines are more likely to pick up the signal, thereby returning more accurate gain errors. To understand this, let's consider a signal whose power is picked up by short baselines. The antennae errors will be weighted such that a lower gain error will be obtained for those dishes that contribute to the largest number of short baselines, i.e. the central dishes. In contrast, a signal picked up by the longest baselines will likewise have a reduced gain error in the outer dishes \cite{Liu_2010}. 
+
+This is demonstrated in figure \ref{fig:8by8positionalscatterwithblstrueviscolorbar}, which depicts the $8 \times 8$ square grid using an annotated scatter plot. Six unique baselines are shown as well with the magnitude of the true visibilities picked up by each baseline. These visibilities have a maximum magnitude of $|y_{i-j}| \sim 2.4$. As shown in the plot, it is the shortest baselines between adjacent dishes in the North-South and East-West directions which observe the highest visibility. The short baselines in the North-West and South-East directions receive a lower signal on the order of $|y_{i-j}| \sim 0.5$. Many of the intermediate length baselines have visibilities on roughly the same order of magnitude. Lastly, the dotted black lines are indicative of all long baselines that have visibilities $|y_{i-j}| \sim 0$. As a result, we expect the gain errors to be weighted such that the central dishes will have a reduced error. This result is shown in figure \ref{fig:lstsq_error_8by8_pt001gainfluc} and discussed thereafter.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../corrcal2/8by8_positional_scatter_with_bls_truevis_colorbar}
+	\caption{Annotated scatter plot of the $8 \times 8$ square grid with 6 unique baselines shown. The correlated sky signal that is picked up by 4 of these baselines is indicated by the colour plot. The two black dotted lines represent the longest baselines which pick up zero sky signal.}
+	\label{fig:8by8positionalscatterwithblstrueviscolorbar}
+\end{figure}
+
+One problem which arises from the weighting in equation \ref{weighted noise cov} is that the estimator in equation \ref{lstsq estimator} is no longer unbiased. As a result, the recovered gains will not converge to the values of the input gains after averaging over many noise realisations. This is because equation \ref{linear lstsq eqn} relies on all quantities on the right hand side being independent of \textbf{d}, in order to use linear least squares fitting. However, substituting equation \ref{Re w} into equation \ref{linear lstsq eqn} introduces nonlinearities. We discuss this further in the next section.
+
+
+For now, we will investigate the effect that telescope noise and gain fluctuations have on the recovered gain errors. The Gaussian noise used in the simulations assumes a channel width of 390 kHz and an integration time of $\tau = 10 s$. Two different system temperatures are assumed when calculating the noise, viz. $T_{sys} = 50$ K and $5$ K and these are plotted for two different gain fluctuations which are on the order of $\eta = 0.001$ and $\eta = 0.1$. 
+ 
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/8by8_leastsqerr_5K_tsys_fg21cm_pt001gainfluc_1runs}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/8by8_leastsqerr_50K_tsys_fg21cm_pt001gainfluc_1runs}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{Least squares error plotted for a noisy $8 \times 8$ array with 6 m dishes placed edge to edge. The plots show two separate noise levels, with the left and right plots assuming antenna system temperatures of $T_{sys}=5 K$ and $T_{sys}=50 K$, respectively. The symmetry of the errors is due to the baseline redundancy, although the error differences are small.}
+	\label{fig:lstsq_error_8by8_pt001gainfluc}
+\end{figure}
+
+Figure \ref{fig:lstsq_error_8by8_pt001gainfluc} shows the effect of noise on amplitude gain errors, assuming a gain amplitude on the order of $0.001$, with the left and right panels assuming $5$ K and $50$ K system temperature, respectively. The error scales show that a 10\% gain uncertainty is expected if we assume very low system temperatures of $5$ K. However, the more realistic temperature of $50$ K results in gain errors on the same order of magnitude as the low gain scatter.
+
+Another observation from the plot is the dependence of the gain error on antenna location. When comparing the error pattern in figure \ref{fig:lstsq_error_5by5} to \ref{fig:lstsq_error_10by10_15by15_16by16}, we find that the centrally located antennae have a reduced gain error due to the weighted noise covariance matrix and the magnitude of the visibilities shown in figure \ref{fig:8by8positionalscatterwithblstrueviscolorbar}. Note that we are not comparing the scales of the errors in figures \ref{fig:lstsq_error_5by5} and \ref{fig:lstsq_error_10by10_15by15_16by16}, since the latter assumed a S/N of 1.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/8by8_leastsqerr_5K_tsys_fg21cm_pt1gainfluc_100runs}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/8by8_leastsqerr_50K_tsys_fg21cm_pt1gainfluc_100runs}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{Least squares error plotted for a noisy $8 \times 8$ array with 6 m dishes placed edge to edge. The plots show two separate noise levels, averaged over 10 realisations, with the left and right plots assuming antenna system temperatures of $T_{sys}=5 K$ and $T_{sys}=50 K$, respectively. As seen, the noise makes a significant difference to gain errors. We also notice the symmetry of the errors which is due to the baseline redundancy, although the error differences are small.}
+	\label{fig:lstsq_error_5by5}
+\end{figure}
+
+ Figure \ref{fig:lstsq_error_5by5} shows the effect of noise on amplitude gain errors, assuming a large gain amplitude on the order of $0.1$, with the left and right panels once again assuming $5$ K and $50$ K system temperature, respectively. The error scales are on the same order of magnitude as that of figure \ref{fig:lstsq_error_8by8_pt001gainfluc}. However, we now have gain uncertainties of 0.1\% and 1\% for $5$ K and $50$ K system temperatures, respectively. The \% gain uncertainty is much lower if we assume gain amplitudes of order 0.1 as opposed to 0.001.
+ 
+Unlike figure \ref{fig:lstsq_error_8by8_pt001gainfluc}, we do not observe a perfectly symmetric pattern in gain errors. This is a result of the larger gain scatter which enters in the noise covariance. While the overall pattern in the error scatter plots is still determined by the baseline redundancy from \textbf{A} and magnitude of true visibilities in \textbf{N}, the gain fluctuations present in \textbf{N} will result in corresponding error fluctuations. Note that both the amplitude and phase scatters enter into the $c_{\alpha}$ factor in \textbf{N}, and that the simulated visibilities contain phase scatters of order $\phi=0.1$. 
+
+%you need pretty low gain scatter to use N=I, because aside from equal noise for all dishes
+
+\subsection {Linear calibration}
+
+Logarithmic calibration allows us to simplify our equation into a simple linear least squares problem. Though it can provide quick tests for gain calibratability, Logcal is not very accurate due to a slight bias. Thus, linear calibration (Lincal) is commonly used instead, with the results from Logcal providing a good first guess for Lincal. We do not quote results using Lincal in this thesis but instead provide a brief overview of Lincal as motivation for implementing this in future work. Ali 2015 and Liu 2010 discuss improvements to redundant calibration as a result of using Lincal or Omnical, which is a combination of the two algorithms. 
+
+Let's return to the last line of equation \ref{measured vis eqn} and write the measured visibilities rather as deviations from an initial guess. We then have (Ali)
+
+\begin{equation}\label{cij with perturbations}
+c_{ij} = g_i^{0*} g_j^{0} y^0_{i-j} + \Delta g_i^{*} g_j^{0} y^0_{i-j} + g_i^{0*} \Delta g_j y^0_{i-j} + g_i^{0*} g_j^{0} \Delta y_{i-j}\\
+\end{equation}
+
+where the superscript 0 is used to denote the initial guesses for the gains and visibilities, and $\Delta$ represents the perturbation about the initial guesses. The true values for the quantities are the sum of the initial guess and the perturbation from the initial guess, so that 
+
+\begin{subequations}
+\begin{equation}
+\begin{aligned}\label{cij ito init guess and perturbation}
+c_{ij} = & c^0_{ij} + \Delta c_{ij}\\
+=& e^{\eta_i^0 - i\phi_i^0} e^{\eta_j^0 + i\phi_j^0}y^0_{i-j} + \Delta c_{ij}
+\end{aligned}
+\end{equation}
+\begin{equation}\label{yi-j ito init guess and perturbation}
+y_{i-j} = y^0_{i-j} + \Delta y_{i-j}
+\end{equation}
+\begin{equation}\label{gij ito init guess and perturbation}
+\begin{aligned}
+g_i = & g_i^0 +\Delta g_i\\
+=& e^{\eta_i^0 + i\phi_i^0} + e^{\eta_i^0 + i\phi_i^0}[\Delta \eta_i +i\Delta \phi_i]
+\end{aligned}
+\end{equation}
+\end{subequations}
+
+We can use equations \ref{cij with perturbations} and \ref{cij ito init guess and perturbation} to get the expression for $\Delta c_{ij}$ and thereafter substitute $\Delta g^*_i$ and $\Delta g_j$ from equation \ref{gij ito init guess and perturbation} in equation \ref{cij with perturbations}. This gives
+
+
+\begin{equation}
+\Delta c_{ij} \approx e^{\eta_i^0 - i\phi_i^0}e^{\eta_j^0 + i\phi_j^0}[\Delta y_{i-j} + y^0_{i-j}(\Delta \eta_i + \Delta \eta_j -i\Delta \phi_i +i\Delta \phi_j)]
+\end{equation}
+
+We solve for the perturbations in gains and true visibilities using the initial guesses which are obtained from Logcal. Again, we use linear least squares with the analogue of equation \ref{lstsq estimator}
+
+\begin{equation}
+x = (B^T B)^{-1} B^T d
+\end{equation}
+
+where x consists of the quantities $\Delta \eta, \Delta \phi$ and $\Delta y_{i-j}$ and d is now $\Delta c_{ij}$. The matrix B is dependent on both the array layout and the initial guesses.
+
+Notice that in linear calibration we cannot isolate the real and imaginary components, i.e. we solve for gain phase and amplitude simultaneously. The problem of phase wrapping which was discussed in the implementation of Logcal does not apply to Lincal because there is no $2\pi$ degeneracy since $\Delta \phi$ for which we solve is no longer in the exponent. There is also no bias because the B matrix is independent on the data vector. 
+
+We do not present results in this chapter for linear calibration but we do discuss how results are obtained. Lincal allows for many iterations until we converge on the best solution. After each iteration, the results are used as the initial guess for the next iteration such that B changes each time \cite{marthi2013nonlinear}. Hence, even if biased results are obtained from Logcal, or results affected by phase wrapping, many iterations will return a solution close to the correct one.
+
+\subsection {Problems with redundant calibration}
+
+One of the drawbacks of redundant calibration, whether we use Logcal or Lincal, is that it assumes perfect redundancy and does not account for dish misalignments. To demonstrate the effect that an offset of as little as 10 cm could have on the gain errors, we introduce random offsets in the x and y positions of each antennae of up to 10 cm. For the $5 \times 5$ array, without gain fluctuations and with $50 K$ system temperature, we compute the mean and standard deviations of the relative gain errors for 100 runs. Note that the randomized dish scatter remains the same for each run and that only the noise and corresponding measured visibilities change for the different runs. We compare histograms of the relative error $\mu$ and $\sigma$ for the perfectly redundant case, that contains no dish scatter, and for the imperfect case with dish scatter. Note that the dish scatter will change the visibilities but we will compute the gain errors assuming a perfect grid, such that the \textbf{A} matrix does not change. In doing so, we find that introducing dish scatters that are on the order of 60 times smaller than the dish separation has roughly the same order increase on the gain errors. Thus, it is worth investigating a calibration algorithm that does not assume complete redundancy.
+
+\begin{figure}
+		\centering
+\begin{subfigure}[b]{0.48\linewidth}
+	\includegraphics[width=\linewidth]{../corrcal2/logcal_5by5_lownoise_nogainfluc_no_dish_scatter/mean_hist_logcal_5by5_nogainfluc_Tsys_50_no_dish_scatter}
+\end{subfigure}\label{key}
+\begin{subfigure}[b]{0.48\linewidth}
+	\includegraphics[width=\linewidth]{../corrcal2/logcal_5by5_lownoise_nogainfluc_no_dish_scatter/std_hist_logcal_5by5_nogainfluc_Tsys_50_no_dish_scatter}
+\end{subfigure}
+\begin{subfigure}[b]{0.48\linewidth}
+	\includegraphics[width=\linewidth]{../corrcal2/logcal_5by5_lownoise_nogainfluc_pt1_dish_scatter/mean_hist_logcal_5by5_nogainfluc_Tsys_50_pt1_dish_scatter}
+\end{subfigure}
+\begin{subfigure}[b]{0.48\linewidth}
+	\includegraphics[width=\linewidth]{../corrcal2/logcal_5by5_lownoise_nogainfluc_pt1_dish_scatter/std_hist_logcal_5by5_nogainfluc_Tsys_50_pt1_dish_scatter}
+\end{subfigure}
+\caption{The mean and standard deviation of relative amplitude error is plotted for a set of 100 runs. The top two histograms are plotted for the perfectly redundant case in which dishes are perfectly placed on a square grid, 6 m apart. The bottom two plots showcase the more realistic scenario of uncertainties in the dish position which lead to a factor of $\sim 40$ increase in gain errors for 10 cm position uncertainty.}
+\label{hist_logcal_dish_sep_compare_no_dish_sep}
+\end{figure}
+
+\section{Quasi-redundant calibration}
+
+\subsection{Redundant calibration with baseline perturbation}
+
+Now, let us consider equation \ref{visibility eqn} and rewrite it with the gains and as a function of the baseline $\textbf{b} = \textbf{r}_i - \textbf{r}_j$ where $r$ represents the antenna positions. We also use the relation $\textbf{u} = \textbf{b}/\lambda$. As a result we obtain
+
+\begin{equation}\label{meas vis integral with gains}
+c(\boldsymbol{b}) = g^*_i g_j \int d^2 \boldsymbol{\theta}  A(\boldsymbol{\theta}) I(\boldsymbol{\theta}) e^{-2\pi i \frac{\boldsymbol{b}}{\lambda}.\boldsymbol{\theta}}
+\end{equation}
+
+Writing the effective sky signal as $I_{eff}(\boldsymbol{\theta}) = A(\boldsymbol{\theta}) I(\boldsymbol{\theta})$, we can then take the Fourier transform of the sky intensity,
+
+
+\begin{equation}\label{fourier transform of Ieff}
+\tilde{I}(\frac{\boldsymbol{b}}{\lambda}) = \int d^2 \boldsymbol{\theta} I_{eff}(\boldsymbol{\theta}) e^{-2\pi i \frac{\boldsymbol{b}}{\lambda}.\boldsymbol{\theta}}.
+\end{equation}
+
+Substituting equation \ref{fourier transform of Ieff} into equation \ref{meas vis integral with gains} gives
+
+\begin{equation}
+c(\boldsymbol{b}) =  g^*_i g_j \tilde{I}(\frac{\boldsymbol{b}}{\lambda})
+\end{equation}
+
+We have relied so far on perfectly redundant baselines. In the $8\times 8$ array we had $2016$ baselines with $104$ unique baselines. We can now introduce baseline perturbations which do not assume complete redundancy. Thus, we define vectors which we label as $\boldsymbol{b}_0^\alpha$ whose position on the uv plane is clustered by the uv points of other nearly redundant baselines. In other words, for the $8\times 8$ array, if we assume imperfect dish positions, a small amount of dish scatter will introduce baseline uncertainties that still allow us to maintain the number of unique baselines which we previously had. In this scenario, $\boldsymbol{b}_0^\alpha$ would extend up to $alpha=104$. This is because the total number of baselines cluster around the uv points of these unique baselines. If the dish scatter is high, we can assume a larger number of unique baselines, i.e. a greater number of uv points around which other baselines cluster. We can therefore introduce a baseline perturbation as $\Delta \boldsymbol{b}_{ij} = \boldsymbol{b}_{ij} - \boldsymbol{b}_0^\alpha$. Assuming the perturbation is small, we can Taylor expand so that up to first order we have
+
+\begin{equation}
+\begin{aligned}
+\tilde{I}(\frac{\boldsymbol{b}}{\lambda}) \approx & \tilde{I}(\frac{\boldsymbol{b}_0^\alpha}{\lambda}) + \lambda \frac{d}{db} \tilde{I}(\frac{\boldsymbol{b}}{\lambda})\Bigr|_{\boldsymbol{b}=\boldsymbol{b}_0^\alpha}. \frac{\boldsymbol{b}_{ij} - \boldsymbol{b}_0^\alpha}{\lambda}\\
+=& \tilde{I}(\frac{\boldsymbol{b}_0^\alpha}{\lambda}) + \nabla_u \tilde{I}(\frac{\boldsymbol{b}}{\lambda}). \frac{\Delta \boldsymbol{b}_{ij}}{\lambda},
+\end{aligned}
+\end{equation}
+
+where $\nabla_u$ denotes the uv plane gradient. We can then write the measured visibilities as
+
+\begin{equation}
+c_{ij} \approx g_i^* g_j c_0^\alpha(1+\boldsymbol{h}_0^\alpha. \frac{\Delta \boldsymbol{b}_{ij}}{\lambda}), 
+\end{equation}
+
+where $\boldsymbol{h}_0^\alpha = \frac{\nabla \tilde{I}}{\tilde{I}}\Bigr|_{\boldsymbol{b}=\boldsymbol{b}_0^\alpha}$. 
+
+We can use the logarithmic approach that was introduced earlier which gives
+
+\begin{equation}
+
+\end{equation}
+
+\subsection{Correlation calibration}
+
+Two problems which arise from redundant calibration tools is that complete redundancy is assumed. This means that any misalignment of dishes or beam variations would not be accounted for and would result in inaccuracies in recovered gains, as demonstrated. Another problem is that redundant calibration assumes that all sky values are equally likely. In other words, the information which is known about the sky is not used to solve for the sky. Instead, the sky values are solved for straightforwardly after specifying the antennae gains. Consider instead a redundant block of visibilities obtained from redundant baselines that form a single point on the UV plane. Assuming first that the baselines are completely redundant in position and beams, the visibility covariance is then just $\left< V_i^* V_j \right> = \alpha^* \alpha$, where $\alpha$ is the sky value. Instead of solving for the sky, as is done in redundant calibration, we include the sky into the noise and use known sky information to construct a covariance matrix. 	
+This is the basis of the correlation calibration formalism by Jon Sievers. Let us consider the simple $\chi^2$ equation, 
+
+\begin{equation}
+\chi^2 = d^T N^{-1} d
+\end{equation}
+
+where $d$ is the data and effective noise $N$, with $N_{ij} = \left< d_i^T d_j \right>$ (the data contains both telescope noise and sky signal), is given as the sum of the per visibility noise and the sky value for a single redundant block: $N = N_{vis} +(\alpha \boldsymbol{1})^T (\alpha \boldsymbol{1})$. 
+
+If we do not assume complete baseline redundancy within a redundant block and choose instead to account for dish and beam effects, we can write the visibility covariance, $\left< V_i^* V_j \right> = C_{ij}$ for $V_i, V_j$ in a quasi-redundant block, so that the effective noise, $N$, is now $N = N_{vis} +C$. The form of C is a set of diagonal quasi-redundant blocks, designed so that only the covariance within a block is accounted for. The formalism does not allow us to calculate covariances between visibilities in separate blocks. We have discussed redundant baselines already. If some dish scatter is introduced, the baselines within a block are no longer completely redundant. The data can be arranged to fall within redundant blocks given the noise and uv points of each visibility, so that the blocks depend on the uv tolerance, i.e. how close points have to be to each other on the uv plane so that the corresponding baselines are considered redundant. In this thesis, we have introduced visibility scatter to simulate the effects of dish scatter, with the scatter allowing us to maintain the same redundant blocking that was used in the scatterless case. 
+
+Corrcal can be used in the redundant case, in which $R$ consists of just two vectors, which make up the uncorrelated real and imaginary components, $R_r = \alpha[1,0,1,0,...]$ and $R_i = \alpha[0,1,0,1,...]$, where $\alpha$ is the sky value which in the redundant case is set to some high value (in the redundant case, the sky value is set to infinity).  
+
+If we are not using the redundant case, then it is required that we set up the visibility covariance. 
+
+The $nside$ is a factor that gives the size of a Healpix map, and which relates to resolution by $npix = 12 \times nside^2$, where $npix$ is the number of pixels. We obtain the angular position of each pixel in the map and use this to obtain the separation of each pixel from the zenith. Assuming a Gaussian beam, we set $A_i(\theta) = \frac{e^{-\theta_i^2}}{\sigma_i}$ for a single beam, such that the quantity, $A(\theta)$ in equation \ref{visibility eqn}, describes the combined beam of each of the two antennae making up that particular baseline, and is written as $A(\theta) = A_i(\theta) A_j(\theta)$. 
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/Hist_logcal_redundant_corrcal_comparison_mean}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}		\includegraphics[width=\linewidth]{../corrcal2/Hist_logcal_redundant_corrcal_comparison_std}
+	\end{subfigure}
+\caption{Redundant Corrcal plotted against Logcal, using Logcal results as the initial guess for each set of 100 noise realisations. The results are very similar for both the mean and standard deviations of the 100 runs.}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.43\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/init_guess_corrcal_comparisons_2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\linewidth}
+		\includegraphics[width=\linewidth]{../corrcal2/Hist_logcal_initguess_and_pt1_initguess_std}
+	\end{subfigure}
+\caption{Mean and standard deviation plotted for 100 runs with redundant Corrcal, using two different initial guesses. It is clear from the plots that using Logcal as the initial guess for Corrcal gives much better results than assuming the initial guess to be a $10\%$ offset of the simulated gains.}
+\end{figure}
