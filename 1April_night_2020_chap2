@@ -1,0 +1,817 @@
+
+
+\chapter{Cosmology and Radio Telescopes} % Main chapter title
+
+\label{Chapter2} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+%----------------------------------------------------------------------------------------
+
+% Define some commands to keep the formatting separated from the content 
+
+
+
+
+
+	
+\section{Standard Model}
+
+This section gives a review of the $\Lambda CDM$ model which is adopted in this thesis, and touches upon useful terminology and equations. The information provided here is based on the textbooks: "Modern Cosmology" \cite{2003moco.book.....D} and "Physical Foundations of Cosmology" \cite{Mukhanov:2005sc}. 
+
+\subsection{Cosmological Principle}
+
+The cosmological principle states that the universe is homogeneous and isotropic on large scales, which means that it looks the same at every location and direction. This principle is fundamental to cosmology, as it asserts that observations carried out on Earth are representative of the laws governing the whole universe. Observational evidence for the cosmological principle has been found with the large scale homogeneity of galaxy surveys \cite{1999Natur.397..225W} and near-isotropy of the CMB \cite{1992ApJ...396L...1S}. 
+
+\subsection{The Expanding Universe}
+
+Edwin Hubble provided observational evidence for the expansion of the universe, with the recession of distant galaxies. The effect of galaxies moving away from each other and from us, is conveniently described with the scale factor, $a$, which is set to the maximum value of one at the present time. We can quantify the rate at which the scale factor changes, by introducing the Hubble rate given by, 
+
+\begin{equation} \label{Hubbles rate}
+H(t)=\frac{da/dt}{a}.
+\end{equation}
+
+Hubble's findings showed that there was a linear relation between velocity and distance, as shown by the aptly named `Hubble's law': $v=H_0 D$, where\\ $H_0= H(t=0)$ is the Hubble constant defined at the present time.
+
+If a galaxy is moving away from us, the observed wavelength will be larger than the wavelength emitted by the galaxy. We say that the galaxy has been redshifted. This effect is denoted by the variable, $z$, which is related to the scale factor quite simply as, 
+
+\begin{equation} \label{redshift eqn}
+1+z=\frac{\lambda_{obs}}{\lambda_{emit}}=\frac{1}{a}.
+\end{equation}
+
+
+
+\subsection{General Relativity}
+
+General relativity was developed by Einstein in 1915 \cite{1916AnP...354..769E}. It describes the distortion of space-time by massive objects, with more mass causing a greater distortion. Therefore, Einstein was the first to describe gravity as a geometric effect.\\
+
+
+\noindent \textbf{Friedmann-Robertson-Walker Metric}\\
+
+The general form for the space-time interval in four dimensions is, 
+
+\begin{equation}\label{space-time interval}
+ds^2 = g_{\mu \nu} dx^\mu dx^\nu, 
+\end{equation} 
+
+with the first coordinate representing time and three spatial coordinates. The metric tensor, $g_{\mu \nu}$, is symmetric and is expressed in the Minkowski space-time as,
+
+\[
+g_{\mu \nu}= \eta_{\mu \nu}=
+\begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{pmatrix}.
+\]
+
+For an expanding universe, the metric is altered to account for spatial expansions by the scale factor, $a(t)$, with no temporal expansion, giving us the metric for an expanding, flat universe,
+
+\[
+g_{\mu \nu}= 
+\begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+0 & a^2(t) & 0 & 0 \\
+0 & 0 & a^2(t) & 0 \\
+0 & 0 & 0 & a^2(t) \\
+\end{pmatrix}.
+\]
+
+The zero contributions from off-diagonal terms are a result of the assumed isotropy of the universe, since there are no preferred directions \cite{gariazzo2016new}. %Likewise, the homogeneity gives an assumed lack of spatial preference, which is also encoded in the metric.  
+ 
+Thus, our space-time interval in equation \ref{space-time interval} becomes,
+
+\begin{equation}
+ds^2 = -dt^2 + a^2(t) \delta_{ij} dx^i dx^j
+\end{equation}
+
+with the diagonal Kronecker delta of $\delta_{ij} = (1,1,1)$ for $i,j=1,2,3$, as defined for a flat universe only. 
+
+Expressing the space-time metric in spherical coordinates for a closed, open or flat universe, gives the general expression
+
+\begin{equation}
+ds^2 = -dt^2 + a^2(t) \left[ \frac{dr^2}{1-kr^2} + r^2(d\theta^2 + sin^2\theta d\phi^2)\right],
+\end{equation}
+
+where $(r, \theta, \phi)$ are the spherical coordinates. The variable, $k$, describes the curvature of the universe, with $k=-1, 0, 1$ for an open, flat or closed universe, respectively. We assume a flat universe.\\ 
+
+\noindent \textbf{Einstein's Equation and the Energy-momentum Tensor}\\
+
+With the inclusion of dark energy, Einstein's equation is expressed as,
+
+\begin{equation}\label{Einsteins eqn with dark energy}
+G^\mu_\nu + \Lambda g^\mu_\nu = \frac{8 \pi G}{c^4} T^\mu_\nu,
+\end{equation}
+
+ with the Einstein tensor, $G^\mu_\nu$, the cosmological constant, $\Lambda$, and energy-momentum tensor, $T^\mu_\nu$. For the case of a perfectly isotropic fluid, the tensor is expressed as a diagonal matrix with dependencies on fluid pressure, $P$, and energy density, $\rho$. The tensor is given by,
+ 
+ \[
+ T^{\mu}_{\nu}= 
+ \begin{pmatrix}
+ -\rho c^2 & 0 & 0 & 0 \\
+ 0 & P & 0 & 0 \\
+ 0 & 0 & P & 0 \\
+ 0 & 0 & 0 & P \\
+ \end{pmatrix}.
+ \]
+ 
+ 
+Substituting the tensor,  $T^\mu_\nu$, into Einstein's equation gives the Friedmann and acceleration equations, which are quoted here with their dependencies on curvature and the cosmological constant. The Friedmann equation is, 
+
+\begin{equation}\label{friedmann eqn}
+H^2 = \left( \frac{\dot{a}}{a}\right)^2 = \frac{8 \pi G }{3}\rho - \frac{kc^2}{a^2} + \frac{\Lambda c^2}{3}.
+\end{equation}
+
+This equation can be simplified and rearranged to give us the expression for the critical density of a spatially flat universe ($k=0$) at the present time if the cosmological constant is assumed to be zero,
+
+\begin{equation}
+\rho_c = \frac{3 H_0 ^2}{8 \pi G}.
+\end{equation}
+
+
+
+Unlike the Friedmann equation, the acceleration equation does not depend on the curvature of the universe. It is defined as, 
+
+\begin{equation} \label{acceleration eqn}
+\dot{H} + H^2 = \frac{\ddot{a}}{a} = - \frac{4 \pi G }{3}\left(\rho + \frac{3P}{c^2}\right) + \frac{\Lambda c^2}{3}.
+\end{equation}
+
+
+\noindent \textbf{Conservation Law and Equation of State}\\
+
+We can combine equations \ref{friedmann eqn} and \ref{acceleration eqn} to obtain the conservation law,
+
+\begin{equation} \label{conservation law}
+a^{-3} \frac{\partial [\rho c^2 a^3] }{\partial t} = -3 \frac{\dot{a}}{a} P.
+\end{equation}
+
+Since matter has zero pressure, we can obtain the relation between the matter energy density and scaling factor,
+
+\begin{equation}
+\frac{\partial [\rho_m a^3]}{\partial t} = 0,
+\end{equation}
+
+which gives the proportionality of $\rho_m \propto a^{-3}$. This is expected since density is inversely proportional to volume.
+
+For radiation, a term used here to refer to all relativistic particles, we have $P=\rho/3$, which gives the expression,
+
+\begin{equation}
+\frac{\partial \rho_r}{\partial t} + \frac{\dot{a}}{a} 4 \rho_r = a^{-4} \frac{\partial [\rho_r a^4]}{\partial t} = 0.
+\end{equation}
+
+Hence,  $\rho_r \propto a^{-4}$. It differs from the scaling relation of the matter density by a factor of $1/a$, which accounts for the decrease in photon energy as their wavelength is redshifted due to cosmological expansion. 
+
+The equation of state relates the pressure and energy density simply as, 
+
+\begin{equation}\label{equation of state}
+P = w\rho c^2,
+\end{equation}
+
+where $w$ is a constant, which is set to $w=0$ for dust (matter) particles, $w=1/3$ for radiation and $w=-1$ for the cosmological constant. Additionally, the spatial curvature can be treated as an additional fluid with $w=-1/3$ \cite{gariazzo2016new}. We can substitute equation \ref{equation of state} into equation \ref{conservation law} to obtain the evolution of energy density with time,
+
+\begin{equation}\label{energy density evolution}
+\rho(t) = a^{-3(w+1)} (t) \rho_0.
+\end{equation}
+
+We have already obtained scaling relations for matter and radiation, and these can be extended to expressions of the evolution of matter and radiation energy density as a function of time. Altogether, we write expressions for the energy density of radiation, matter, curvature and the cosmological constant, 
+
+\begin{subequations}
+\begin{equation}\label{radiation density}
+\rho_r(t) = a^{-4} (t) \rho_{r,0}
+\end{equation}
+\begin{equation}
+\rho_m(t) = a^{-3} (t) \rho_{m,0}
+\end{equation}
+\begin{equation}
+\rho_k(t) = a^{-2} (t) \rho_{k,0}
+\end{equation}
+\begin{equation}\label{lambda density}
+\rho_\Lambda(t) = \rho_{\Lambda,0},
+\end{equation}
+\end{subequations}
+
+where the quantities, $\rho_0$ are energy densities at the present time. The cosmological constant does not evolve over time and instead remains constant throughout the cosmological expansion, as explicitly shown in the last equation. The equations can be used to determine the different eras of domination in the universe. The universe was initially radiation dominated, but as seen from the expressions, radiation energy density falls off faster than that of matter, resulting in a transition to matter domination. Matter-radiation equality occurred when $\rho_m = \rho_r$, such that the scale factor at this time is simply, $a_{eq} = \frac{\rho_{r,0}}{\rho_{m,0}}$. Though the matter density succeeds the radiation domination for a time, both are eventually superseded by the dark energy whose domination is everlasting. Figure \ref{fig:mat_rad_darkenergy} \cite{2003moco.book.....D} depicts the evolution of the universe through all three stages of domination by plotting the densities as a function of scale factor, in units of critical density. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../Pictures/Screenshot from 2019-12-10 16-40-51"}
+	\caption{Energy density vs scale factor is expressed in units of present time critical density for a flat universe. Shown in the plot is the radiation domination at early times, and the matter domination which followed. The matter-radiation epoch of equality is marked as $a_{eq}$. The cosmological constant is plotted with constant energy density and it is seen to dominate both radiation and matter at late times.}
+	\label{fig:mat_rad_darkenergy}
+\end{figure}
+
+\noindent \textbf{Density Parameters}\\
+
+The density parameters are simply defined by taking the ratios of the individual densities in equations \ref{radiation density} - \ref{lambda density}, and the critical density. This allows us to define the density parameters of particular constituents in the universe as,
+
+\begin{equation}
+\Omega_i = \frac{\rho_i}{\rho_c},
+\end{equation}
+
+where $i=r,m,\Lambda,k$ for radiation, matter, dark energy and curvature, respectively. 
+
+Thus, the Friedmann equation, \ref{friedmann eqn}, can be rewritten as
+
+\begin{equation}
+H^2 (t) = H_0^2 (a^{-4}(t) \Omega_{r,0} +a^{-3}(t) \Omega_{m,0} + a^{-2}(t) \Omega_{k,0} + \Omega_{\Lambda}).
+\end{equation}
+
+\noindent \textbf{Evolution of the Scale Factor}\\
+
+The evolution of the scale factor is obtained by substituting equation \ref{energy density evolution} into equation \ref{friedmann eqn}, after assuming a flat universe and neglecting $\Lambda$. This expression is therefore only applicable for the matter and radiation dominated eras of a flat universe and is expressed as, 
+
+\begin{equation}
+a(t) = a_0 \left( \frac{t}{t_0} \right)^{\frac{2}{3(w+1)}}. 
+\end{equation}
+
+Inputting the values for $w$, the following relations are obtained: $a(t) \propto t^{1/2}$ for radiation and $a(t) \propto t^{2/3}$ for matter.This shows that the universe is expanding in both radiation and matter dominated eras, as expected. The evolution of the scale factor during the dark energy domination, in which the energy density is constant, is increasing exponentially, i.e. $a(t) \propto e^{Ht}$. 
+
+
+
+\subsection{Distances}
+
+In this section, we will discuss different methods of measuring distances between points in an expanding universe. The most common of these is the comoving distance, which we use throughout our thesis, for convenience.\\ 
+ 
+
+\noindent \textbf{Proper Distance}\\
+
+%If we picture space as a grid with assigned coordinates, the physical distance between two points on the grid will change if the grid expands, while the coordinates will remain unchanged. Thus, the comoving distance remains unchanged while the physical distance is proportional to the scale factor by which the grid expanded. 
+
+The equation describing the physical distance between an observer at the present time and a distant object at redshift, $z$, is expressed as,
+
+\begin{equation}
+\begin{aligned}
+D_{proper}(z) = c \int_{t(z)}^{t_0} dt =\frac{c}{H_0} \int_{a(z)}^{a(z_0)} \frac{da}{\sqrt{a^{-1}\Omega_{m,0} + (1-\Omega_{m,0} - \Omega_{\Lambda}) + a^2 \Omega_{\Lambda}}}.
+\end{aligned}
+\end{equation} 
+
+It is described as the simple distance that light travels in a given time. The final expression is a function of scale factor and energy densities to show the dependency that proper distance has on our cosmological assumptions.\\ 
+
+\noindent \textbf{Comoving Distance}\\
+
+Proper distances are not commonly used and are replaced with the comoving distance, which is more convenient in an expanding universe. The total comoving distance that light could have traveled since the beginning of time is, 
+
+\begin{equation}\label{comoving horizon}
+\eta = \int_0^t \frac{dt}{a(t)}.
+\end{equation}
+
+This distance is so important since it is a measure of the maximum distance that regions can be separated, and still be causally connected. The variable, $\eta$, can also be referred to as the comoving horizon, a term which we will make use of in the discussion of inflation and the matter power spectrum.\\ If we are instead interested in the comoving distance between a distant galaxy and us, we can express the comoving distance as follows,
+
+\begin{equation}
+\chi (a) = \int_{t(a)}^{t_0} \frac{dt}{a(t)} = \int_a^1 \frac{da}{H(a)} = \int_0^z \frac{c dz}{H(z)}. 
+\end{equation}
+
+The conversion from time, $t$, to scale factor, $a$, was obtained using the Hubble rate defined in equation \ref{Hubbles rate} and the conversion to redshift was then obtained using the equation \ref{redshift eqn}. \\
+
+\noindent \textbf{Angular Diameter Distance}\\
+
+In astronomy it is common to define the angle, $\theta$, subtended by an object of known size, $l$, in the following way:
+
+\begin{equation}\label{ang diam dist general eqn}
+d_A = \frac{l}{\theta}.
+\end{equation}
+
+In a flat universe, the angular diameter distance is,
+
+\begin{equation}
+d_A = a \chi(a) = \frac{\chi(z)}{1+z}.
+\end{equation}
+
+\noindent \textbf{Luminosity Distance}\\
+
+For a static universe, the familiar expression relating flux, $F$, and intrinsic brightness, $L$ as a function of the distance that the light travels, $d$, is:
+
+\begin{equation}\label{flux equation}
+F=\frac{L}{4 \pi d^2}.
+\end{equation}
+
+However, for an expanding universe, we must consider a comoving shell that forms a sphere around the source that is situated at the centre. The luminosity is affected by the number density of photons passing through the comoving spherical shell per unit time. More photons pass through at early times than at late times, due to reduced proper distance at early times. We therefore have a $1/a$ reduction in intrinsic brightness due to cosmological expansion. We also must factor in the reduced energy of photons as they are redshifted, giving a further reduction of $1/a$, in source brightness. Thus, the corrected flux equation is
+
+\begin{equation}\label{corrected flux eqn}
+F=\frac{L a^2}{4 \pi \chi (a)^2}.
+\end{equation}
+
+Comparing equations \ref{flux equation} and \ref{corrected flux eqn} gives the luminosity distance as,
+
+\begin{equation}
+d_L=\frac{\chi}{a} = \chi (1+z).
+\end{equation}
+
+\section{Perturbations and Inflation}
+
+We have so far considered a smooth, isotropic and homogeneous universe. Of course, this assumption is only valid on large scales. On small scales, inhomogeneities are present, as evidenced by the galaxies and clusters of galaxies. Therefore, we must introduce perturbations to the smooth universe, so as to allow for such structures to form. The perturbations allowed for overdense and underdense regions in the universe, with the higher density regions accumulating more matter, due to gravity. Now that we have briefly introduced the concept of small scale perturbations and how they have influenced the formation of gravitationally bound structures, we must also discuss the onset of the initial perturbations, that allowed for the stars and galaxies which we see today. 
+
+\subsection{Initial Perturbations}
+
+The theory of inflation describes the initial `seeds' of perturbations \cite{Guth:1980zm} in the very early universe. The idea is that the universe underwent a process of rapid expansion after the big bang, and that quantum fluctuations were then able to expand \cite{riotto2002inflation} and give rise to larger density perturbations.  
+
+\subsection{The Horizon Problem}
+
+Inflation also provides a solution to the horizon problem \cite{Guth:1980zm}, which can be understood by considering the near-isotropy of the CMB. When the CMB was produced, photons on the opposite ends of the sky would not have been causally connected. In other words, the CMB ought not to have reached thermal equilibrium due to lack of contact between photons in regions that exceeded the comoving horizon, expressed in equation \ref{comoving horizon}.  
+
+\subsection{Solution to the Horizon Problem}
+
+To see how inflation solves the horizon problem, let us return to equation \ref{comoving horizon} and rewrite it so that we can define another useful quantity, which is called the comoving Hubble radius, 
+
+\begin{equation}
+\eta = \int_0^a \frac{da}{a} \frac{1}{aH(a)},
+\end{equation}
+
+where the Hubble radius is then $ \frac{1}{aH(a)}$. This is the distance that light can travel during the course of one expansion time, which can be considered to be the time taken for the scale factor to double. Note that there is an important difference between the Hubble radius and the comoving horizon: if two regions are separated by a distance larger than the Hubble radius, that means that there is no causal contact now, but it does not negate the possibility that the regions could have been in causal contact at an earlier time. The same cannot be said for the comoving horizon. We now use the Hubble radius to explain the way in which the theory of inflation provides a solution to the horizon problem. The Hubble radius increases in the radiation and matter domination eras. However, it is possible that there was an era prior to the radiation era, that allowed for a decreasing Hubble radius. A rapid cosmological expansion would have achieved this, thereby allowing particles to be in causal contact in the early universe, before inflation. Inflation would have then caused a decrease in the Hubble radius, with the smallest scales remaining in causal contact the longest. Thereafter, the radiation and matter eras caused the Hubble radius to increase, such that the scales that we see today are once more in causal contact, as they were prior to inflation. 
+
+The biggest contribution to the comoving horizon therefore came from the period of inflation, with little contribution from the radiation and matter eras thereafter. Thus, it is useful to redefine the comoving horizon, $\eta$ as the comoving horizon from the end of inflation till a time, $t$. This gives a modified version of equation \ref{comoving horizon}, 
+
+\begin{equation}
+\eta = \int_{t_{e}}^t \frac{dt}{a(t)},
+\end{equation} 
+
+where $t_e$ is the time after inflation ended. Thus, we can describe the scales as being within the horizon before inflation ($\lambda<\eta$) and then leaving the horizon during inflation, before once more entering the horizon during the radiation or matter eras. In the next section we will elaborate on the perturbations of different scales entering the horizon so as to better understand their evolution, and their effect on the matter power spectrum. 
+
+\section{Matter Power Spectrum}
+
+\subsection{Statistics of the Density Field}
+
+Consider two galaxies at spatial positions, \textbf{x} and \textbf{y}. We can define a statistical function, called the correlation function, which gives the excess probability of finding two overdense regions separated by the distance $|\textbf{x} - \textbf{y}|$. This function is computed by taking the expectation value of the product of the two density fields $\delta(\textbf{x})$ and $\delta(\textbf{y})$,. The quantity, $\delta(\textbf{x})$, represents the dimensionless matter overdensity given by,
+
+\begin{equation}
+\delta(\textbf{x}) = \frac{\rho(\textbf{x}) - \bar{\rho}}{\bar{\rho}},
+\end{equation}
+
+where the density at a region is $\rho(\textbf{x})$ and the average density over all space is $\bar{\rho}$.
+
+The correlation function is then written as \cite{Bernardeau_2002}
+
+\begin{equation}\label{correlation function}
+\epsilon(\textbf{x}, \textbf{y})  = \epsilon(|\textbf{x}- \textbf{y}|) = \left<\delta(\textbf{x}) \delta(\textbf{y}) \right>.
+\end{equation}
+
+Note that in the second equality we have used the assumption of homogeneity and isotropy to write the argument of the correlation function as the distance between the two points only.
+
+Now, let us take the overdensity, $\delta(\textbf{x})$ and write its Fourier transform so that we can obtain the matter density as a function of the wavevector, \textbf{k}: 
+
+\begin{equation}
+\delta(\textbf{k}) = \int d^3 \textbf{x} e^{-i \textbf{k}. \textbf{x}} \delta (\textbf{x}).
+\end{equation}
+
+We can then take the expectation value of the density field in \textbf{k} space:
+
+\begin{equation}\label{expec value of delta delta for Pmm}
+\left< \delta_m (\textbf{k}) \delta_m (\textbf{k}') \right> = (2\pi)^3 \delta^3_D(\textbf{k} - \textbf{k}') P_{mm}(k),
+\end{equation}
+
+where we have defined the dark matter density, $\delta_m(\boldsymbol{k})$, and the power spectrum, $P_{mm}(k)$, which is dependent on the scalar $k$ mode due to isotropy. It is clear from the equations laid out in \ref{correlation function} - \ref{expec value of delta delta for Pmm}, that the power spectrum is the Fourier transform of the correlation function. 
+
+We can also define the power spectrum of the gravitational potential by relating the potential, $\Phi$, to the matter density through the Poisson's equation, written as, 
+
+\begin{equation}
+\Phi = \frac{4 \pi G \bar{\rho}_m a^2 \delta_m}{k^2}.
+\end{equation} 
+
+\subsection{Evolution of the Gravitational Potential}
+
+We wish to understand how the distribution of matter which we observe today, evolved between now and inflation. We therefore set up a simple equation to explain this process \cite{2003moco.book.....D},
+
+\begin{equation}
+\Phi (\textbf{k}, a) = \Phi_p (\textbf{k}) T(k) D(a),
+\end{equation}
+
+where $\Phi (\textbf{k}, a)$ is the scale factor dependent potential, $\Phi_p (\textbf{k})$ is the primordial potential set up by inflation, $T(k)$ is the transfer function describing the evolution of perturbations during the radiation and matter eras, and the growth function, $D(a)$, defines the evolution at late times (during dark energy domination). 
+
+We will give analytic expressions for the transfer function after briefly describing the evolution of large and small scale modes during the radiation and matter eras. %Just to quickly iterate over what has been mentioned already regarding the expanding universe, we can consider the universe to be an expanding box and within the box we have a range of perturbations of different wavelengths. The size of the box is referred to as the horizon, $\eta$, which is the longest distance that light could have traveled since the beginning of time. 
+The large wavelength modes have $\lambda>>\eta$ and hence these modes enter the horizon much later in the universe evolution, i.e. after matter domination has occurred. Therefore, the evolution of large scale modes is broken up into two sections: (i) the evolution of the modes as they pass through the epoch of equality at $a=a_{eq}$, and (ii) the evolution of the modes as they enter the horizon in the matter era. The converse is true for the small scale modes. In this instance, we have (i) modes entering the horizon during the radiation era and, (ii) the evolution of the small scale modes during the epoch of equality.
+
+The large scale modes have an almost constant gravitational potential, with only a $10\%$ drop in $\Phi$ during the radiation-matter era transition. Because of this, we can approximate the transfer function to be one for these modes. Small scale modes have a very different evolution. This can be understood by considering the dependence that matter growth has on both gravity and pressure, with pressure suppressing the growth and gravity of course, attracting more matter. Since the pressure is higher in the radiation era, we would expect a reduced growth of matter perturbations. Thus, $\delta_m$ grows logarithmically for small scales. Also, the opposing forces of pressure and gravity presents itself in the gravitational potential, as oscillations, with a large decay in potential due to the cosmological expansion. Notice that, although dark matter does not interact with radiation, the growth of dark matter is affected by the gravitational potential during the radiation era. The gravitational potential is constant for both large scale and small scale modes during the matter era, with the density perturbations scaling as $\delta_m \propto a$. 
+
+The transfer function is then set to 1 for $k<<k_{eq}$, where $k_{eq}$ is defined as the k modes that enter the horizon at $a=a_{eq}$. For $k>>k_{eq}$, the transfer function is,
+
+\begin{equation}\label{transfer func small scale}
+T(k) = 12 \left( \frac{k}{k_{eq}} \right)^{-2} In\frac{k}{8 k_{eq}}.
+\end{equation}
+
+Now that we have discussed the radiation and matter eras, let us move on to the late times in which the growth function plays a role. We have stated already that there is logarithmic matter growth in the radiation era while in the matter era, growth scales as $\delta \propto a$. This is true for a flat universe. The inclusion of curvature or dark energy causes the suppression of the growth of matter. Therefore, we expect the structures observed today to have evolved the most during the matter era, with little change in recent times. The growth function is expressed as,
+
+\begin{equation}\label{growth function}
+D(a) = \frac{5 \Omega_m H(a)}{2 H_0} \int_0^a \frac{da}{(a H(a)/H_0)^2}.
+\end{equation}
+
+Now that we have all the separate components contributing to the gravitational potential evolution, we can put it all together to obtain the following expression at late times,  
+
+\begin{equation}\label{grav pot}
+\Phi(\textbf{k}, a) = \frac{9}{10} \Phi_p (\textbf{k}) T(k) \frac{D(a)}{a}.
+\end{equation}
+
+\subsection{Final Power Spectrum}
+
+The expression for the final power spectrum is obtained by substituting equation \ref{grav pot} into Poisson's equation above, which then gives the relation between overdensities at late times and the primordial gravitational potential:
+
+\begin{equation}
+\delta_m(\textbf{k}, a) = \frac{3k^2}{\Omega_m H_0^2} \Phi_p (\textbf{k}) T(k) D(a).
+\end{equation}
+
+The matter power spectrum at late times is then, 
+
+\begin{equation}
+P_{mm}(k,a) = 2\pi^2 \delta_H^2 \frac{k^{n_s}}{H_0^{n_s+3}} T^2(k) \left(\frac{D(a)}{D(a=1)}\right)^2,
+\end{equation}
+
+where we have used the equation for the power spectrum describing primordial potential fluctuations, 
+
+\begin{equation}
+P_{\Phi \Phi} (k) = \frac{50 \pi^2}{9 k^3} \left(\frac{k}{H_0}\right)^{n_s - 1} \delta_H^2 \left(\frac{\Omega_m}{D(a=1)}\right)^2.
+\end{equation}
+
+We use $n_s=1$, which we can assume for a scale-invariant universe. This is a good approximation according to the latest Planck results, which sets $n_s= 0.9655 \pm 0.0062$ \cite{2019arXiv190602552P}. We therefore have the relation, $P \propto k$ for large scales. Equation \ref{transfer func small scale} gives $T(k) \propto k^{-2}$, for small scales and, substituting this in gives the corresponding power spectrum relation, $P \propto k ^{-3}$. This explains the shape of the power spectrum, which increases linearly at $k<k_{eq}$ with a peak at $k=k_{eq}$, and a decreasing spectrum for $k>k_{eq}$. 
+
+
+
+\section{Cosmic Microwave Background}
+
+%In the early universe, baryons, photons and all other particles existed in a hot and dense 'cosmic soup'. The baryons and photons were coupled through Compton scattering, while Coulombic forces kept the protons and electrons coupled as well. As the universe expanded, it cooled, eventually reaching temperatures low enough for neutral atoms to form. This is referred to as recombination and it is during this era that the photons decoupled from the baryon-photon fluid. Thus, approximately 380 000 years after the Big Bang, the universe was neutralized and newly decoupled
+CMB photons were released from the baryon-photon fluid after recombination and have been free-streaming until today from the `surface of last scattering'. This radiation is measured at millimetre wavelengths due to the stretching of the photon wavelength as the radiation traveled to Earth. The CMB has a temperature of 2.73 K and is nearly isotropic, with anisotropic fluctuations on the order of $10^{-5}$ \cite{1992ApJ...396L...1S}. In this section we will discuss the CMB temperature fluctuations and spectrum, and thereafter discuss the small scale anisotropies which we are interested in.
+
+\subsection{CMB Anisotropies}
+
+
+
+The CMB temperature fluctuations, expressed in terms of spherical harmonics, $Y_{lm}$ are given as,
+
+\begin{equation}
+\Theta(\theta, \phi) = \frac{\Delta T(\theta, \phi)}{T} = \sum_{l,m} a_{lm} Y_{l,m}(\theta, \phi)
+\end{equation}
+
+where $\theta, \phi$ are the regular polar coordinates which we have chosen to use in the labeling the cold and hot spots in CMB temperature maps. Analogous to the density perturbations (refer to equation \ref{expec value of delta delta for Pmm}), we define the expectation value of the $a_{lm}$'s as, 
+
+\begin{equation}
+\left< a_{lm} a_{l'm'}^* \right> = \delta_{ll'} \delta_{mm'} C_l,
+\end{equation}
+
+where the $C_l$ is the angular power spectrum. Notice that we are defining a 2D angular power spectrum here, because the CMB is a projected field, in contrast to the 3D matter power spectrum defined earlier. Although we have defined the angular power spectrum using spherical harmonic decomposition, we will later on define our $C_l$'s in the flat sky approximation such that 2D Fourier transforms will suffice. 
+ It is important to touch upon the issue of cosmic variance which arises due to the fact that at low $l$, we do not obtain much information about the variance, $C_l$. Thus, the angular power spectrum has a large uncertainty at low $l$, but is well sampled for higher $l$. This uncertainty is expressed as,
+
+\begin{equation}
+\left( \frac{\Delta C_l}{C_l}\right) = \sqrt{\frac{2}{2l+1}}.
+\end{equation}
+
+It is for this reason that $l(l+1) C_l/2\pi$ is often plotted. 
+
+\subsection{Analysis of the CMB Spectrum}
+
+The angle subtended by the Hubble radius at the surface of last scattering corresponds to the multipole, $l \sim 100$. At large angular scales (corresponding to low $l\leq 100$), the CMB does not evolve much due to the perturbation wavelength being larger than the Hubble radius at that time. Thus, large scale anisotropies seen today are very similar to what would have been observed at very early times.\\ 
+
+\noindent \textbf{The Sachs-Wolfe and Integrated Sachs-Wolfe Effects}\\
+
+An interesting phenomenon present at large scales is the Sachs-Wolfe (SW) effect which is the gravitational redshifting of CMB photons as they climb out of gravitational potential wells at the time of recombination \cite{Hu_2002}. This is interesting because it means that the cold regions which we observe today were in fact overdense at recombination. The photons lost a lot of energy in escaping the well, such that they are now colder than those regions that were underdense at recombination.\\
+ 
+Another effect is the integrated Sachs-Wolfe (ISW) \cite{Hu_2002}, which is shown at very low $l$. This is the result of a change in gravitational potential due to the universe undergoing a transition from radiation to matter domination and is known as ISW$^{early}$). Photons that fall into a gravitational well in the radiation era  have to escape the well in the matter dominated era. The late time counterpart of the effect occurs during the transition from matter to dark energy domination and is known as ISW$^{late}$.\\ %the well is deeper in the matter era because there is no longer radiation pressure opposing gravity
+
+\noindent \textbf{Acoustic Peaks}\\
+
+The Acoustic peaks occur at approximately $100 \leq l \leq 1000$. %which are a direct representation of the baryon acoustic oscillations (BAO's).
+ At the time of recombination, gravity and radiation pressure were acting in opposing directions, causing oscillations in the baryon-photon fluid. When the photons decoupled from the fluid, the oscillatory motion was imprinted in the CMB spectrum. The modes which entered the horizon at a time that allowed for the fluctuation to reach a maximum at recombination, are represented as the first of the acoustic peaks. This peak is followed by a trough, corresponding to modes which entered the horizon at a time which resulted in their reaching a minimum (amplitude of zero) when decoupling occurred. The second peak is due to modes which entered the horizon and underwent a full oscillation, such that they were once more at a peak during recombination. The cycle continues in this manner. The odd peaks, however, appear to be taller than the even peaks. This is because the photon-baryon fluid acts as a forced harmonic oscillator, as expressed below, with the force, $F$, due to gravity:
+
+\begin{equation}
+\ddot{\Theta}_0 + k^2 c_s^2 \Theta_0 = F.
+\end{equation} 
+
+The quantity, $c_s$ is the speed of sound of the fluid.\\
+
+\noindent \textbf{Silk Damping}\\
+
+The other effect is Silk damping which can be seen in the damping tail for small scales ($l \ge 1000$). This can be understood by relaxing the assumption that the baryon-photon fluid consists of particles moving together perfectly as a single fluid. In reality, the photons scatter off electrons and move a distance away, and we can quantify this distance using the mean distance that the photon moves in Hubble time, $H^{-1}$, 
+
+\begin{equation}
+\lambda_D = \frac{1}{\sqrt{n_e \sigma_T H}},
+\end{equation}
+
+where $n_e$ is the electron number density and $\sigma_T$ is the Thomson cross-section.
+Given this distance, it is clear that perturbations with wavelength, $\lambda <\lambda_D$, will get damped by the motion of the photons as they scatter. A more intuitive understanding of this is that the photons mix between hot and cold regions, thereby smoothing out temperature fluctuations \cite{1968ApJ...151..459S} \cite{Hu_1997}. This translates to damping at high $l$ in the CMB spectrum. 
+
+
+\subsection{Scattering Effects}
+
+Everything that was discussed so far in this section focused on the CMB anisotropies at the surface of last scattering. We refer to these as primary anisotropies. There exist secondary anisotropies as well, which occur between the last scattering surface and today, due to gravitational \cite{white2002tacmb1} and scattering effects. We will discuss the scattering effects in detail. 
+
+ Scattering occurs in regions such as the ICM, where the temperature is hot enough for electrons to be ionized. Scattering also occurs at reionization. Let us take the example of the CMB photons passing through the hot ICM. This causes a distortion of the CMB spectrum as photons are inverse Compton scattered by the ionized electrons and is known as the SZ effect. This effect is dominant on small angular scales and consists of two contributions, viz. the thermal SZ which probes projected pressure distributions \cite{Cooray_2000} and the kinetic SZ (kSZ) which probes bulk peculiar velocities of clusters due to the Doppler shifting of the CMB signal \cite{Soergel_2016}\cite{Sunyaev:1972eq} \cite{Sunyaev:1980nv}. Although the kSZ is much smaller than the tSZ, it plays an important role in studying the contribution that gas distributions in LSS have on CMB anisotropies at small scales. We will discuss both effects below. \\
+
+%Another instance of ionization occurs at the EoR, at a redshift of about $z=10$.
+%Note that it is typically only $\leq 1\%$ of photons that are inverse Compton scattered when passing through the centre of a cluster \cite{Soergel_2016} [SZ 1970, 1972]
+
+\noindent \textbf{Thermal Sunyaev-Zel'dovich Effect}\\
+
+The intensity of a single photon is given by the Planck's radiation formula, 
+
+\begin{equation}\label{plancks radiation one photon}
+I_0(\nu_0)=\frac{2h\nu_0^3}{c^2}n_0,
+\end{equation}
+
+where $I_0$ is the intensity of the photon with frequency, $\nu_0$, $h$ is the Planck's constant and the quantity, $n_0=(e^{h\nu_0/k_BT_{rad}}-1)^{-1}$, is the Bose-Einstein distribution of photons. The scattering of photons will cause a change in the photon distribution, which changes the observed CMB spectrum. This change can be written analogously to equation \ref{plancks radiation one photon} as,
+
+\begin{equation}\label{delta I eqn}
+\Delta I(x)=\frac{2hx^3}{c^2}\left(\frac{k_BT_{rad}}{h}\right)^3\Delta n,
+\end{equation}
+
+where $x=\frac{h\nu}{k_BT_{rad}}$, with the Boltzmann's constant, $k_B$. $T_{rad}$ is the CMB temperature of $2.73 K$ and $\Delta n$ is the spectral change caused by scattering. 
+
+Now, the Kompaneets equation describes the rate of change of photon number assuming that the electrons are non-relativistic and that energy transfer between scattering photons and electrons is small. The Kompaneets equation is given by \cite{Nozawa_2005},
+
+\begin{equation}\label{kompaneets eqn}
+\begin{aligned}
+%&\frac{\partial n}{\partial t}=n_e \sigma_T c \frac{k_BT_e}{mc^2}\frac{1}{x_e^2}\frac{\partial}{\partial x_e}\left[x_e^4\left(\frac{\partial n}{\partial x_e}+n+n^2\right)\right]\Rightarrow\\
+&\frac{\partial n}{\partial y_c}=\frac{1}{x_e^2}\frac{\partial}{\partial x_e}\left[x_e^4\left(\frac{\partial n}{\partial x_e}+n+n^2\right)\right],
+\end{aligned}
+\end{equation}
+
+ where $T_e$ is the electron temperature, $x_e=\frac{h\nu}{k_BT_e}$, $\sigma_T$ is the Thomson cross section and the Compton y parameter is given as \cite{2019arXiv191210152L},
+
+\begin{equation}
+y_c=\int dl n_e \sigma_T  \frac{k_BT_e}{m_ec^2}.
+\end{equation}
+
+ This parameter describes the fractional change in energy of a photon as it passes through a region of matter of cross section, $\sigma_T$, and electron number density, $n_e$, that is integrated over the line-of-sight distance , $dl=cdt$. 
+ 
+Electron temperatures in the intracluster medium are typically very high, allowing us to make the approximation, $x_e=\frac{h\nu}{k_BT_e} \ll 1$, which gives $\frac{\partial n}{\partial x} \gg n,n^2$. Thus, equation \ref{kompaneets eqn} becomes
+
+\begin{equation}
+\frac{\partial n}{\partial y}=\frac{1}{x_e^2}\frac{\partial}{\partial x_e}\left[x_e^4\frac{\partial n}{\partial x_e}\right].
+\end{equation}
+
+Typically we have $T_e \gg T_{rad}$. As scattering occurs, the temperature of the electrons decrease which leads to the increase in photon temperature, thereby giving rise to the tSZ spectrum distortion. Thus, the change in electron temperature is equal to the change in photon temperature, allowing us to make the replacement, $x_e=x$. Using $n=(e^{x}-1)^{-1}$ we can carry out the derivative. With small $y_c$ approximations, for regions with lower temperature and optical depth, we have the non-relativistic spectral change, $\Delta n_{NR}$
+
+\begin{equation}
+\Delta n_{NR}=xy_c\frac{e^x}{(e^x-1)^2}\left(x\frac{e^x+1}{e^x-1}-4\right),
+\end{equation}
+
+This expression, expanded to first order perturbations to account for relativistic effects, is given by 
+
+\begin{equation}
+\Delta n=xy_c\frac{e^x}{(e^x-1)^2}\left(x\frac{e^x+1}{e^x-1}-4\right)(1+\delta_{SZ}(x,T_e))
+\end{equation}
+
+where $\delta_{SZ}(x,T_e)$ is the relativistic correction. Substituting this into equation \ref{delta I eqn} gives the final expression for the tSZ effect,
+
+
+\begin{equation}
+\frac{\Delta I_{TSZ}}{I}= x^4 y_c \frac{e^x}{(e^x-1)^2}\left(x\frac{e^x+1}{e^x-1}-4\right)(1+\delta_{SZ}(x,T_e)),
+\end{equation}
+
+for $I=\frac{2h}{c^2}\left(\frac{k_BT_{rad}}{h}\right)^3$. In the Rayleigh-Jeans limit, $x \ll 1$ for small frequencies, so that we can use Taylor expansions $e^x \approx 1+x$ to give
+
+\begin{equation}
+\frac{\Delta I_{TSZ}}{I}=2y_c.
+\end{equation}
+\\
+
+\noindent \textbf{Kinetic Sunyaev-Zel'dovich Effect}\\
+
+The bulk motion of the cluster relative to the CMB causes a Doppler shift which, in the non-relativistic limit, is expressed as the CMB spectral distortions \cite{1998PhRvD..58d3001J} \cite{Ma_2002} \cite{2014PhLB..735..402M},
+
+\begin{equation}\label{p(theta) temp distortion ksz}
+p(\boldsymbol{\theta})\equiv \frac{\delta T_{KSZ}}{T_{rad}}=\int_{\chi(0)}^{\chi(r_e)} n_e\sigma_Te^{-\tau}\left[\hat{\theta}.\frac{\mathbf{v}(\chi \boldsymbol{\theta},\chi)}{c}\right]a(\chi)d\chi,
+\end{equation}
+
+%\begin{equation}\label{temp distortion due to ksz}
+%\frac{\delta T_{KSZ}}{T_{rad}}=\tau \frac{\nu_r}{c}cos\theta
+%\end{equation}
+where \textbf{v} is the bulk velocity at position $\mathbf{x}(\boldsymbol{\theta},\chi)=(\chi \boldsymbol{\theta},\chi)$, $\boldsymbol{\theta}= (\theta_1, \theta_2, 0)$ is the 2D vector determining the position of a source in the transverse direction and $\hat{\theta}= (\theta_1, \theta_2, 1)$ is the 3D unit vector in the direction of observation \cite{1998PhRvD..58d3001J}. Thus, for small angles, $\theta_1,\theta_2$, we can approximate $\hat{\theta}= (0, 0, 1)$. The integration limits extend from the present time up to reionization. Note that the comoving distance has explicit redshift dependence, such that $\chi = \chi(z)$. However, we have removed this explicit dependence throughout this chapter.
+
+%We can write this in terms of intensity using Planck's radiation formula to obtain 
+%\begin{equation}
+%\frac{\delta I_{KSZ}}{I}=-x^4 \frac{e^x}{(e^x-1)^2}\tau \frac{\nu_r}{c}cos\theta
+%\end{equation}
+
+The optical depth, $\tau$, is \cite{Bianchini_2016} % the ksz in modified gravity paper
+
+\begin{equation}
+\tau(z) = \sigma_T c \int_0^z dz \frac{\bar{n}_e (z)}{(1+z) H(z)},
+\end{equation}
+
+where $\bar{n}_e$ is the mean free-electron density. The electron number density can be computed by taking the mean gas density and dividing it by the mean mass of a single electron, $\mu_e m_p$. We of course have to include the electron ionization fraction as well to determine the amount of gas that consists of electrons. The expression for $\bar{n}_e$ is then] \cite{Shaw_2012},
+
+\begin{equation}
+\bar{n}_e =\frac{x_e \rho_g(z)}{\mu_e m_p},
+\end{equation}
+
+with $\rho_g(z) = \rho_{g0} (1+z)^3$, $\rho_{g0}=\Omega_{b0}\rho_{c0}$. The ionization fraction, $x$, is computed assuming that hydrogen is completely ionized at low redshifts, and is therefore dependent only on the helium ionization \cite{Shaw_2012}, %Deconstructing the kSZ power spectrum
+
+\begin{equation}
+x_e = \frac{1-Y_p (1-N_{He}/4)}{1-Y_p/2},
+\end{equation}
+
+where $Y_p$ is the primordial helium abundance, and $N_{He}$ is the number of ionized helium electrons with $N_{He} = 0, 1, 2$ corresponding to ionization fractions, $x_e = 0.86, 0.93, 1$, for neutral, singly ionized and fully ionized helium. We are assuming neutral helium, so that the ionized electrons are contributed from hydrogen only. 
+
+Equation \ref{p(theta) temp distortion ksz} can be written with an explicit dependence on the visibility function, which defines the probability of photons scattering off ionised electrons. This function is expressed as \cite{Shaw_2012},
+\begin{equation}
+g(\eta)=-\dot{\tau}e^{-\tau} \Rightarrow g(\chi)= \overline{n}_e(\chi) \sigma_Ta(\chi),
+\end{equation} 
+
+where we have made the approximation of $e^{-\tau} \simeq 1$. Substituting this into equation \ref{p(theta) temp distortion ksz} and expanding the electron number density to second order, so that $n_e = \bar{n}_e(1+\delta)$, we have 
+
+\begin{equation}\label{p as a function of theta}
+p(\boldsymbol{\theta}) =-\frac{1}{c}\int_{\chi(0)}^{\chi(r_e)} d\chi g(\chi)\hat{\theta}.\boldsymbol{q}(\boldsymbol{x}(\boldsymbol{\theta},\chi)),
+\end{equation}
+
+where $\boldsymbol{q}(\boldsymbol{x})=(1+\delta(\boldsymbol{x}))\boldsymbol{v}(\boldsymbol{x})$ is the product of the electron density and peculiar fields in real space. Note that the effect up to first order neglects the electron density and is a measure of the Doppler effect, which dominates on larger scales and causes only a shift in the CMB spectrum with no spectral distortions \cite{Soergel_2016}. \\
+\noindent We can use Fourier conventions to find $q(\boldsymbol{k})$.
+
+\begin{equation}
+\boldsymbol{q}(\chi \boldsymbol{\theta}, \chi) = \int \frac{d^3 \boldsymbol{k}}{(2\pi)^3} e^{i \boldsymbol{k}.\boldsymbol{x}} \boldsymbol{q}(\boldsymbol{k}, \chi) = \int \frac{d^2 \boldsymbol{k}^\perp}{(2\pi)^2} e^{i \boldsymbol{k}^\perp.\boldsymbol{\chi}_\perp} \int \frac{dk^\parallel}{2\pi} e^{i k^\parallel \chi} \boldsymbol{q}(\boldsymbol{k}^\perp, k^\parallel, \chi),
+\end{equation}
+
+where the second equality was obtained by separating $\boldsymbol{k}$ into its components, $
+\boldsymbol{k}^\perp$ and $k^\parallel$. We have also introduced the quantity, $\boldsymbol{\chi}^{\perp}$ which is written analogously to equation \ref{ang diam dist general eqn} as $\boldsymbol{\chi}^{\perp} = \boldsymbol{\theta} \chi $. Writing this expression with its Fourier conjugates gives the following relation which will be used many times 
+
+\begin{equation}\label{kperp l relation}
+\boldsymbol{k}^\perp = \frac{\boldsymbol{l}}{\chi}.
+\end{equation}
+
+
+
+Substituting this into equation \ref{p as a function of theta}, we have
+
+\begin{equation}\label{p_kSZ of theta with l}
+p(\boldsymbol{\theta})=-\frac{1}{c}\int d\chi \frac{g(\chi )}{\chi ^2}\int \frac{d^2 \boldsymbol{l}}{(2\pi)^2} e^{i \boldsymbol{l}.\boldsymbol{\theta}} \int \frac{dk^\parallel}{2\pi} e^{ik^{\parallel}\chi }\hat{\theta}.\boldsymbol{q}(\boldsymbol{k}^\bot,k^\parallel,\chi ).
+\end{equation}
+
+Now, using the fact that $\boldsymbol{l}$ is the Fourier conjugate of $\boldsymbol{\theta}$ once more, we obtain the relation between the kSZ momentum in $\theta$ space and $l$ space,
+
+\begin{equation}\label{p of theta related to p of ell}
+p(\boldsymbol{\theta}) = \int \frac{d^2 \boldsymbol{l}}{(2\pi)^2} p(\boldsymbol{l}).
+\end{equation}
+
+By comparing equations \ref{p_kSZ of theta with l} and \ref{p of theta related to p of ell}, the equation for $p(\boldsymbol{l})$ is given by
+
+\begin{equation}\label{final p(l) kSZ equation}
+p(\boldsymbol{l})=-\frac{1}{c}\int d\chi  \widetilde{g}(\chi ) \int \frac{dk^\parallel}{2\pi} e^{ik^{\parallel}\chi } \boldsymbol{q}^{\parallel}(\boldsymbol{k}^\bot,k^\parallel,\chi),
+\end{equation}
+
+where we have defined $\widetilde{g}(\chi)=\frac{g(\chi )}{\chi ^2}$ and $\boldsymbol{q}^{\parallel}(\boldsymbol{k}^\bot,k^\parallel,\chi) = \delta_e \circledast v_e^\parallel (\boldsymbol{k}) $, which is the convolution of the two fields in k space. We have assumed $\delta_e >>1$ so as to approximate $1 + \delta_e \approx \delta_e$. The kSZ signal, $\delta T_{KSZ}$ is then proportional to the line of sight momentum.
+
+We have used a subscript, $e$, to specify that we are evaluating the electron density and bulk peculiar velocity fields. However, we assume that the electron and baryon overdensities are equivalent due to neutrality and high electron ionization, and assume as well that the baryon density distribution matches that of dark matter \cite{2014PhLB..735..402M} \cite{1998PhRvD..58d3001J} \cite{Dodelson_1995}. This approximation does not hold true on small scales due to the thermal pressure of baryons reducing gas density fluctuations at non-linear scales \cite{Shaw_2012}. Star formation and radiative cooling can also modify the gas density power spectrum \cite{Shaw_2012} \cite{Jing_2006} \cite{Rudd_2009} \cite{Casarini_2010}, so that it is not safely approximated by the matter density power spectrum. In this thesis, we have ignored all such effects of baryon physics, such that the approximation, $\delta_e = \delta_m$, is valid. 
+
+
+To obtain an estimate of the velocity field on linear scales, we use the continuity equation, expressed as $\dot{\delta}_m + ikv_m =0$, which gives the relation between velocity and density fluctuations
+
+\begin{equation}\label{v related to delta continuity eqn}
+\boldsymbol{v}_m(\boldsymbol{k},z)=\frac{ifaH\delta_m(\boldsymbol{k},z)}{k^2}\boldsymbol{k}.
+\end{equation}
+
+The linear growth rate, $f$ is expressed as 
+
+\begin{equation}
+f = \frac{a}{da} \frac{dD}{D} = \Omega_m(z)^\gamma
+\end{equation} 
+
+where in the second equality we have used an approximation which works well and assumes $\gamma \approx 0.55$ \cite{2019arXiv190602552P}. 
+
+\section{Neutral Hydrogen}\label{HI section}
+
+Hydrogen is the most abundant element in the universe, making up 75\% of the total baryonic matter. It was the first neutral atom to form in the recombination era, due to it simply consisting of a proton and electron, and it maintained neutrality until the epoch of reionization (EoR). When the first stars began to form, the UV radiation which was emitted, reionized the universe. At this time, structures that contained a large amount of matter were able to shield the inner regions from the UV radiation, thereby maintaining the neutrality of hydrogen in the larger structures. It is because of this that LSS such as galaxies and clusters contain large amounts of neutral hydrogen. Thus, neutral hydrogen is a biased tracer of dark matter density \cite{Bharadwaj_2001} \cite{Wyithe_2007}. HI can be used to probe different stages in the evolution of the universe, including dark ages and the EoR \cite{Datta_2007}. 
+ 
+
+\subsection{HI Lines}
+
+One way of observing the HI signal is through the transition of the electron between the n=2 state and the ground state (n=1), which is referred to as the Lyman-alpha transition. If an HI region absorbs radiation emitted by a quasar, for instance, the electrons may absorb the photons and thereby get excited to a higher energy state. This will be featured as an absorption line, which we can then measure.
+
+An alternative method of observing the HI signal is through the measurement of the 21 cm line that results from the spin flip transition of the electron in the hydrogen atom. Because hydrogen in its ground state has a higher energy if its spin is aligned with the proton, rather than misaligned, the electron undergoes a forbidden transition. Although this transition is rare, the abundance of HI, even at low redshifts, still allows for enough 21 cm radiation to be produced that will allow for the probing of the HI signal. This 21 cm signal was first detected in 1951 \cite{1951Natur.168..356E}.
+
+\subsection{Intensity Mapping}
+
+
+Mapping the HI emission from individual galaxies requires very sensitive radio telescopes with high angular resolution. As a result, the sky coverage is limited which could lead to large shot noise at low redshifts. Although galaxy redshift surveys, such as DES %\cite{Abbott_2019} 
+and Euclid \cite{Racca_2016}, have provided stringent constraints on cosmological parameters, we discuss an alternative to such surveys, which is more cost and time efficient. Intensity mapping covers large sky areas in a reduced time by integrating all photons detected, thereby eliminating the problems which arise from resolving individual galaxies \cite{Wyithe_2007}. We obtain three dimensional information of power spectra by measuring a range of angular fluctuations at different frequencies, which correspond to different redshifts. 
+
+Although intensity mapping provides us with numerous advantages, there are shortcomings as well, one of which is foreground contaminations. Foregrounds are long wavelength, smoothly varying galactic signals that propagate in the line-of-sight and which are up to five orders of magnitude larger than the 21 cm signal \cite{Shaw_2015}. These cause contamination of the signal which we are trying to measure. A further limitation of intensity mapping experiments is that the angular fluctuations that can be probed using the radio interferometer are limited by the longest and shortest baselines while the radial fluctuations are limited by the bandwidth and frequency channel \cite{Bull_2015}.
+
+This technique is employed by many experiments currently, such as the Canadian Hydrogen
+Intensity Mapping Experiment (CHIME) \cite{2014era..conf10102V},
+the Baryon acoustic oscillations In Neutral Gas Observations experiment (BINGO) \cite{10.1093/mnras/stt1082} and Tianlai \cite{CHEN_2012} as well as MeerKAT \cite{2012AfrSk..16..101B} and
+the Square Kilometer Array \cite{2015aska.confE..19S}. Upcoming experiments such as the Hydrogen Intensity and Real-time Analysis eXperiment
+(HIRAX) \cite{2016SPIE.9906E..5XN} will also make use of intensity mapping. Large volume intensity mapping surveys
+are expected to result in cosmological constraints competitive with those from galaxy redshift
+surveys \cite{Bull_2015}.
+
+We will focus on the use of HIRAX which will be operational in the Karoo in the next few years. HIRAX will consist
+of 1024 dishes that are 6 m in diameter, which will be arranged in a close-packed structure that
+makes use of redundant baselines.
+
+
+\subsection{HI Signal}
+
+Let us consider the density field of neutral hydrogen. We mentioned already that the HI signal is a biased tracer of dark matter density. This HI bias factor is called $b_{HI}$. Also, the signal measured using radio telescopes has been redshifted due to redshift-space distortions (RSD). The RSD factor can be understood by considering an overdense region with a galaxy closest to us in our line-of-sight, and a galaxy furthest away. Both galaxies will be moving towards the centre of the overdense region. Prior to the collapse of this structure, the real space arrangement of these galaxies is circular. In redshift-space, we will observe the galaxy closest to us as further away than it is in real space, and likewise the galaxy furthest from us will be blueshifted so that it appears closer. Thus, the circular arrangement in real space becomes a distorted ellipse in redshift-space.
+
+ This RSD factor together with the HI bias results in the following expression, 
+
+
+\begin{equation}\label{delta HI to delta m}
+\delta_{HI}(\boldsymbol{k})=\delta_m(\boldsymbol{k})[b_{HI}+f\mu_k^2],
+\end{equation}
+
+where $\delta_{HI}$ is the density contrast of the HI signal intensity. Now, the signal intensity measured from radio telescopes is related to temperature via Rayleigh-Jean's approximation, $I_\nu=2k_BT\frac{\nu^2}{c^2}$, for long wavelengths such as 21 cm. Since this approximation shows that the signal intensity is proportional to temperature, we have
+ 
+\begin{equation}\label{delta 21 ito k}
+\begin{aligned}
+\delta T_{21}(\boldsymbol{k};z_i)&=\overline{T}(z_i)\delta_{HI}(\boldsymbol{k};z_i)
+\\&=\overline{T}(z_i)\delta_m(\boldsymbol{k};z_i)[b_{HI}+f\mu_k^2]
+\\&=\overline{T}(z_i)D(z_i)\delta_m(\boldsymbol{k};z=0)[b_{HI}+f\mu_k^2],
+\end{aligned}
+\end{equation}
+
+where the third equality comes from removing redshift dependance from $\delta_m$ so that we can consider the matter density today and multiply this by the growth function, which  has been described already in equation \ref{growth function}. The mean temperature is given by \cite{Bull_2015}
+
+\begin{equation}\label{mean 21 cm temp}
+\bar{T} \approx 566h \left(\frac{H_0}{H(z)}\right)\left(\frac{\Omega_{HI}}{0.003}\right)(1+z)^2 \mu K.
+\end{equation}
+
+The HI bias is expressed as \cite{Bull_2015}
+
+\begin{equation}\label{HI bias}
+b_{HI} (z) = \frac{\int_{M{min}}^{M_{max}} dM M_{HI} \frac{dn}{dM} b(z, M)}{\int_{M{min}}^{M_{max}} dM M \frac{dn}{dM}},
+\end{equation}
+
+where $b(z, M)$ is the halo bias and $\frac{dn}{dM}$ is the proper halo mass function. The values for the HI bias are equal to $0.84, 1.49, 2.03$ for redshifts $0, 1, 2$ \cite{Villaescusa_Navarro_2018}. Thus, in the HIRAX range of $z=0.8-2.5$, it is safe to make the approximation that $b_{HI} =1$.
+
+The variable $l$ was used when discussing the CMB spectrum and kSZ momentum signal. We will now define more formally the observational coordinates, $l$ and $y$ which, in a comoving volume with width $\Delta z$, centered at redshift $z_i$, is given by \cite{Bull_2015}
+
+\begin{equation}
+\delta_{21} (\boldsymbol{l}, y; z_i) = \int d^2\boldsymbol{\theta} d\bar{\nu} e^{-i(\boldsymbol{l}.\boldsymbol{\theta}+ y\bar{\nu})} \delta_{21}(\boldsymbol{\theta}, \nu),
+\end{equation}
+
+
+
+where $\bar{\nu}=\frac{\nu}{ 1420 MHz}= \frac{1}{1+z}$ is the dimensionless frequency. This expression shows once more than $l$ is the Fourier conjugate of $\theta$. Likewise, $y$ is the Fourier conjugate of $\bar{\nu}$, such that $l$ and $y$ operate in angular and radial directions, respectively. The HI fluctuation, when expressed in observational coordinates, is then defined for a range of $l$ and $y$ values within the specified frequency bin. These limits for $l$ and $y$ are very useful in intensity mapping, since we do not obtain 3D information of individual galaxies. The 21 cm signal expressed as a function of $l,y$ is related to the $\boldsymbol{k}$ components as
+
+\begin{equation}\label{delta 21 ito y and l final eqn}
+\delta T_{21}(\boldsymbol{l},y;z_i)=\frac{\delta T_{21}(\boldsymbol{k}^\bot,k^\parallel;z_i)}{(\chi )^2r_{\nu}},
+\end{equation}
+
+where the expression for $y$ relates to $k^\parallel$ as
+
+\begin{equation}\label{y eqn}
+y=k^\parallel r_\nu,
+\end{equation}
+
+with the redshift dependent quantity $r_\nu=\frac{c(1+z_i)^2}{H(z_i)}$. This equation is the analogue of equation \ref{kperp l relation}. Note that in equation \ref{delta 21 ito y and l final eqn} we are defining the temperature fluctuation at the central redshift, $z_i$, and assuming that the signal does not vary much over the redshift bin.
+
+
+
+\section{Basics of Radio Interferometry}
+
+\subsection{Visibility Equation}
+
+Interferometers consist of numerous dishes and the separation between each pair is called a baseline. The baselines sample different points on the $uv$ plane, where $(u, v) = \frac{\boldsymbol{b}}{\lambda}$, are coordinates of baselines in wavelength units that account for east-west and north-south components of the baselines, respectively. Interferometers should aim to be well sampled on the uv plane since they cannot produce sky images and instead take the Fourier transform of the sky intensity using different baselines. This is captured in the visibility equation given as \cite{Zaldarriaga_2004},
+
+\begin{equation}\label{visibility eqn}
+V(\boldsymbol{u}) = \int d^2 \boldsymbol{\theta} A(\boldsymbol{\theta}) I(\boldsymbol{\theta}) e^{-2\pi i \boldsymbol{u}.\boldsymbol{\theta}}, 
+\end{equation}
+
+which describes the visibility for an interferometer measuring the HI temperature fluctuations with primary beam, $A$. The exponential factor, $e^{-2\pi i \boldsymbol{u}.\boldsymbol{x}}$, is the phase difference of signals between two antennae.
+
+The baseline vector $\boldsymbol{u}$ can be written as $\boldsymbol{l} = 2\pi \boldsymbol{u}$. The limits for $u$ are determined by the longest and shortest baselines, such that $u_{min}, u_{max} = \frac{D_{min}}{\lambda}, \frac{D_{max}}{\lambda}$ for shortest and longest baselines, $D_{min}$ and $D_{max}$, respectively. The shortest baseline is equal to the dish diameter. 
+
+\subsection{Interferometer Noise}
+
+The detector noise is assumed to be gaussian with a standard deviation that is determined by a modified version of the radiometer equation, \cite{Bull_2015}
+
+\begin{equation}
+\sigma = \frac{T_{sys}}{\sqrt{\Delta \nu t_u}} \frac{\lambda^2}{A_{eff}},
+\end{equation}
+
+where $\Delta \nu$ is the channel width, $t_u$ is the integration time and $T_{sys}$ is the system temperature, which is the sum of the instrumental and sky noise. The factor $\frac{\lambda^2}{A_{eff}}$, with effective area, $A_{eff}$, is proportional to the field-of-view (FOV) that sets the telescope resolution in $uv$ space. 
+Although the noise is uncorrelated for different baselines, the visibilities are correlated for distances in $uv$ space that are smaller than $\delta_u \delta_v \sim 1/FOV$. We can therefore average visibilities that fall within the area $\delta_u \delta_v$ such that a larger number of baselines falling within the $\delta_u \delta_v$ area will reduce the noise. Accounting for the sky rotation within a full day, we can write the noise as a function of the average number density of baselines, $n(u)$ instead, so that the noise standard deviation for a resolution area, $(\Delta_u)^2$  is \cite{Bull_2015},
+
+\begin{equation}
+\sigma_T(\boldsymbol{u}, v) = \frac{\lambda^2 T_{sys}}{A_{eff} \sqrt{\Delta \nu t_p n(u) (\Delta_u)^2}},
+\end{equation}
+
+with the total observation time for a sky patch equal to $t_p$ and $n(u) = \frac{N_d(N_d-1)}{2\pi( u_{max}^2 - u_{min}^2 )}$, where $N_d$ is the number of dishes. Note that for more pointings, we are increasing the survey area, $S_{area}$. The number of patches that the telescope observes is expressed as $N_{patches} =S_{area}/FOV$ so that the total observation time is $t_{tot}= t_p N_{patches}$. The noise power spectrum can then be written as \cite{Bull_2015},
+
+\begin{equation}\label{Interferom noise eqn}
+N_l^{HI} = \frac{T_{sys}^2}{\nu_{21} n_{pol} t_{tot}} \frac{\lambda^4 N_{patches}}{A_{eff}^2 } \frac{1}{N_b n(u)}
+\end{equation}
+
+with the number of polarisations, $n_{pol}$, and number of beams, $N_b$. 
+
+\subsubsection{Telescope limitations}\label{sec:telescope limits chap2}
+
+The limitations set by the telescope must be considered as well. The FOV and angular resolution constrain the angular modes to which we have access, while foregrounds affect the minimum radial $k$ modes. The limitation on the maximum radial mode is due to the uncorrelated velocities washing out small scale signals past the cut-off set by the non-linear dispersion factor, $\sigma_{NL}$ \cite{Bull_2015}. The equations governing the $k^\perp$ and $k^\parallel$ limits for intensity mapping experiments are \cite{Bull_2015} \cite{Shaw_2015},
+
+\begin{subequations}\label{telescope limits eqns}
+	\begin{align}
+	\begin{split}
+	k^\parallel_{min} & \sim  \frac{1}{r_\nu \Delta \bar{\nu}_{tot}}
+	\end{split}\\
+	\begin{split}
+	k^\parallel_{max} & \sim \frac{1}{\sigma_{NL}} \sim 0.14 \textrm{ Mpc}^{-1}
+	\end{split}\\
+	\begin{split}
+	k^\perp_{min} & \sim \frac{2 \pi u_{min}}{\chi}
+	\end{split}\\
+	\begin{split}
+	k^\perp_{max} & \sim \frac{2 \pi u_{max}}{\chi },
+	\end{split}\\
+	\end{align}
+\end{subequations}
+
+where $\Delta \bar{\nu}_{tot}$ is the dimensionless quantity equal to the bandwidth for a given redshift bin. In the second line, we have set $\sigma_{NL}$ to $7$ Mpc to obtain the value for $k^\parallel_{max}$ \cite{Bull_2015}. Notice that three limits, with the exception of $k^\parallel_{max}$, are redshift dependent so that the modes that can be accessed by the telescope change for different redshift bins. 
+
+\section{Summary}
+
+In this chapter we have given an overview of general relativity and the FRW metric in setting up the cosmology that is used for a $\Lambda CDM$ model. The important concepts of redshift and scale factor were applied to the equation of state and density parameters, which were discussed in the context of the evolution of the universe. We then discussed four different measurements of distance that are commonly used in cosmology, and defined the important concept of a comoving horizon. The theory of inflation was mentioned as an explanation of the density perturbations that eventually gave rise to LSS. Inflation was also described in the context of the horizon problem. An explanation of the cold dark matter power spectrum was provided with details of the evolution of the gravitational potential of modes entering the horizon. CMB anisotropies were described in the context of the CMB spectrum. Thereafter, the small scale scattering perturbations that we focus on in this thesis, were discussed in detail. This was followed with an explanation of neutral hydrogen and 21 cm intensity mapping, which is used by many radio telescopes including our experiment, HIRAX. Lastly, radio interferometers were briefly described in the context of the visibility signal and the detector noise.
