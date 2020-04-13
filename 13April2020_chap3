@@ -1,0 +1,1451 @@
+
+\chapter{Cross-Correlation between KSZ and HI Intensity Mapping} % Main chapter title
+
+\label{Chapter3} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+In this chapter, we explore the cross-correlation between the kSZ and HI signals using a bispectrum estimator. Other two-point estimators, such as the direct correlation between the kSZ momentum and HI density, will not work due to the signals canceling out. Therefore, we construct a bispectrum estimator by correlating the kSZ momentum field with a product of the HI density and velocity fields.
+
+The individual kSZ and HI signals are studied first to get more physical insight into them, before constructing the estimator. We explore the kSZ effect in detail by constructing the angular power spectrum and discussing the effective modes for the detection of the signal. %This spectrum is computed in the Limber approximation which assumes wide redshift bins, but the full case is also considered which can be applied to narrow redshift bins. 
+We then discuss the HI signal in the context of intensity mapping with HIRAX, after which we compute the HI intensity signal-to-noise. Thereafter, we set up the HI momentum field and discuss the signal and noise. 
+
+After discussing the kSZ and HI fields separately, the HI-HI-kSZ bispectrum signal and noise are derived, and forecasts for the bispectrum signal-to-noise are shown for Advanced ACT correlated with HIRAX and SKA1-MID.
+
+In this chapter, we have assumed a spatially flat, $\Lambda CDM$ model of the universe with the following cosmological parameters: $\Omega_{M}=0.3, \Omega_{\Lambda}=0.7, h=0.67, \Omega_{b} = 0.049, \sigma_8 = 0.9$ and $n_s = 1.0$. 
+
+\section{KSZ Effect}
+
+The first order kSZ signal is referred to as the Doppler effect \cite{Alvarez_2016}, which assumes negligible density fluctuations and is dominant on large angular scales. To second order, using only linear density and velocity fields, we have the linear kSZ signal, which is referred to as the Ostriker-Vishniac (OV) effect \cite{1986ApJ...306L..51O}. The full kSZ signal is inclusive of both linear and non-linear scales, such that non-linear density fields are convolved with linear velocity fields \cite{Ma_2002}. In this thesis, we have not considered non-linear effects. Thus, any mention of the kSZ is in reference to the OV effect. Any reference to the full kSZ will be explicitly referred to as the non-linear kSZ. 
+
+
+\subsection {Signal}
+
+Let us return to equation \ref{final p(l) kSZ equation} and explicitly write the equations for two separate kSZ momentum fields. Note that we have used the convention of setting $c=1$ in all equations,
+
+\begin{subequations}
+\begin{equation}
+p(\boldsymbol{l})=-\int d\chi_1 \widetilde {g}(\chi_1) \int \frac{dk^{\parallel}}{2\pi}e^{ik^{\parallel} \chi_1}\int \frac{d^3k_v}{(2\pi)^3}\delta_e(\boldsymbol{k}_\delta, z_1)\boldsymbol{v}_e^\parallel(\boldsymbol{k}_v, z_1),
+\end{equation}
+\begin{equation}\label{p kSZ of l2}
+p(\boldsymbol{l}')=-\int d\chi_2 \widetilde {g}(\chi_2) \int \frac{dk'^{\parallel}}{2\pi}e^{ik'^{\parallel} \chi_2}\int \frac{d^3k'_{v}}{(2\pi)^3}\delta_e(\boldsymbol{k}_\delta', z_1)\boldsymbol{v}_e^\parallel(\boldsymbol{k}_v', z_1),
+\end{equation}
+\end{subequations}
+
+where we have defined $\chi_1 = \chi(z_1)$ and $\chi_2 = \chi(z_2)$. The $\boldsymbol{k}$ vectors at which the density and velocity fields are evaluated, are explicitly labeled as $\boldsymbol{k}_\delta$ and $\boldsymbol{k}_v$, respectively. The vectors are related to each other as $\boldsymbol{k}_\delta = \boldsymbol{k} - \boldsymbol{k}_v$ and $\boldsymbol{k}'_\delta = \boldsymbol{k}' - \boldsymbol{k}'_v$, with $\boldsymbol{k} = \boldsymbol{l}/\chi_1$ and $\boldsymbol{k}' = \boldsymbol{l}'/\chi_2$. 
+
+The two-point correlation gives a constraint which can be seen if we take the $p(\boldsymbol{l})$ equation, for instance. The constraint gives $\boldsymbol{l}/\chi_1 = \boldsymbol{k}_\delta + \boldsymbol{k}_v \Rightarrow k^\parallel_\delta + k^\parallel_v = 0$. This means that the density and velocity fields have equal line-of-sight contributions in opposite directions. 
+
+%The kSZ temperature fluctuation is $\delta T_{kSZ}(\boldsymbol{l}) = T_{rad} p(\boldsymbol{l})$. 
+The OV power spectrum is computed by cross-correlating two kSZ momentum fields which gives,
+
+\begin{equation}\label{Cl lin kSZ ito delta and v}
+\begin{aligned}
+C_l^{OV} = &\int \frac{d^2 l'}{(2\pi)^2}\left<p_{kSZ}(\boldsymbol{l})p_{kSZ}^*(\boldsymbol{l}')\right>\\
+ =  & \int \frac{d^2l'}{(2\pi)^2}\int d\chi_1 \widetilde {g}(\chi_1) D(z_1)^2\int d\chi_2 \widetilde {g}(\chi_2)  D(z_2)^2\int \frac{dk^{\parallel}}{2\pi}e^{ik^{\parallel} \chi_1}\\
+&\int \frac{dk'^{\parallel}}{2\pi}e^{-ik'^{\parallel} \chi_2} 
+\int \frac{d^3k_v}{(2\pi)^3}\int\frac{d^3k_v'}{(2\pi)^3}\left< \delta_e(\boldsymbol{k}_\delta)\boldsymbol{v}_e^\parallel(\boldsymbol{k}_v)\delta^*_e(\boldsymbol{k}_\delta')\boldsymbol{v}^{*\parallel}_e(\boldsymbol{k}_v') \right>.
+\end{aligned}
+\end{equation}
+
+%Although the equation has the form of a trispectrum, we can regard this as the product of two power spectra since the density and velocity fields are components of the momentum field
+
+where we have removed the redshift dependence from the $\delta_e$ factors using the growth function, as was done in equation \ref{delta 21 ito k}. The velocity fields maintain a redshift dependence, according to equation \ref{v related to delta continuity eqn}, but we drop this explicit dependence in the rest of the equations.
+
+ We have discussed two-point correlations thus far. When computing a four-point correlation of Gaussian fields, we use the Wick theorem for Gaussian fields \cite{Bernardeau_2002}, which takes all possible combinations of the fields which are being correlated. In simple notation, we can express $\left< ABCD \right> = \left< AB \right> \left< CD \right> + \left< AC \right> \left< BD \right> + \left< AD \right> \left< BC \right> + \left< ABCD \right>_c$ for four Gaussian fields, $A, B, C, D$. The last term is the connected fourth moment \cite{Ma_2002}, which we assume is negligible for the rest of the thesis. We also ignore the $\left< AB \right> \left< CD \right>$ factor, which corresponds to $\left< \delta_e(\boldsymbol{k}_\delta)\boldsymbol{v}_e^\parallel(\boldsymbol{k}_v)\right> \left<\delta^*_e(\boldsymbol{k}_\delta')\boldsymbol{v}^{*\parallel}_e(\boldsymbol{k}_v') \right>$, since this would give $\delta_D^3(\boldsymbol{k}_\delta- \boldsymbol{k}_v) =\delta_D^3(\boldsymbol{k})$ and $\delta_D^3(\boldsymbol{k}'_\delta- \boldsymbol{k}'_v) =\delta_D^3(\boldsymbol{k}')$, which would require us to set $\boldsymbol{k}= \boldsymbol{k}'= 0$. Therefore, we are left with two terms when computing the four-point correlation:
+
+\begin{equation}\label{4 point correlation}
+\begin{aligned}
+\left< \delta_e(\boldsymbol{k}_\delta)\boldsymbol{v}_e^\parallel(\boldsymbol{k}_v)\delta^*_e(\boldsymbol{k}_\delta')\boldsymbol{v}^{*\parallel}_e(\boldsymbol{k}_v') \right>
+=&\left< \delta_e(\boldsymbol{k}_\delta)\delta^*_e(\boldsymbol{k}_\delta') \right> \left<\boldsymbol{v}_e^\parallel(\boldsymbol{k}_v) \boldsymbol{v}^{*\parallel}_e(\boldsymbol{k}_v')  \right>+
+\left< \delta_e(\boldsymbol{k}_\delta) \boldsymbol{v}^{*\parallel}_e(\boldsymbol{k}_v') \right> 
+\left<\delta^*_e(\boldsymbol{k}_\delta') \boldsymbol{v}_e^\parallel(\boldsymbol{k}_v)  \right>\\
+=&(2\pi)^6 [P_{\delta_{e} \delta_{e}}(|\boldsymbol{k}-\boldsymbol{k}_v|) P_{v_{e}^\parallel v_{e}^\parallel}(k_{v})\delta_D^3(\boldsymbol{k}_v-\boldsymbol{k}_{v}')\delta_D^3(\boldsymbol{k}-\boldsymbol{k}_v-\boldsymbol{k}'+\boldsymbol{k}_{v}')\\
+&\quad \quad + P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}-\boldsymbol{k}_v|)P_{\delta_{e} v_{e}^\parallel}(k_{v})\delta^3_D(\boldsymbol{k}-\boldsymbol{k}_v-\boldsymbol{k}_{v}')\delta^3_D(\boldsymbol{k}'-\boldsymbol{k}_{v}'-\boldsymbol{k}_v)].
+\end{aligned}
+\end{equation}
+
+
+Substituting this into equation \ref{Cl lin kSZ ito delta and v} gives,
+
+\begin{equation}
+\begin{aligned}
+C_l^{OV}= &\int \frac{d^2l'}{(2\pi)^2}\int d\chi_1 \widetilde {g}(\chi_1) D(z_1)^2\int d\chi_2 \widetilde {g}(\chi_2)  D(z_2)^2\int \frac{dk^{\parallel}}{2\pi}e^{ik^{\parallel} \chi_1}\int \frac{dk'^{\parallel}}{2\pi}e^{-ik'^{\parallel} \chi_2}\\ 
+& \int \frac{d^3k_v}{(2\pi)^3}\int\frac{d^3k_v'}{(2\pi)^3}(2\pi)^6 [P_{\delta_{e} \delta_{e}}(|\boldsymbol{k}-\boldsymbol{k}_v|) P_{v_{e}^\parallel v_{e}^\parallel}(k_{v})\delta^3_D(\boldsymbol{k}_v-\boldsymbol{k}_{v}')\delta^3_D(\boldsymbol{k}-\boldsymbol{k}_v-\boldsymbol{k}'+\boldsymbol{k}_{v}')+\\
+&+P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}-\boldsymbol{k}_v|)P_{\delta_{e} v_{e}^\parallel}(k_{v})\delta^3_D(\boldsymbol{k}-\boldsymbol{k}_v-\boldsymbol{k}_{v}')\delta^3_D(\boldsymbol{k}'-\boldsymbol{k}_{v}'-\boldsymbol{k}_v)]\\
+=  &\int \frac{d^2k'^{\perp}}{(2\pi)^2}\int d\chi_1 \widetilde {g}(\chi_1) D(z_1)^2\int d\chi_2 {g}(\chi_2)  D(z_2)^2\int \frac{dk^{\parallel}}{2\pi}e^{ik^{\parallel} \chi_1}\int \frac{dk'^{\parallel}}{2\pi}e^{-ik'^{\parallel} \chi_2}\\ 
+& \int \frac{d^3k_v}{(2\pi)^3} (2\pi)^3 \delta^3_D(\boldsymbol{k}-\boldsymbol{k}') [P_{\delta_{e} \delta_{e}}(|\boldsymbol{k}-\boldsymbol{k}_v|) P_{v_{e}^\parallel v_{e}^\parallel}(k_{v}) +P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}-\boldsymbol{k}_v|)P_{\delta_{e} v_{e}^\parallel}(k_{v})],
+\end{aligned}
+\end{equation}
+
+
+where we have collapsed the $k_v'$ integral by setting $k_v = k_v'$. We can now collapse the $k'^\perp$ and $k'^\parallel$ integrals by writing $\delta^3_D(\boldsymbol{k}-\boldsymbol{k}') = \delta^2_D(\boldsymbol{k}^\perp-\boldsymbol{k}'^\perp)\delta_D({k}^\parallel-{k}'^\parallel)
+$. This gives the expression, 
+
+\begin{equation}\label{OV spectrum nonlimber}
+\begin{aligned}
+C_l^{OV} =& \int d\chi_1 \widetilde {g}(\chi_1)  D(z_1)^2\int d\chi_2 {g}(\chi_2)  D(z_2)^2\int \frac{dk^{\parallel}}{2\pi}e^{ik^{\parallel} (\chi_1 - \chi_2)}\\
+&\int \frac{d^3k_v}{(2\pi)^3} [P_{\delta_{e} \delta_{e}}(|\boldsymbol{k}-\boldsymbol{k}_v|) P_{v_{e}^\parallel v_{e}^\parallel}(k_{v},z_1,z_2) +P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}-\boldsymbol{k}_v|,z_1)P_{\delta_{e} v_{e}^\parallel}(k_{v},z_2)],
+\end{aligned}
+\end{equation}
+
+where the expressions for the radial velocity power spectra are written with their explicit dependence on redshift, as:
+
+\begin{subequations}\label{Pvv Pdelv relations}
+	\begin{equation}
+	P_{v_m^\parallel v_m^\parallel} (k,z, z') = \frac{f(z) f(z') H(z) H(z')}{(1+z)(1+z')} \frac{\mu_k^2}{k^2} P_{\delta_m \delta_m} (k),
+	\end{equation}
+	\begin{equation}
+	P_{\delta_m v_m^\parallel} (k,z) = \frac{f(z) H(z)}{(1+z)} \frac{\mu_k}{k} P_{\delta_m \delta_m} (k),
+	\end{equation}
+\end{subequations}
+
+with $\mu_k = \frac{k^\parallel}{k}$. 
+ 
+Equation \ref{OV spectrum nonlimber} consists of a large scale electron velocity power spectrum, $P_{v_{e}^\parallel v_{e}^\parallel}$ and small scale electron density power spectrum $P_{\delta_{e} \delta_{e}}$, as well as the cross density-velocity power spectra, $P_{\delta_{e} v_{e}^\parallel}$. The dominant scales of the power spectra are discussed in detail in section \ref{effective modes of kSZ section}. This OV power spectrum allows us to measure the angular signal which results from CMB photons scattered off free electrons during reionization, which are then rescattered by the linear structure of galaxy clusters through the linear velocity modes. The rescattering off non-linear structures is not captured by the OV effect and requires the inclusion of the non-linear matter power spectrum, $P_{\delta_m \delta_m}^{NL}$. Non-linearities have not been investigated in this thesis, although we refer the reader to \cite{Ma_2002} \cite{2014PhLB..735..402M} \cite{Shaw_2012}, in which halofit models were used to construct $P_{\delta_m \delta_m}^{NL}$.  
+
+As it stands, equation \ref{OV spectrum nonlimber} has an integral dimensionality of six, since the velocity and density power spectra are integrated over the 3D vector, $\boldsymbol{k}_v$, which is then summed over all radial modes. Thereafter we have integrated over the comoving distances of the two kSZ signals, which extends up to reionization. \\
+
+\noindent \textbf{Limber Approximation}\\
+
+Since we are considering large redshift bins in equation \ref{OV spectrum nonlimber}, we can simplify the expression by considering the fact that integration along the line-of-sight will suppress short wavelength radial modes since these modes cancel under integration. Therefore, the dominant contribution to the OV is from the long wavelength radial modes which correspond to $k^\parallel=0$. This is referred to as the Limber approximation \cite{1987MNRAS.227....1K} \cite{1953ApJ...117..134L}. Since the angular power spectra only have contributions from k modes perpendicular to the line-of-sight \cite{Ma_2002}, we can simplify our expression for the OV signal by setting $P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}-\boldsymbol{k}_v|) = P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}^\perp-\boldsymbol{k}_v|)$. Removing $k^\parallel$ dependence from the $d^3k_v$ integral allows us to collapse the $\chi_2$ integral, giving us the expression which is valid under the Limber approximation \cite{2004PhRvD..70d9902C} \cite{1998PhRvD..58d3001J},
+
+\begin{equation}\label{Cl OV dimless}
+\begin{aligned}
+C_l^{OV} =&\int d\chi \frac{g(\chi)}{\chi^2}  D(z)^4 \int \frac{d^3k_v}{(2\pi)^3} [P_{\delta_{e} \delta_{e}}(|\boldsymbol{k}^\perp-\boldsymbol{k}_v|) P_{v_{e}^\parallel v_{e}^\parallel}(k_{v}) +P_{\delta_{e} v_{e}^\parallel}(|\boldsymbol{k}^\perp-\boldsymbol{k}_v|)P_{\delta_{e} v_{e}^\parallel}(k_{v})],
+\end{aligned}
+\end{equation} 
+
+We can see that the Limber approximation reduced the number of integrals in equation \ref{OV spectrum nonlimber} from six to four. The dimensionality of the OV spectrum in equation \ref{Cl OV dimless} is further reduced by decomposing the spectrum into spherical coordinates and fully integrating over the polar angle. 
+
+
+In plotting the OV angular power spectrum, equation \ref{Cl OV dimless} must be multiplied by $T_{rad}^2$, to obtain the spectrum of the kSZ temperature fluctuations in units of $K^2$. 
+
+Figure \ref{fig:cl-ov-integral-redshift-bins} shows the OV power spectrum, plotted with different initial redshifts, $z_{min}$, all of which are integrated up to $z_{re}$. This is useful in determining whether or not the OV signal is large enough over the HIRAX range of $0.8 - 2.5$, to make the computation of the cross-correlation worthwhile using the HIRAX telescope. 
+
+
+The angular spectra which we have plotted, assume a redshift integral that extends up to reionization. The value chosen for the redshift of reionization, $z_{re}$, has an impact on the spectrum, with a larger $z_{re}$ resulting in a higher amplitude signal that peaks at smaller scales. This is explored briefly in \cite{2004PhRvD..70d9902C}, while \cite{1998PhRvD..58d3001J} evaluates the effect of a variety of cosmological parameters, including $z_{re}$, on the OV spectrum. In this thesis, we choose $z_{re} =10$, which is the convention chosen in \cite{2014PhLB..735..402M} \cite{Bianchini_2016}.
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../python_scripts/kSZ_21cm_signal/Cl_OV_limber_redshiftbins"}
+	\caption{OV power spectrum plotted for different redshift bins in the Limber approximation, with each bin integrated until $z=10$.}
+	\label{fig:cl-ov-integral-redshift-bins}
+\end{figure}
+
+%The blue curve is slightly lower in amplitude than the OV spectra plotted in \cite{1998PhRvD..58d3001J} \cite{2014PhLB..735..402M}, which have a maximum amplitude of $\sim 1.4 \mu K^2$. This is because a maximum redshift of $z_{re} = 10$ is often used in literature. Furthermore, the ripples in the curves are due to numerics and are not due to any oscillations in the OV signal. 
+
+From the plot, we see that the spectra gradually decrease for larger $l$ modes, which probe non-linear scales \cite{2014PhLB..735..402M}. Let us consider the green and black curves, which are integrated from $0.8-10$ and $2.5-10$, respectively. The signal which resides between the green and black curves corresponds to the HIRAX range of $0.8 - 2.5$. As discussed, we cannot isolate specific redshifts with the angular CMB map, but we can see that there is sufficient signal over the HIRAX range to make the HI-kSZ cross-correlation worth computing at low redshifts.\\
+
+\iffalse
+\noindent \textbf{Non-Limber Approximation}\\
+
+The Limber approximation is valid for large bins and small angular scales. Although it is true that the redshift used for the full OV spectrum is large, as it extends from now to reionization, the HIRAX range is much smaller. Thus, it is worth plotting the full OV signal instead, without assuming that the Limber approximation holds true. This is computed by referring to equation \ref{OV spectrum nonlimber}. The Limber and non-Limber OV signals are plotted together for a limited $k$ range in figure \ref{fig:comparison-of-limber-and-non-limber-ov}. The two are in close agreement for the modes considered. 
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../python_scripts/kSZ_21cm_signal/comparison of limber and non-limber OV"}
+	\caption{Comparison of Limber and non-Limber OV angular power spectra, integrating up to $k_v=10^{-2}$ $\textrm{Mpc}^{-1}$. The results are in close agreement for the \textit{k} modes considered.}
+	\label{fig:comparison-of-limber-and-non-limber-ov}
+\end{figure}
+\fi
+
+\subsection {Effective Modes of the KSZ signal}\label{effective modes of kSZ section}
+
+Let us consider the different scale contributions to the kSZ signal by computing the signal variances from the individual density and velocity power spectra. The variance is a dimensionless power spectrum, $\Delta^2(k) = \frac{k^3 P(k)}{2\pi^2}$, which gives a sense of the excess power in a bin centred at $k$ that has width $dk$ \cite{2003moco.book.....D} \cite{Li_2019}. We can therefore deduce the weight carried by k modes and the strength of the density and radial velocity fields. Figure \ref{fig:effective_modes} shows the density and velocity variances for $z=1$. The amplitude of the velocity variance is dependent on redshift, but the scales on which the $k^\perp$ and $k^\parallel$ modes are dominant in this plot would remain the same for all redshifts. 
+
+Examining the plots in figure \ref{fig:effective_modes}, the colour scales of the individual signal variances show that the variance is higher at low $k^\perp$ for the velocity spectra while for the density spectra, the variance dominates at $k^\perp$ and $k^\parallel$ greater than $0.14$ $\textrm{Mpc}^{-1}$. The regions which are demarcated in red on each of the variance plots depict the effective modes for the kSZ signal, which we restrict to $k^\perp>0.14$ $\textrm{Mpc}^{-1}$ for the density plot. The reason that the signal variance for $k^\parallel>0.14$ $\textrm{Mpc}^{-1}$ must be ignored when marking out effective modes for the kSZ signal, is due to the $\sigma_{NL}$ factor introduced in section \ref{sec:telescope limits chap2}.
+
+Examining the demarcated regions on each of the plots, we see that the density and velocity signal variances dominate on the same scales radially, as expected from the two-point correlation constraint. On angular scales, the velocity variance is a small $k^\perp$ dominated field while the density variance dominates at large $k^\perp$. Because the radial velocity is a large scale field, the baryon density that is indirectly probed by the kSZ signal, is useful for studying the diffuse baryon content, i.e. the use of linear velocity fields do not restrict us to the high density environment of clusters, unlike the thermal SZ.
+
+%Since the kSZ dominates at small angular scales, the density field is a bigger contributor to the essential modes for the kSZ, i.e. the $l$ modes of the OV spectrum trace the density field \cite{Li_2019}.
+
+
+ %The reason that we only mark out the high $k^\perp$ modes of the $\Delta^2_{\delta}$ as effective modes, is that low $k^\perp$ modes are heavily suppressed by the CMB as shown in figure \ref{fig:clttnlttov}. We can still mark out the low $k^\perp$ modes of the $\Delta^2_{v}$ since these are radial and therefore not heavily suppressed by the angular CMB. Another reason for the effective density modes in figure \ref{fig:effective_modes} is that the radial modes of $k^\parallel\gtrsim 0.3$ must be ignored because of uncorrelated velocities washing out small scale signals past the cut-off set by the non-linear dispersion factor, $\sigma_{NL}$ \cite{Bull_2015}. We have only extended the plots to $k^\parallel=1$ in order to show that these non-linear radial scales contain extra signal, but cannot be included due to the nuisance factor, $\sigma_{NL}$. 
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1.\linewidth]{"../Pictures/Pdeldel_Pvv_2"}
+	\caption{The variance of density (right) and velocity (left) power spectra plotted for $z=1$. The effective modes are marked out on the plots in red, after factoring in the non-linear dispersion factor which restricts $k^\parallel_{max}$.}
+	\label{fig:effective_modes}
+\end{figure}
+
+
+We can further examine the detectable scales of the kSZ by plotting the CMB spectrum, noise and the OV signal. We consider the Advanced Atacama Cosmology Telescope (AdvACT) as the fiducial experiment, when calculating the detector noise of CMB experiments. The noise for a Gaussian beam is given as
+
+\begin{equation}
+N_l^{TT}=\sigma_p^2 e^{l^2 \theta_{beam}^2},
+\end{equation}
+
+where $\theta_{beam}=\theta_{fwhm}/8ln2$ is the beam width and $\sigma_p$ is the detector noise in a pixel of side $\theta_{beam}$. The detector noise is calculated using the 150 GHz channel of AdvACT. The specifications of the AdvACT experiment are shown in table \ref{tab:AdvACT}.\\
+
+
+
+
+\begin{table}[h!]
+	\centering
+		\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{l|l}
+		\hline
+		{\textbf{AdvACT}} &{\textbf{Value}}\\
+		\hline
+		Frequency channel (GHz) & $150$ \\
+		\hline
+		Beam size, $\theta_{beam}$ (arcmin) & $1.5$  \\
+		\hline
+		Temperature sensitivity, $\sigma_p$ ($\mu K$-arcmin) & $1.5$   \\
+		\hline
+	\end{tabular}
+	\caption{\label{tab:AdvACT} AdvACT specifications.}
+\end{table}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../Pictures/ClTT_NlTT_OV_2}
+	\caption{The full $OV$ signal is plotted with the CMB spectrum, $C_l^{TT}$ and the CMB noise, $N_l^{TT}$.  The kSZ window for which modes are detectable is marked out with dashed lines.}
+	\label{fig:clttnlttov}
+\end{figure}
+
+The kSZ signal is difficult to detect due to the primary CMB which dominates over secondary effects at low $l$, and the noise which dominates at high $l$. The total CMB noise is equal to the sum of the CMB spectrum and the CMB noise. Thus, $N_l^{kSZ} \equiv N_l^{CMB}=C_l^{TT}+N_l^{TT}$. This leaves a small window of detectability for the kSZ signal, which we refer to as the `kSZ window', as marked out on the plot in dashed lines. This scale extends from $l \approx 10^3 - 10^4$. As discussed in chapter \ref{Chapter2}, Silk damping starts to take effect from $l \ge 1000$ and thus sets the scales for the kSZ window. Although we are not hoping to detect the kSZ signal in auto-correlation, our detection of the cross-correlation will be influenced by the detectability of the individual signals. We will see in section \ref{Bispec SN section} that the kSZ window features in the detectability of the cross-correlation of kSZ and HI intensity mapping. 
+
+\iffalse
+The angular power spectrum of the kSZ signal can be expressed as
+
+\begin{equation}
+C_l^{kSZ}=\left< p^{kSZ}(\boldsymbol{l}) p^{kSZ}(\boldsymbol{l})\right>
+\end{equation}
+
+
+The variance of the kSZ signal is written as
+
+\begin{equation}\label{variance of kSZ}
+\begin{aligned}
+\delta^2_D(\boldsymbol{l}-\boldsymbol{l}')(\sigma_l^{kSZ})^2&=\left<C_l C_{l'}\right>-\left<C_l\right>\left<C_{l'}\right>\\
+&=\left< \hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l}')\hat{p}(\boldsymbol{l}')\right>-\left<\hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l})\right> \left<\hat{p}(\boldsymbol{l}')\hat{p}(\boldsymbol{l}')\right>\\
+&=2\left<\hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l}')\right>\left<\hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l}')\right> +\left<\hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l})\right>\left<\hat{p}(\boldsymbol{l}')\hat{p}(\boldsymbol{l}')\right>-\left<\hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l})\right> \left<\hat{p}(\boldsymbol{l}')\hat{p}(\boldsymbol{l}')\right>
+\end{aligned}
+\end{equation}
+where the kSZ noise is given as
+
+\begin{equation}
+\left< \hat{p}(\boldsymbol{l})\hat{p}(\boldsymbol{l}')\right>=\delta^2_D(\boldsymbol{l}-\boldsymbol{l}')(C_l^{pp}+N_l^{pp})
+\end{equation}
+
+This gives the variance of
+
+\begin{equation}
+\sigma_{ksz}^2= 2(C_l^{pp}+N_l^{pp})^2
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\left(\frac{S}{N}\right)^2=&2 f_{sky}\int \frac{d^2l}{(2\pi)^2}\left(\frac{C_l^{kSZ}}{\sigma_l^{kSZ}}\right)^2 \\
+=&2 f_{sky}\int \frac{dl}{2\pi}l\left(\frac{C_l^{kSZ}}{\sqrt{2}(C_l^{kSZ}+N_l^{kSZ})}\right)^2 \\
+\end{aligned}
+\end{equation}
+
+The sky fraction, $f_{sky}$, is expressed as $f_{sky}=\frac{S_{area} (radians)}{4\pi}$. We plot the differential and cumulative signal-to-noise in figures \ref{fig:snr-integrand} and \ref{fig:snr}.
+Using the previously calculated kSZ variance, $(\sigma_l^{kSZ})^2$, the signal-to-noise can be calculated as $S/N=\sqrt{N_{modes}} \frac{C_l^{kSZ}}{\sigma_l^{kSZ}}$ where $N_{modes}=2l\Delta l f_{sky}$.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{"../python_scripts/CMB_noise/SNR integrand"}
+			\caption{Differential signal-to-noise.}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/CMB_noise/SNR}
+			\caption{Cumulative signal-to-noise.}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{OV}
+	\label{fig:fit_residue}
+\end{figure}
+\fi
+
+\section{Neutral Hydrogen}
+
+We have discussed the HI temperature fluctuation in equation \ref{delta 21 ito k}. This can be used to compute the HI intensity power spectrum by correlating two HI intensity signals. 
+
+\subsection {HI Intensity Signal}
+
+Equation \ref{delta 21 ito k} shows that the HI density can be obtained from the HI intensity using a model or measurement of $\bar{T}(z)$. In the rest of the thesis, we will work with the HI density on this basis.  
+
+The power spectrum for the HI temperature fluctuations is given by
+ 
+\begin{equation}\label{Cl 21 relation to auto-correlation}
+\begin{aligned}
+\langle  \delta T_{HI}(\boldsymbol{l},y;z_i) \delta T_{HI}^*(\boldsymbol{l}',y';z_i)\rangle  =&(2 \pi)^3\delta^2_D(\boldsymbol{l}-\boldsymbol{l}')\delta_D(y-y')C_l^{HI}(y;z_i)
+\\
+\Rightarrow C_l^{HI}(y;z_i)=&\int \frac{d^2\boldsymbol{l}'}{(2\pi)^2} \int \frac{dy'}{2\pi}\langle  \delta T_{HI}(\boldsymbol{l},y;z_i) \delta T_{HI}^*(\boldsymbol{l}',y';z_i)\rangle, 
+\end{aligned}
+\end{equation}
+
+where $z_i$ is the central redshift in a particular bin, as defined in equation \ref{delta 21 ito y and l final eqn}. We further assumed that the HI signal does not vary much over the redshift bin. As a result, we can substitute equation \ref{delta 21 ito y and l final eqn} into equation \ref{Cl 21 relation to auto-correlation} without integrating over redshift, and write the HI angular power spectrum as
+
+\begin{equation}
+C_l^{HI}(y;z_i)=\int \frac{d^2\boldsymbol{l}'}{(2\pi)^2}\int \frac{dy'}{2\pi}\frac{(\overline{T}(z_i)D(z_i)[b_{HI}+f\mu_k^2])^2}{\chi(z_i)^2 \chi'(z_i)^2 r_{\nu}(z_i) r'_{\nu}(z_i)}\langle  \delta_m(\boldsymbol{k};z=0)\delta_m^*(\boldsymbol{k};z=0)\rangle.  
+\end{equation}
+
+Expressing $\langle  \delta_m(\boldsymbol{k};z=0)\delta_m^*(\boldsymbol{k};z=0)\rangle  $ in terms of the matter power spectrum, we have
+
+\begin{equation}
+C_l^{HI}(y;z_i)=\int \frac{d^2\boldsymbol{l}'}{(2\pi)^2}\int \frac{dy'}{2\pi}\frac{(\overline{T}(z_i)D(z_i)[b_{HI}+f\mu_k^2])^2}{\chi(z_i)^2 \chi'(z_i)^2  r_{\nu}(z_i) r'_{\nu}(z_i)}(2\pi)^3
+\delta^2_D(\boldsymbol{k}^\perp-\boldsymbol{k}'^\perp)\delta_D(k^{\parallel}-k'^\parallel)P_m(k)
+\end{equation}
+
+Rewriting the integrals as $\boldsymbol{k}'^\perp$ and $k'^\parallel$, and thereafter applying the Dirac delta functions, collapses the integrals and gives
+
+\begin{equation}
+C_l^{HI}(y;z_i)=\frac{(\overline{T}(z_i)D(z_i)[b_{HI}+f\mu_k^2])^2}{\chi(z_i)^2 r_{\nu}(z_i)}P_m(k).
+\end{equation}
+
+where we have expressed the matter power spectrum as a function of the magnitude, $k=\sqrt{\frac{l^2}{\chi^2}+\frac{y^2}{r^2_\nu}}$. 
+
+The main feature of this equation is that it measures the matter power spectrum, distorted due to the peculiar velocities of the galaxies and clouds in which the HI resides. The distortion is dependent on the HI bias, which we expressed in equation \ref{HI bias} and which is a key uncertainty in the HI intensity signal due to the dependence that the bias has on the size of the host dark mater halo. A small halo will have a low HI signal due to a lack of sufficient shielding from the UV rays emitted by stars, thereby resulting in fewer neutral hydrogen atoms. The converse is true for a large halo. This equation captures the use of the HI signal as a biased tracer of dark matter, as mentioned in section \ref{HI section}. 
+
+The HI signal is plotted in the left panel of figure \ref{fig:hiraxnoise4bins100mhzwidth} for a range of y modes at the central redshift, $z_i=1$, with the assumption that the signal does not vary much over a 100 MHz bin width. The shape of the spectrum as a function of $l$ and $y$ is simply dependent on the matter power spectrum, multiplied by the $\mu^4_k$ factor, where we bear in mind that $P_m(k)$ peaks at $k \sim 0.15$ $\textrm{Mpc}^{-1}$ and falls thereafter. This feature is seen in figure \ref{fig:hiraxnoise4bins100mhzwidth} as all $y$ modes converge and decrease for large $l$. 
+
+
+\subsection {Thermal Noise}\label{sec:thermal noise}
+
+We have discussed the noise for an interferometer in chapter \ref{Chapter2}. We can now give the HIRAX specifications used to calculate the noise. 
+
+\begin{table}[h!]
+	\centering
+		\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{l|l}
+		\hline
+		{\textbf{HIRAX}} &{\textbf{Value}}\\
+		\hline
+		System temperature, $T_{sys}$ (K) & $50$ \\
+		\hline
+		Number of dishes, $N_{dishes}$ & $1024$  \\
+		\hline
+		Dish diameter, $D_{dish}$ (m) & $6$   \\
+		\hline
+		Minimum frequency, $\nu_{min}$(MHz) & $400$ \\
+		\hline
+		Maximum frequency, $\nu_{max}$ (MHz)& $800$ \\
+		\hline
+		Minimum redshift, $z_{min}$ & $0.775$ \\
+		\hline
+		Maximum redshift, $z_{max}$ & $2.55$ \\
+		\hline	
+	%	Channel width, $\delta_{\nu}$ (kHZ)& $390$\\
+	%	\hline
+		Survey area, $S_{area}$ (square degrees)& $15000$\\
+		\hline
+	\end{tabular}
+	\caption{\label{tab:HIRAX_specs} HIRAX specifications}
+\end{table}
+
+The HIRAX noise is obtained using equation \ref{Interferom noise eqn} with the values in table \ref{tab:HIRAX_specs}. We assume that the noise is constant over $y$ and therefore plot the noise as a function of $l$ only. Figure \ref{fig:hiraxnoise4bins100mhzwidth} depicts the HIRAX noise plotted against the HI signal, using a central redshift of $z_i=1$ and $100$ MHz bandwidth, with the assumption that the noise does not vary much over the redshift bin. We can see that the noise has the distinct features of cut offs at low and high $l$, which are a result of the limits set by the longest and shortest baselines, as per equation \ref{telescope limits eqns}. The baseline lengths can be calculated by assuming that the HIRAX array is arranged as a compact square grid, with the 1024 dishes of 6 m diameter placed edge-to-edge. We plot the effective noise which accounts for the reduced noise level from observing a larger sky fraction, and is expressed as $\frac{N_l^{HI}}{\sqrt{l f_{sky}}}$, where $f_{sky}$ is the sky fraction. 
+%Long baseline angular resolution and short baseline gives FOV
+
+We can see from the plot that the HI intensity signal dominates the HIRAX noise between $l \sim 100$ and $l \sim 1000$ for all y modes considered, such that a large signal-to-noise is expected within this range. 
+
+
+In the right panel of figure \ref{fig:hiraxnoise4bins100mhzwidth}, the effective HIRAX noise is plotted for all four bins of $100$ MHz in the HIRAX frequency range, with the blue and red curves centered at $z=0.9$ and $z=1.19$, respectively. Thus, the black noise curve in the left panel would be situated part way between the blue and red curves on the right. From the plot we see that the noise is shifted to lower values of $l$ as the frequency decreases which is expected due to the redshift dependence of equation \ref{telescope limits eqns}.
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/Cl_21_z_1_100MHz_diffy_with_HIRAXnoise}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/hiraxnoise_4freqbins_func_of_ell}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{(Left) HI intensity signal plotted for different y modes at $z=1$ for $100$ MHz bin width. The effective HIRAX noise is plotted for the same bin width. (Right) HIRAX noise plotted for all four bins of $100$ MHz in the HIRAX frequency range. The plots show a shift to lower values of $l$ as the frequency decreases.} 
+	\label{fig:hiraxnoise4bins100mhzwidth}
+\end{figure}
+
+
+\subsection {HI Signal-to-Noise}
+
+We have so far considered only the true HI intensity that exists on the sky, denoted by ${\delta} T_{HI}$. In reality, we observe the sky with a telescope which adds noise. Thus, we define the observable HI intensity, $\hat{\delta} T_{HI}$.
+Let us now return to equation \ref{Cl 21 relation to auto-correlation} and rewrite it as
+
+\begin{equation}
+\langle  \delta \hat{T}_{HI}(\boldsymbol{l},y;z_i) \delta \hat{T}_{HI}^*(\boldsymbol{l}',y';z_i)\rangle  =(2 \pi)^3\delta^2_D(\boldsymbol{l}-\boldsymbol{l}')\delta_D(y-y')C_l^{HI, tot}(y;z_i),
+\end{equation}
+
+where the total power spectrum, $C_l^{HI, tot}(y;z_i) = C_l^{HI}(y;z_i) + N_l^{HI}$. 
+
+The error in the HI angular power spectrum is given by \cite{Kesden_2003},
+
+\begin{equation}
+\sigma_l^{HI}=\frac{C_l^{HI, tot}(y;z_i)}{\sqrt{N_{modes}}},
+\end{equation}
+
+where $N_{modes}$ is the number of modes in an annulus centred at $l$ and is expressed as
+
+\begin{equation}\label{Nmodes}
+N_{modes} = 2l\Delta l f_{sky}
+\end{equation}
+
+in the flat sky approximation, with $f_{sky}$ related to the survey area by $S_{area}/f_{sky} = 4\pi$. We also account for the survey volume by including the factor $\Delta \tilde{\nu} S_{area}$. Thus, the signal-to-noise is expressed as,
+
+\begin{equation}\label{SN HI intensity}
+\left(\frac{S}{N}\right)^2=V\int \frac{dl}{2\pi} \int \frac{dy}{2\pi} l \left(\frac{C_l^{HI}(y;z_i)}{C_l^{HI, tot}(y;z_i)}\right)^2,
+\end{equation}
+
+where $V =f_{sky}\Delta \tilde{\nu}S_{area}$.\\ 
+We use a 100 MHz bin width centred at $z_i=1$ and obtain the pixelated signal-to-noise plot in figure \ref{fig:hisn2dz1pt27deltazpt16}, which determines the signal-to-noise in individual bins. This results from splitting $l$ and $y$ into bins and integrating over each, so that we can deduce which bins give the highest contribution to the signal-to-noise. It is clear that the noise cuts off all signal at low and high $k^\perp$. We also see that the HI has a high signal-to-noise, with a maximum of $45$ in a single bin. This is of course optimistic since we have not yet accounted for foregrounds. We do not evaluate the effect of foregrounds on the HI signal here but we do explore this effect when computing the signal-to-noise plots for the cross-correlation of the kSZ and HI in section \ref{foregrounds and systm limits}. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/HI_SN_2D_z_1pt27_deltaz_pt16}
+	\caption{2D pixelated signal-to-noise (SN) plot showing a high SN detection of the HI signal at $z_i=1$ for a 100 MHz bin width. The $k^\perp$ and $k^\parallel$ bins have widths of $0.01$ $\textrm{Mpc}^{-1}$.}
+	\label{fig:hisn2dz1pt27deltazpt16}
+\end{figure}
+
+
+\subsection {HI Momentum Signal}\label{HI momentum signal}
+
+We have so far discussed the kSZ momentum field which is composed of Gaussian density and velocity fields, and we have plotted the HI intensity signal. In computing the cross-correlation, it is natural to start with the simplest signal, which is the expectation value of $\left< p_{ksz} \delta_{HI} \right>$. However, for three Gaussian fields, this cross-correlation will yield no signal. Thus, we must either extend the HI density to second order, so as to include non-Gaussianity, or include a fourth Gaussian field. We choose the latter and pick the HI velocity field as the fourth Gaussian field. Although we could have chosen to include a second HI density field, we instead choose to construct a proxy for the HI momentum field by convolving the HI density and velocity fields. In comparison, the cross-correlation computed in \cite{smith2018ksz}, consists of the kSZ momentum field and two galaxy density fields. This estimator is related to our cross-correlation by the factors which appear in the continuity equation, as well as the factors relating galaxy density to HI density. 
+ 
+
+The reconstructed HI velocity, $v_{HI}$, is simple when computed in the linear regime since we only require the use of the continuity equation, but this approach has its limitations. This poses a problem for any non-linear scales since non-linearities would introduce a bias in the recovered velocities \cite{Alonso_2016}. Also, since we are using the redshift-space distorted HI intensity signal to reconstruct the velocity, we are not measuring the true velocity. The bias factor which relates the true and reconstructed velocities is the RSD factor, which was given in equation \ref{delta HI to delta m}. 
+
+ We can then construct a proxy HI momentum power spectrum in analogue to the $C_l^{OV}$, although the HI momentum spectrum can access a much wider range of $k^\parallel$ modes. It is worth reflecting on this. The use of narrow redshift bins will not allow for the use of the Limber approximation. Therefore, the full integral must be computed. 
+ 
+ First let us write the expression for the HI momentum field: 
+
+
+
+\begin{equation}\label{HI momentum field}
+p_{HI}(\boldsymbol{l}, y; z_i)=-\int d z \frac{D(z)^2}{\chi(z)^2 r_\nu (z)} \boldsymbol{q}_{HI}(\boldsymbol{k}^\perp,k^\parallel),
+\end{equation}
+
+with $\boldsymbol{q}_{HI}(\boldsymbol{k}^\perp,k^\parallel)=\int \frac{d^3\boldsymbol{k}'}{(2\pi)^3}\delta_{HI}(\boldsymbol{k}-\boldsymbol{k}')\boldsymbol{v}_{HI}(\boldsymbol{k}')$. Note that we have integrated over redshift, instead of assuming that the signal remains constant over the redshift bin as was done for the HI intensity power spectrum.
+
+The derivation of $C_l^{p_{HI}}(y)$ is given by, 
+
+\begin{equation}\label{Cl pHI}
+\begin{aligned}
+C_l^{p_{HI}}(y; z_{i})=& \int dz \int dz' \int \frac{d^2 \boldsymbol{l}'}{(2\pi)^2} \int \frac{dy'}{2\pi} \left< p_{HI}(\boldsymbol{l},y,z_i) p^*_{HI}(\boldsymbol{l}',y',z_i\right>\\
+=& \int dz \frac{D^2(z)}{\chi^2(z)r(z)} \int dz' D^2(z') \int \frac{d^2 \boldsymbol{k}'^\perp}{(2\pi)^2} \int \frac{d k'^\parallel}{2\pi}  \\
+&\int d^3 \boldsymbol{k}_v \int d^3\boldsymbol{k}'_v\left<\delta_{HI}(\boldsymbol{k}-\boldsymbol{k}_v) v^{\parallel}_{HI}(\boldsymbol{k}_v) \delta^*_{HI}(\boldsymbol{k}'-\boldsymbol{k}'_v) v^{*\parallel}_{HI} (\boldsymbol{k}'_v)\right>\\
+=&\frac{1}{8\pi^3}\int dz \frac{D^2(z)}{\chi^2(z)r(z)} \int dz' D^2(z')  F(k,z,z'),
+\end{aligned}
+\end{equation}
+
+where we have integrated over the redshifts of two HI momenta signals, $z$ and $z'$, under the assumption that both are centred at $z_i$. Thus, the HI momentum angular spectrum is computed over overlapping redshift bins. 
+
+The expression for $F(k,z,z')$ is
+
+\begin{equation}\label{F for Cl pHI}
+\begin{aligned}
+F(k,z,z')=& \int d^3{\boldsymbol{k}}_{v} [P_{\delta_{HI} \delta_{HI}}(|\boldsymbol{k}-\boldsymbol{k}_v|) P_{v_{HI} v_{HI}}(k_{v},z,z')+P_{\delta_{HI} v_{HI}}(|\boldsymbol{k}-\boldsymbol{k}_v|,z) P_{v_{HI} \delta_{HI}}(k_{v},z')]\\
+=& 2\pi \int d k^\parallel_v \int  d k^\perp_{v}  k^ \perp_{v}[P_{\delta_{HI} \delta_{HI}}(|\boldsymbol{k}-\boldsymbol{k}_v|) P_{v_{HI} v_{HI}}(k_{v},z,z')+P_{\delta_{HI} v_{HI}}(|\boldsymbol{k}-\boldsymbol{k}_v|,z) P_{v_{HI} \delta_{HI}}(k_{v},z')],
+\end{aligned}
+\end{equation}
+
+
+after using equation \ref{4 point correlation} (and replacing subscripts $e$ with $HI$) to collapse the integrals and simplify the equation. In the second equality of equation \ref{F for Cl pHI} we have decomposed the $d^3{\boldsymbol{k}}_{v}$ integral into cylindrical coordinates, resulting in an extra $2\pi$ factor.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/2D_Clp21_z_1_deltaz_pt2_zksz_full_integral_over_z21_kparmin_1e-3}
+	\caption{$C_l^{p_{HI}}$ spectrum plotted in units of in units of $\mu K^4$. The redshift bin is centred at $z_i=1$ and we integrate over a bin width of $\Delta z = 0.4$.}
+	\label{fig:2dclp21z1deltazpt2zkszfullintegraloverz21}
+\end{figure}
+
+We plot the HI momentum power spectrum in figure \ref{fig:2dclp21z1deltazpt2zkszfullintegraloverz21} in units of $\mu K^4$ by multiplying equation \ref{Cl pHI} by $\bar{T}^4(z)$, for a bin width of $\Delta_z=0.4$, centred at $z_i=1$. The plot shows higher signal at low $k^\perp$ and very low signal at $k^\perp>1$ $\text{Mpc}^{-1}$ which corresponds to $l\sim 5000$.  This shows that the HI momentum signal is highest on the large angular scales on which the primary CMB anisotropies dominate. 
+
+%The signal is small within a single bin, with an amplitude of $10^{-5} \mu K^4$. Summing over kpar bins gives amplitude peak of 10 for l^2 Cl 
+%This plot can be sanity checked by summing over the $k^\parallel$ bins and comparing the resulting 1D spectrum to the $C_l^{OV}$ spectrum. We expect the 1D plots for the HI and kSZ momentum signals to have a similar shape due to the similarity in which the equations are set up. Summing over $k^\parallel$ would give us a flat spectrum at low $k^\perp$ which then decreases after $k^\perp \sim 0.1$. Plotting this as $l^2 C_l^{p_{HI}}$ would then give the same shape as that of the OV spectrum. 
+
+\subsubsection{HI Momentum Noise}\label{section:HI momentum noise}
+
+Now, let us consider the noise for the HI momentum field so that we can understand the scales on which this signal is detectable. 
+
+The equation for $C_l^{p_{HI},tot}$ is obtained by taking the expectation value of the observed HI momentum signals and is given as
+
+\begin{equation}\label{Cl p21 tot eqn}
+\begin{aligned}
+C_l^{p_{HI},tot}(y; z_{i})=& \int dz \int dz' \int \frac{d^2 \boldsymbol{l}'}{(2\pi)^2} \int \frac{dy'}{2\pi} \left< \hat{p}_{HI}(\boldsymbol{l},y,z_i) \hat{p}^*_{HI}(\boldsymbol{l}',y',z_i\right>\\
+=& \int dz \frac{D^2(z)}{\chi^2(z)r(z)} \int dz' D^2(z') \int \frac{d^2 \boldsymbol{k}'^\perp}{(2\pi)^2} \int \frac{d k'^\parallel}{2\pi}  \\
+&\int d^3 \boldsymbol{k}_v \int d^3\boldsymbol{k}'_v\left<\hat{\delta}_{HI}(\boldsymbol{k}-\boldsymbol{k}_v) \hat{v}^{\parallel}_{HI}(\boldsymbol{k}_v) \hat{\delta}^*_{HI}(\boldsymbol{k}'-\boldsymbol{k}'_v) \hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_v)\right>\\
+=&\frac{1}{8\pi^3}\int dz \frac{D^2(z)}{\chi^2(z)r(z)} \int dz' D^2(z')  F^{tot}(k,z,z')
+\end{aligned}
+\end{equation}
+
+where $F^{tot}(k,z,z')$ is given by
+
+\begin{equation}\label{Cl p21 signal plus noise}
+\begin{aligned}
+F^{tot}(k,z,z')=&\int d^3 \boldsymbol{k}_{v} [(P_{\delta_{HI} \delta_{HI}}(k_{\delta})+ N_{\delta_{HI}\delta_{HI}}(k_{\delta}, z)
+) (P_{v^\parallel_{HI} v^\parallel_{HI}}(k_{v},z,z')+ N_{v^\parallel_{HI}v^\parallel_{HI}}(k_{v},z,z'))\\
+ & \quad \quad  +(P_{\delta_{HI} v^\parallel_{HI}}(k_{\delta},z)+ N_{\delta_{HI}v^\parallel_{HI}}(k_{\delta},z))
+(P_{\delta_{HI} v^\parallel_{HI}}(k_{v},z')+ N_{\delta_{HI}v^\parallel_{HI}}(k_{v},z'))]\\
+=&\int d^3\boldsymbol{k}_{v} [P_{\delta_{HI} \delta_{HI}}(k_{\delta})P_{v^\parallel_{HI} v^\parallel_{HI}}(k_{v},z,z')
++P_{\delta_{HI} v^\parallel_{HI}}(k_{\delta},z)P_{\delta_{HI} v^\parallel_{HI}}(k_{v},z')\\
+&\quad \quad +N_{\delta_{HI}\delta_{HI}}(k_\delta, z)N_{v^\parallel_{HI} v^\parallel_{HI}}(k_v,z,z') +
+N_{\delta_{HI}v^\parallel_{HI}}(k_{\delta},z)N_{\delta_{HI}v^\parallel_{HI}}(k_{v},z')\\
+&\quad \quad +P_{\delta_{HI} v^\parallel_{HI}}(k_{\delta},z) N_{\delta_{HI}v^\parallel_{HI}}(k_{v},z') + P_{\delta_{HI} \delta_{HI}} (k_\delta) N_{v^\parallel_{HI} v^\parallel_{HI}}(k_v,z,z') \\
+& \quad \quad + P_{v^\parallel_{HI}v^\parallel_{HI}}(k_v,z,z')N_{\delta_{HI}\delta_{HI}}(k_\delta, z) 
+ + P_{\delta_{HI} v^\parallel_{HI}}(k_{v},z') N_{\delta_{HI}v^\parallel_{HI}}(k_{\delta},z)].
+\end{aligned}
+\end{equation}
+
+We have defined three noise terms in equation \ref{Cl p21 signal plus noise}, viz. the density noise, $N_{\delta_{HI}\delta_{HI}}$ velocity noise, $N_{v^\parallel_{HI}v^\parallel_{HI}}$ and cross density-velocity noise, $N_{\delta_{HI}v^\parallel_{HI}}$. The density noise is related to the HIRAX noise, $N_l^{HI}$ plotted in section \ref{sec:thermal noise}, as $N_{\delta_{HI}\delta_{HI}}(k,z) =\chi^2(z)r(z) N_l^{HI}$. The velocity noise terms are then related to the density noise by the same factors which relate the density and velocity power spectra, such that
+
+\begin{subequations}\label{Nvv Ndelv relations}
+	\begin{equation}
+	N_{v_{HI}^\parallel v_{HI}^\parallel} (k, z, z') = \frac{f(z)f(z') H(z)H(z')}{(1+z)(1+z')} \frac{\mu_k^2}{k^2} N_{\delta_{HI} \delta_{HI}} (k, z),
+	\end{equation}
+	\begin{equation}
+	N_{\delta_{HI} v_{HI}^\parallel} (k,z) = \frac{f(z) H(z)}{(1+z)} \frac{\mu_k}{k} N_{\delta_{HI} \delta_{HI}} (k, z).
+	\end{equation}
+\end{subequations}
+
+In figure \ref{fig:hiraxnoise4bins100mhzwidth} we showed that the HIRAX noise cuts off any signal outside of the range $ 80 \lesssim l \lesssim 4000$. This corresponds to values of $k_{v,min}^\perp \sim 0.02$ $\text{Mpc}^{-1}$ and $k_{v,max}^\perp \sim 0.7$ $\text{Mpc}^{-1}$ for any $N(k_v)$ term centered at $z=1$. In contrast, the cut off values for the $N(k_\delta)$ terms depend on both $k_v^\perp$ and $k^\perp$. Note that we have omitted the subscripts for $N$ because the scales at which the noise approach infinity depend only on the argument of the noise function. Since each noise term in the integrand of $F^{tot}(k,z,z')$ approaches infinity on different scales of $k_v$, the resultant integral over $k_v$ will reduce the total signal to zero for all values of $k$. 
+
+
+
+%This is important because we are required to integrate all noise terms over $k_v$, as expressed in equation \ref{Cl p21 signal plus noise}. If each noise term approaches infinity on different scales of $k_v$, the noisy modes in the integrand of $F(k,z,z')$ cannot be removed and the signal will not be detectable for any value of $k$. 
+
+
+Figure \ref{fig:nncolorplotrectcoords} shows the scales on which the noise is dominant for all the noise terms in $F^{tot}(k,z,z')$ which can be expressed as $N(k_\delta, z)N (k_v, z)$, $P(k_{\delta}) N(k_{v}, z)$ and $P(k_v)N(k_\delta, z) 
+$. We have included the redshift dependence of $N$ only to signify that the redshift bin affects the scales on which the noise dominates, but omit all factors which affect the amplitude only. We decompose the integral $d^3\boldsymbol{k}_v$ into cylindrical coordinates, which results in integrals over $k_v^\parallel$ and $k_v^\perp$.
+However, since the noise varies on angular scales, we do integrate over $k_v^\parallel$ and assume constant values for $k^\parallel$ and $k_v^\parallel$ instead.  
+
+
+%and  $\textbf{k}=(k^{\parallel},k^{\perp})=\left(\frac{y}{r(z)},\frac{l}{\chi(z)}\right)$.
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/PN_kv_interp}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/PN_interpolated_Mpc_sq_micro_K_power_4}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/NN_interpolated_Mpc_sq_microK_power4}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{Plots showing the dominant scales for the noise terms in equation \ref{Cl p21 signal plus noise} which are of the form $P(k_{\delta})N(k_v)$ (top left), $P(k_{v})N(k_\delta)$ (top right) and $N(k_{\delta})N(k_v)$ (bottom). These noisy regions, shown in dark blue, cannot be easily isolated and removed due to the different scales on which the noise spectra dominate. The integration over all $k_v^\perp$ causes the total signal to become undetectable. These scales depend on the arguments of the noise terms as well as the frequency bin for which we have used the $700 - 800$ MHz bin.} 
+	\label{fig:nncolorplotrectcoords}
+\end{figure}
+
+The three terms in figure \ref{fig:nncolorplotrectcoords} are plotted as a function of $k^\perp$ and $k_v^\perp$ in units of $\text{Mpc}^{6}$ for the $700 - 800$ MHz bin. In the top left panel, the noisy modes of $P(k_{\delta})N(k_v, z)$ depend only on $k_v^\perp$ and can be easily extracted. In the top right, $P(k_{v})N(k_\delta, z)$ is dependent on both $k^\perp$ and $k_v^\perp$. $N(k_\delta, z)N (k_v, z)$ in the bottom panel is a product of the two noise spectra shown in the top panels. It is clear when comparing the three plots that the noisy modes cannot be easily extracted from all terms in $F^{tot}(k,z,z')$. Thus, in order to obtain signal-to-noise estimates for the HI-kSZ cross-correlation discussed for the remainder of this chapter, we will use an optimal estimator which downweights noisy modes that dominate on different angular scales. This estimator will be computed in section \ref{bispectrum noise section}. 
+
+
+\section{HI-HI-KSZ Bispectrum}
+
+We first set up the conventions for the computation of the HI-HI-kSZ bispectrum. In doing so, we consider a single box in which the kSZ momentum field is correlated with the HI density and velocity fields. In contrast, the projected kSZ momentum fields were integrated over a large redshift, so that the two fields were not correlated in a patch on the sky. In computing the HI momentum power spectrum, two copies of the HI momentum signal were correlated in a box whose radial length was determined by the redshift bin width. The bispectrum has a similar setup, which we discuss in detail in section \ref{definitions and notations}.
+
+
+
+\subsection {Definitions and Notations}\label{definitions and notations}
+
+We consider a single box, centred at redshift, $z_*$, that is situated a comoving distance, $\chi_*$, away from us. %It is assumed that narrow redshift bins of $\Delta z \ll z_*$. 
+We compute the cross-correlation of the kSZ and HI fields by restricting the signal to the limits set by the box.
+The dimensions of the box are set by the angular and radial scales to which we have access. This setup is shown in figure \ref{fig:diagram1stsep2019}, with $r$ representing the radial axis.
+The radial sides of the box correspond to the difference between the comoving distances set by the redshift bin, i.e. $L^\parallel=\chi_{max} -\chi_{min}$, where $\chi_{max}=\chi(z_*+\Delta z)$ and $\chi_{min}=\chi(z_*-\Delta z)$. The dimensions of the box on the xy plane, denoted by $L^\perp$, is determined by multiplying the angular size of a single square patch on the sky with the comoving distance, $\chi_*$. The universe is approximated as a discrete set of boxes that are stacked in the radial direction, with equal angular size, such that the total signal over a large redshift is computed by simply summing over the signals in each box. The redshift range which will be considered for HIRAX is $0.8-2.5$. 
+
+
+When computing the bispectrum, we take the small angle approximation. This is valid as there is very low contribution to the signal at low $l$ and we can expect the bispectrum signal to peak at large $l$, since this was the case for the kSZ and HI momentum signals. Thus, we consider both momentum fields to be in the same line-of-sight direction.
+
+
+
+\iffalse
+
+Thus, the transverse comoving distance is written as $\chi^{\perp}=\boldsymbol{\theta} \chi_*$ with the 2D angular vector, $\boldsymbol{\theta}=(\theta_1,\theta_2)$. Defined as well is the 3D line-of-sight unit vector, $\hat{\theta}=(\theta_1,\theta_2,1)$. \\
+The kSZ momentum field is composed of the electron density and velocity fields. It is defined in $\theta$ space as 
+
+\begin{equation}
+p_{ksz}(\boldsymbol{\theta})=-\frac{1}{c}\int_{\chi_{min}}^{\chi_{max}} d\chi g(\chi)\hat{\theta}.\boldsymbol{q}_e(\chi_* \boldsymbol{\theta},\chi)
+\end{equation}
+
+%WE DONT WRITE \VEC{P}_{KSZ} I THINK BECAUSE KSZ MOMENTUM IS ISOTROPIC SO NO DIRECTION SPECIFICATION REQUIRED, SO ITS A SCALAR
+
+with $\boldsymbol{q}_e(\boldsymbol{x})=\boldsymbol{v}_e(\boldsymbol{x}) \delta_e (\boldsymbol{x})$. 
+
+Using Fourier transforms, we can express $\boldsymbol{k}$ as
+
+\begin{equation}
+f(\boldsymbol{x})=\int \frac{d^3 \boldsymbol{k}}{(2 \pi)^3} e^{i\boldsymbol{k}.\boldsymbol{x}}f(\boldsymbol{k})
+\end{equation}
+
+
+The velocity in $k$ space is defined according to the continuity equation
+
+\begin{equation}
+\boldsymbol{v}(\boldsymbol{k})=\frac{ifaH\delta(\boldsymbol{k},z)}{k^2}\boldsymbol{k}\\
+\end{equation}
+
+We decompose $\boldsymbol{k}$ into components $k^{\parallel}$ and $\boldsymbol{k}_{\perp}$, which are parallel and perpendicular to the line-of-sight, respectively. In the flat sky approximation, we can assume $k_{\perp}=\frac{\boldsymbol{l}}{\chi_*}$, where $l$ is the Fourier conjugate of $\theta$. The $k^\parallel$ modes to which we are sensitive in the box are set by the redshift range of a single cube.\\
+
+\fi
+ 
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{../Pictures/diagram_1stSep2019}
+	\caption{Illustration of the box centred at redshift $z_*$, of width $\Delta_z$, in which the kSZ and HI momentum signals are contained. The box has a length $L$ which is determined by the difference between the maximum and minimum comoving distances, $\chi$. Also shown are the 2D projected momenta fields for the kSZ and HI. The line-of-sight axis is taken to be $r$.}
+	\label{fig:diagram1stsep2019}
+\end{figure}
+
+Let us consider the maps which we will be using to compute the signal. The kSZ momentum field will be extracted from the CMB map, while the HI map will be used separately for the HI density and velocity fields. The correlation of these three fields forms a bispectrum; a term used to describe the Fourier transform of a three-point correlation, just as the Fourier transform of a two-point correlation is called a power spectrum. The diagram in figure \ref{fig:kvecdiagramnonlimber3d} depicts the vectors at which each of these fields is evaluated, with the length of the vectors representing the scales on which the fields are dominant. This results in a short HI velocity vector in $k$ space and two long vectors in $k$ space, representing the kSZ momentum and HI density. 
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{"../Pictures/kvec_HI_ksz_4"}
+	\caption{A representation of the vectors for the kSZ momentum, HI velocity and HI density fields. The 2D kSZ momentum field lies on the $k_\perp$ plane. The length of the vectors is representative of the scales on which the fields dominate. This results in a short HI velocity vector and two long vectors representing the kSZ momentum and HI density.}
+	\label{fig:kvecdiagramnonlimber3d}
+\end{figure}
+
+Motivation for using the bispectrum comes from \cite{smith2018ksz} in which the kSZ bispectrum was computed for two galaxy fields correlated with the kSZ. %The estimator was optimally weighted under the assumption of a constant redshift over the redshift range considered. 
+There are several statistics that have been investigated for studying the kSZ, including the kSZ template method introduced in \cite{Shao_2011} \cite{Li_2019}. In \cite{smith2018ksz}, all kSZ methods that involve three-point estimators of the form $\left<ggT\right>$, where $g$ is the galaxy signal and $T$ is the kSZ temperature fluctuation, are collectively referred to as `kSZ tomography'. The paper shows that all such methods, if optimally weighted, are equivalent to the bispectrum \cite{smith2018ksz}. 
+
+ We are not using galaxy surveys as in \cite{smith2018ksz} but are instead using two copies of the HI map(one of which contains extra $k$ and $z$ factors from the continuity equation to give the reconstructed velocity map), due to HIRAX measuring the HI signal with intensity mapping. Nevertheless, constructing the bispectrum makes it easier to compare our results to other methods of kSZ tomography, such as the kSZ template method.
+
+
+\subsection {Bispectrum Signal}
+
+We now compute the expectation value of the product of the HI density and velocity fields with the kSZ momentum. Note that we use labels that distinguish between the HI and kSZ fields and their redshifts. 
+
+The three-point function which we construct is written as
+
+\begin{equation}\label{3 point function of bispectrum}
+<\delta_{HI}(\boldsymbol{k}_{\delta_{HI}}){v}_{HI}^{\parallel}(\boldsymbol{k}_{v_{HI}}) p^*_{ksz}(\boldsymbol{l}_{ksz})> = B^{\delta_{HI} v_{HI} p_{ksz}}(\boldsymbol{k}_{\delta_{HI}}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz}) (2\pi)^3 \delta^3\left (\frac{\boldsymbol{l}_{ksz}}{\chi_{ksz}} + \boldsymbol{k}_{\delta_{{HI}}} + \boldsymbol{k}_{v_{HI}}\right).
+\end{equation}
+
+where $\chi_{ksz}$ is the comoving distance evaluated at the kSZ redshift, $z_{ksz}$. Note that we have removed the explicit redshift dependence of the bispectrum.
+
+ The bispectrum imposes a constraint on the fields in a similar way to that of the two-point correlation for the kSZ signal. This constraint is $ \frac{\boldsymbol{l}_{ksz}}{\chi_{ksz}} + \boldsymbol{k}_{\delta_{{HI}}} + \boldsymbol{k}_{v_{HI}} = 0$, which gives the same result of $k^\parallel_{\delta_{{HI}}} = -k^\parallel_{v_{HI}}$ which we had obtained for the kSZ auto-correlation. Now, we define $\boldsymbol{k}_{HI}=\boldsymbol{k}_{\delta_{HI}}+\boldsymbol{k}_{v_{HI}}$. Substituting $k^\parallel_{\delta_{{HI}}} = k^\parallel_{HI} - k^\parallel_{v_{HI}}$,  we obtain $k^\parallel_{HI} = 0 = k^\parallel_{ksz}$, which also allows us to equate the components $\boldsymbol{k}^\perp_{HI} =  \frac{\boldsymbol{l}_{ksz}}{\chi_{ksz}}= \boldsymbol{k}^\perp_{ksz}$.
+ 
+The bispectrum is integrated over $\boldsymbol{k}_{v_{HI}}$ and $\boldsymbol{l}_{ksz}$ allowing us to express it in physical coordinates as $B(\boldsymbol{k}^\perp_{HI}, k^\parallel_{HI})$. We have chosen to keep $k_{HI}^\parallel$ as a free parameter and not set it to zero, although the signal is expected to dominate at very low $k_{HI}^\parallel$. 
+
+The observational coordinates are then related to the physical coordinates by $\boldsymbol{k}_{HI} = (\boldsymbol{k}^\perp_{HI}, k^\parallel_{HI} )= \left( \frac{\boldsymbol{l}}{\chi(z_{HI})}, \frac{y}{r_\nu(z_{HI})} \right)$. 
+Integrating over $z_{HI}$, and applying 2D rotational invariance, we can write the bispectrum in observational coordinates as $B =B_l^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})$,. We have used $\bar{z}_{HI}$ to signify the average redshift of the binned HI signal.
+
+We compute the bispectrum as follows:
+
+\begin{equation}\label{bispec eqn}
+\begin{aligned}
+B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})%=&\int \frac{d^2\boldsymbol{l}_{ksz}}{(2\pi)^2}\left<p_{HI}(\boldsymbol{l}_{HI},y_{HI};\bar{z}_{HI})p^*_{ksz}(\boldsymbol{l}_{ksz})\right>\\
+=& \int dz_{HI} \frac{D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})} \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2}  \int \frac{d^3\boldsymbol{k}_{v_{HI}}}{(2\pi)^3} <\delta_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}){v}_{HI}^{\parallel}(\boldsymbol{k}_{v_{HI}}) p^*_{ksz}(\boldsymbol{l}_{ksz})>\\
+=&\int dz_{HI} \frac{D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})} \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \int d\chi_{ksz}  {g}(\chi_{ksz})D^2(z_{ksz})\\
+&\int \frac{dk_{ksz}^{\parallel}}{2\pi}\frac{e^{-ik_{ksz}^{\parallel}\chi_{ksz}} }{\chi^2_{ksz}}  \int \frac{d^3\boldsymbol{k}_{v_{HI}}}{(2\pi)^3}\int\frac{d^3\boldsymbol{k}_{v_{ksz}}}{(2\pi)^3}\\
+& <\delta_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}){v}_{HI}^{\parallel}(\boldsymbol{k}_{v_{HI}}) \delta^*_{ksz}(\boldsymbol{k}_{ksz}-\boldsymbol{k}_{v_{ksz}}){v}^{*\parallel}_{ksz}(\boldsymbol{k}_{v_{ksz}})>. 
+%=&\frac{T_{rad}}{c^2}\frac{D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})}\int \frac{d^2\boldsymbol{l}_{ksz}}{(2\pi)^2} \int d\chi_{ksz}  {g}(\chi_{ksz})D^2(z_{ksz}) \int \frac{dk_{ksz}^{\parallel}}{2\pi}\frac{e^{-ik_{ksz}^{\parallel}} \chi_{ksz}}{\chi^2_{ksz}} \\ 
+%& \int \frac{d^3\boldsymbol{k}_{v_{HI}}}{(2\pi)^3}\int\frac{d^3\boldsymbol{k}_{v_{ksz}}}{(2\pi)^3} \\
+%&=-\frac{T_{rad}}{c^2}\frac{\bar{T}(z_i)D(z_i)(b+f\mu_k^2)}{\chi^2(z_i)r_\nu(z_i)}\left(\frac{a(z_i)\dot{D}(z_i)D(z_i)}{2{D_0}^2}\right)\int \frac{d^2k_{2\perp}}{(2\pi)^2} \int d\chi \chi^2 \widetilde {g}(\chi) \left(\frac{a(\chi)\dot{D}(\chi)D(\chi)}{2{D_0}^2}\right)\\ 
+%&\int \frac{dk^{\parallel}}{2\pi}\frac{e^{ik^{\parallel} \chi_i}}{\chi_i^2}\int \frac{dk_{2\parallel}}{2\pi}e^{-ik_{2\parallel} \chi}\int \frac{d^2k'_\perp}{(2\pi)^2}\frac{dk'_\parallel}{2\pi}
+%\int \frac{d^2k''_\perp}{(2\pi)^2}\frac{dk''_\parallel}{2\pi} \left<\delta_0(\boldsymbol{k}')\delta_0(\boldsymbol{k}-\boldsymbol{k}')  \delta_0^*(\boldsymbol{k}'')\delta_0^*(\vec{k_2}-\boldsymbol{k}'')\right>\\
+%&\hat{\theta}.\left[\frac{\boldsymbol{k}-\vec{k'}}{|\boldsymbol{k}-\boldsymbol{k}'|^2}+\frac{\boldsymbol{k}'}{|\boldsymbol{k}'|^2}\right]\hat{\theta}.\left[\frac{\vec{k_2}-\boldsymbol{k}''}{|\vec{k_2}-\boldsymbol{k}''|^2}+\frac{\boldsymbol{k}''}{|\boldsymbol{k}''|^2}\right]
+\end{aligned}
+\end{equation}
+
+ 
+  Using equation \ref{4 point correlation} once more, we have 
+  
+  \begin{equation}
+  \begin{aligned}
+  B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})= &\int dz_{HI} \frac{D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})} \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2}  \int d\chi_{ksz}  {g}(\chi_{ksz})D^2(z_{ksz})\\
+  &\int \frac{dk_{ksz}^{\parallel}}{2\pi}\frac{e^{-ik_{ksz}^{\parallel}\chi_{ksz}} }{\chi^2_{ksz}}  \int \frac{d^3\boldsymbol{k}_{v_{HI}}}{(2\pi)^3}\int\frac{d^3\boldsymbol{k}_{v_{ksz}}}{(2\pi)^3}(2\pi)^6 \\
+  & [P_{\delta_{HI} \delta_{ksz}}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|)P_{v_{HI}^\parallel v_{ksz}^\parallel}(k_{v_{HI}},z_{HI}, z_{ksz})\delta^3_D(\boldsymbol{k}_{v_{HI}}-\boldsymbol{k}_{v_{ksz}})\\
+  &\delta^3_D(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}-\boldsymbol{k}_{ksz}+\boldsymbol{k}_{v_{ksz}})+P_{\delta_{HI} v_{ksz}^\parallel}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|, z_{ksz})\\
+  &P_{\delta_{HI} v_{ksz}^\parallel}(k_{v_{HI}}, z_{HI})\delta^3_D(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}-\boldsymbol{k}_{v_{ksz}})\delta^3_D(\boldsymbol{k}_{ksz}-\boldsymbol{k}_{v_{ksz}}-\boldsymbol{k}_{v_{HI}})]
+  \end{aligned}
+\end{equation}
+
+ We can collapse the $k_{v_{ksz}}$ integral by setting $k_{v_{HI}} = k_{v_{ksz}}$, which gives
+  
+ \begin{equation}
+\begin{aligned}
+  B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})=  &\int dz_{HI}\frac{ D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})} \int \frac{d^2 \boldsymbol{k}^\perp_{ksz}}{(2\pi)^2}  \int d\chi_{ksz}  {g}(\chi_{ksz})D^2(z_{ksz})\int \frac{dk_{ksz}^{\parallel}}{2\pi} e^{-ik_{ksz}^{\parallel}\chi_{ksz}}\\
+&   \int \frac{d^3\boldsymbol{k}_{v_{HI}}}{(2\pi)^3} (2\pi)^3 \delta^3_D(\boldsymbol{k}_{HI}-\boldsymbol{k}_{ksz})[P_{\delta_{HI} \delta_{ksz}}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|)  \\
+& P_{v_{HI}^\parallel v_{ksz}^\parallel}(k_{v_{HI}}, z_{HI}, z_{ksz}) +P_{\delta_{HI} v_{ksz}^\parallel}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|, z_{ksz})P_{\delta_{HI} v_{ksz}^\parallel}(k_{v_{HI}}, z_{HI})].
+\end{aligned}
+ \end{equation} 
+  
+
+  
+ We can now collapse the $k_{{ksz}}^\perp$ and $k_{{ksz}}^\parallel$ integrals by writing $\delta^3_D(\boldsymbol{k}_{HI}-\boldsymbol{k}_{ksz}) = \delta^2_D(\boldsymbol{k}_{HI}^\perp-\boldsymbol{k}_{ksz}^\perp)\delta_D({k}_{HI}^\parallel-{k}_{ksz}^\parallel)$. Thus, the bispectrum expression becomes
+  
+  %such that $\boldsymbol{k}_{v_{HI}}=\boldsymbol{k}_{v_{ksz}}$, and $\boldsymbol{k}_{{HI}}=\boldsymbol{k}_{ksz}$, for the first term. The second term gives the relation, $\boldsymbol{k}_{v_{ksz}}=\boldsymbol{k}_{{HI}}-\boldsymbol{k}_{v_{HI}}$, which again leaves $\boldsymbol{k}_{{HI}}=\boldsymbol{k}_{ksz}$. 
+
+\iffalse
+
+\begin{equation}
+\begin{aligned}
+&<\delta_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}){v}_{HI}^{\parallel}(\boldsymbol{k}_{v_{HI}}) \delta^*_{ksz}(\boldsymbol{k}_{ksz}-\boldsymbol{k}_{v_{ksz}}){v}^{*\parallel}_{ksz}(\boldsymbol{k}_{v_{ksz}})>\\
+&=
+(2\pi)^6 (P_{\delta_{HI} \delta_{ksz}}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|) P_{v_{HI}^\parallel v_{ksz}^\parallel}(k_{v_{HI}})\delta^3_D(\boldsymbol{k}_{v_{HI}}-\boldsymbol{k}_{v_{ksz}})\delta^3_D(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}-\boldsymbol{k}_{ksz}+\boldsymbol{k}_{v_{ksz}})\\
+&+P_{\delta_{HI} v_{ksz}^\parallel}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|)P_{\delta_{ksz} v_{HI}^\parallel}(k_{v_{HI}})\delta^3_D(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}-\boldsymbol{k}_{v_{ksz}})\delta^3_D(\boldsymbol{k}_{ksz}-\boldsymbol{k}_{v_{ksz}}-\boldsymbol{k}_{v_{HI}}))
+\end{aligned}
+\end{equation}
+
+\fi
+
+\begin{equation}\label{bispec eqn simplified}
+\begin{aligned}
+B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})=&\frac{1}{8\pi^3}\int dz_{HI} \frac{D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})} F(k_{HI}, z_{HI}, z_{ksz})
+\int d\chi_{ksz} g(\chi_{ksz}) D^2(z_{ksz}) e^{-ik_{HI}^\parallel \chi_{ksz}},
+\end{aligned}
+\end{equation}
+
+where we define 
+
+\begin{equation}\label{F eqn bispec}
+F(k_{HI}, z_{HI}, z_{ksz})=\int d^3\boldsymbol{k}_{v_{HI}} [P_{\delta_{HI} \delta_{ksz}}(k_{\delta_{HI}}) P_{v_{HI} v_{ksz}}(k_{v_{HI}}, z_{HI}, z_{ksz})+P_{\delta_{HI} v_{ksz}}(k_{\delta_{HI}}, z_{ksz}) P_{v_{HI} \delta_{ksz}}(k_{v_{HI}}, z_{HI})].
+\end{equation}
+
+Equations \ref{bispec eqn simplified} and \ref{F eqn bispec} can then be rewritten to completely remove the dependence of F on $z_{ksz}$ by substituting the velocity power spectra from equations \ref{Pvv Pdelv relations}. This gives the equation
+
+
+\begin{equation}\label{bispec signal observational coords}
+\begin{aligned}
+B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})=\frac{1}{8\pi^3}&\int dz_{HI} \frac{D^2(z_{HI})f(z_{HI}) H(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})(1+z_{HI})} F(k_{HI}) |G(k_{HI}^\parallel)|,
+\end{aligned}
+\end{equation}
+
+where we have redefined F to be 
+
+\begin{equation}\label{F indep of redshift}
+F(k_{HI})= 2\pi \int d {k}^\parallel_{v_{HI}} \int d {k}^\perp_{v_{HI}} {k}^\perp_{v_{HI}} \left(\frac{\mu^2_{k_{v_{HI}}}}{k^2_{v_{HI}}} +\frac{\mu_{k_{v_{HI}}}}{k_{v_{HI}}} \frac{\mu_{k_{\delta_{HI}}}}{k_{\delta_{HI}}}\right) P_{\delta_{HI} \delta_{ksz}}(k_{\delta_{HI}}) P_{\delta_{HI} \delta_{ksz}}(k_{v_{HI}}),
+\end{equation}
+
+and we have also defined the complex function,
+
+\begin{equation}\label{G eqn}
+G(k_{HI}^\parallel)=\int d\chi_{ksz} W(\chi_{ksz}) e^{-ik_{HI}^\parallel \chi_{ksz}}.
+\end{equation}
+
+with
+
+\begin{equation}\label{W of chi ksz eqn}
+W(\chi_{ksz}) = \frac{g(\chi_{ksz}) D^2(z_{ksz})f(z_{ksz}) H(z_{ksz})}{1+z_{ksz}}
+\end{equation}
+
+
+Since we have removed the dependence of the power spectra on $\chi_{ksz}$ in equation \ref{F indep of redshift}, we can take the Fourier transform of the $\chi_{ksz}$ integral, as expressed in equation \ref{G eqn}. This prevents us from having to evaluate the oscillatory $e^{-ik_{HI}^\parallel \chi_{ksz}}$ term directly. 
+
+Equation \ref{W of chi ksz eqn} is plotted as a function of $\chi(ksz)$ in figure \ref{fig:fchikszfull}, over all redshifts up to reionization. The plot shows that $W(\chi_{ksz})$ is a smooth function that is slowly varying over redshift. We can therefore expect the Fourier transform, $G(k_{HI}^\parallel)$, to be close to a Dirac delta function, which will result in a lot of signal existing in low $k^\parallel$ modes. This is expected due to the bispectrum constraint, $k^\parallel_{HI} = k^\parallel_{ksz}=0$. It is worth noting that this constraint does not require both $k^\parallel_{v_{HI}}$ and $k^\parallel_{\delta_{HI}}$ to be individually small, but rather stipulates that their sum, $k^\parallel_{HI}$, must be close to zero. 
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/F_chi_ksz_full}
+	\caption{A plot of $W(\chi_{ksz})$ vs $\chi_{ksz}$ plotted over all redshifts up to reionization. The small amplitude change of $ \sim 6 \times 10^{-11}$ $\textrm{Mpc}^{-2}$ shows that $W(\chi_{ksz})$ is slowly varying over redshift, such that we expect the Fourier transform, $G(k_{HI}^\parallel)$, to be close to a Dirac delta function.} 
+	\label{fig:fchikszfull}
+\end{figure}
+
+
+%Substituting for the velocity power spectra and $g(\chi)$, we have the full expression, 
+
+
+%\begin{equation}\label{bispec signal eqn}
+%\begin{aligned}
+%B_{l_{HI}}^{\delta_{HI} v_{HI} p_{ksz}}(y_{HI},\bar{z}_{HI})&=\frac{T_{rad}x}{4\pi^2 c}\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\int_{z_{min}}^{z_{max}} d z_{HI}\frac{\bar{T}^2(z_{HI})rsd^2f(z_{HI})D(z_{HI})^2 H(z_{HI}) }{\chi^2(z_{HI})r(z_{HI})(1+z_{HI})} G(k_{HI}^\parallel,k_{HI}^\perp)F(k_{HI}^\parallel),
+%&=\frac{T_{rad}x}{4\pi^2 c^2}\frac{\sigma_T \rho_{g0}}{\mu_e m_p}\int d \chi_{HI}\frac{\bar{T}^2(z_{HI})rsd^2f(z_{HI})D^2(z_{HI}) H^2(z_{HI}) }{\chi^2(z_{HI})r(z_{HI})(1+z_{HI})} G(k_{HI}^\parallel,k_{HI}^\perp)F(k_{HI}^\parallel)
+%\end{aligned}
+%\end{equation}
+
+
+
+
+%and 
+
+%\begin{equation}\label{G eqn}
+%G(k_{HI}^\parallel,k_{HI}^\perp)=\int d k_{v_{HI}}^{\perp} \int dk_{v_{HI}}^{\parallel} k_{v_{HI}}^{\perp} P_{\delta_{m} \delta_m}(k_{v_{HI}}) P_{\delta_{m} \delta_m}(k_{\delta_{HI}})\left( \frac{\mu^2_{k_{v_{HI}}}}{k^2_{v_{HI}}}+\frac{\mu_{k_{v_{HI}}} \mu_{k_{\delta_{HI}}}}{k_{v_{HI}} k_{\delta_{HI}}} \right),
+%\end{equation}
+
+
+%which uses the dimensionless quantity $\mu_{k}=\frac{k^\parallel}{k}$ and which contains the decomposition of the 3D $dk_{v_{HI}}$ integral into its $k^\perp$ and $k^\parallel$ components.
+ Before plotting the bispectrum signal, we investigate the limits over which ${k}^\perp_{v_{HI}}$ and ${k}^\parallel_{v_{HI}}$ should be integrated in equation \ref{F indep of redshift}. Although we have illustrated in figure \ref{fig:kvecdiagramnonlimber3d} that $\boldsymbol{k}_{v_{HI}}$ is a short vector, we still need to determine the parallel and perpendicular components of the vector that will contribute the most to the bispectrum signal. We do so by plotting the integrand of equation \ref{F indep of redshift} in units of $\textrm{Mpc}^7$ for a few values of $k_{HI}$. This is shown in figure \ref{fig:2d_kpperp_kppar_bispec_integrand} for three values of $k_{HI}$ assuming equal $k_{HI}^\perp$ and $k_{HI}^\parallel$ values of $10^{-3}$, $10^{-1}$ and $10$ $\textrm{Mpc}^{-1}$, respectively. 
+ 
+ 
+ 
+ \begin{figure}[!htb]
+ 	\minipage{0.33\textwidth}
+ 	\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/2D_kpperp_kppar_bispec_F_integrand_z_1_deltaz_pt2_kperp_kpar_pt001}
+ 	\endminipage\hfill
+ 	\minipage{0.33\textwidth}
+ 	\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/2D_kpperp_kppar_bispec_F_integrand_z_1_deltaz_pt2_kperp_kpar_pt1}
+ 	\endminipage\hfill
+ 	\minipage{0.33\textwidth}%
+ 	\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/2D_kpperp_kppar_bispec_F_integrand_z_1_deltaz_pt2_kperp_kpar_10}
+ 	\endminipage
+ 	\caption{Plot showing the ${k}^\perp_{v_{HI}}$ and ${k}^\parallel_{v_{HI}}$ modes which contribute the most to the bispectrum signal. This is shown for three values of $k_{HI}$ assuming equal $k_{HI}^\perp$ and $k_{HI}^\parallel$ components.}
+ 	\label{fig:2d_kpperp_kppar_bispec_integrand}
+ \end{figure}
+ 
+All three panels of figure \ref{fig:2d_kpperp_kppar_bispec_integrand} clearly show that there is little contribution to the signal for larger $k^\perp_{v_{HI}}$, such that we can set an upper integration limit of $k^\perp_{v_{HI}, max} =1$ $\textrm{Mpc}^{-1}$. The remaining limits for $k^\parallel_{v_{HI}}$ and $k^\perp_{v_{HI}}$ are set by equation \ref{telescope limits eqns} at a central redshift of $z_i=1$ for a redshift bin width of $0.4$, which corresponds to a comoving distance of $\sim 10^3$ Mpc. 
+ 
+The bispectrum signal is plotted in figure \ref{fig:2dbispecfourierz1deltazpt2withz21intfullzkszint} as a 2D colour plot so as to determine which $k^\parallel_{HI}$ and $k^\perp_{HI}$ modes contribute the most to the signal. The plot shows that the signal is highest at low $k^\parallel$ modes, as expected from the bispectrum constraint stipulated after equation \ref{W of chi ksz eqn}. With regards to the angular scales, in comparing figures \ref{fig:2dclp21z1deltazpt2zkszfullintegraloverz21} and \ref{fig:2dbispecfourierz1deltazpt2withz21intfullzkszint} we see that the bispectrum and HI momentum signals dominate on the same angular scales ($k^\perp<0.1$ $\text{Mpc}^{-1}$). This is expected since the expressions for the two signals have a similar structure. As stated for the HI momentum signal, the signal is dominant on the same large angular scales as the primary anisotropies of the CMB spectrum, thereby limiting the signal-to-noise.
+
+  
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/F_chi_ksz_full}
+%	\caption{$F(\chi_{ksz})$ plotted against $\chi_{ksz}$}
+%	\label{fig:fchikszfull}
+%\end{figure}
+
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/F_kpar_full_relevant_kpar_scales}
+%	\caption{$F(k_{21}^\parallel)$ plotted against $k_{21}^\parallel$}
+%	\label{fig:fkparfullrelevantkparscales}
+%\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/2D_bispec_fourier_z_1_deltaz_pt2_with_z21_int_full_zksz_int_kpperp_5e-4_1_kppar_1e-6_pt15_30pts_fullbispec}
+	\caption{Bispectrum signal centred at $z_i=1$, for a 0.4 redshift bin width, with $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$ integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively.}
+	\label{fig:2dbispecfourierz1deltazpt2withz21intfullzkszint}
+\end{figure}
+
+
+
+So far we have considered the full bispectrum in our calculations. We have already used the fact that $k_{v_{HI}} < k_{\delta_{HI}}$ when computing the full bispectrum. However, it is interesting to consider the squeezed bispectrum in which we make the approximation that $k_{v_{HI}} \ll k_{\delta_{HI}},k_{ p_{ksz}}$. The vector $\boldsymbol{k}_{v_{HI}}$ in figure \ref{fig:kvecdiagramnonlimber3d} would then have a much smaller magnitude than the other two vectors, thus forming a squeezed triangle. We keep the maximum limit of $k_{HI} =10$ $\text{Mpc}^{-1}$, while reducing the limit for $k_{v_{HI}}$ to $0.1$ $\text{Mpc}^{-1}$. As a result, ${k}_{\delta_{HI}}$ can then be approximated as
+
+
+\begin{equation}
+|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|=\sqrt{k_{HI}^2+k_{v_{HI}}^2-2\boldsymbol{k}_{HI}.\boldsymbol{k}_{v_{HI}}}=k_{HI}\sqrt{1-\frac{2\boldsymbol{k}_{HI}.\boldsymbol{k}_{v_{HI}}}{k_{HI}^2}+\frac{k_{v_{HI}}^2}{k_{HI}^2}}\simeq k\left(1-\frac{\boldsymbol{k}_{HI}.\boldsymbol{k}_{v_{HI}}}{k_{HI}^2}\right),
+\end{equation}
+
+where the last equality comes from the use of the Taylor expansion.
+Using this amplitude, the corresponding power spectrum is
+
+\begin{equation}
+\begin{aligned}
+P_{\delta_{{HI}} \delta_{{HI}}}(|\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}|)&\simeq P_{\delta_{{HI}} \delta_{{HI}}}(k_{HI}-\frac{\boldsymbol{k}_{HI}.\boldsymbol{k}_{v_{HI}}}{k}) \simeq P_{\delta_{{HI}} \delta_{{HI}}}(k_{HI})-\frac{\boldsymbol{k}_{HI}.\boldsymbol{k}_{v_{HI}}}{k_{HI}}\frac{dP_{\delta_{{HI}} \delta_{{HI}}}(k_{HI})}{dk_{HI}}\\
+&=P_{\delta_{{HI}} \delta_{{HI}}}(k_{HI})\left(1-\frac{\boldsymbol{k}_{HI}.\boldsymbol{k}_{v_{HI}}}{k_{HI}^2}\frac{dlnP_{\delta_{{HI}} \delta_{{HI}}}(k_{HI})}{dlnk_{HI}}\right)
+\approx P_{\delta_{{HI}} \delta_{{HI}}}(k_{HI}).
+\end{aligned}
+\end{equation}
+
+where in the second line we have used the condition of $\frac{k_{v_{HI}}}{k_{HI}} \ll 1$. Equation \ref{bispec eqn simplified} is then modified for the squeezed bispectrum to give
+
+\begin{equation}
+\begin{aligned}
+B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})_{squeezed}=\frac{1}{8\pi^3}&\int dz_{HI} \frac{D^2(z_{HI})f(z_{HI}) H(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})(1+z_{HI})} F(k_{HI})_{squeezed} G(k_{HI}^\parallel),
+\end{aligned}
+\end{equation}
+
+where we have redefined F from equation \ref{F indep of redshift} in the squeezed limit,
+
+
+\begin{equation}
+F(k_{HI})_{squeezed}= 2\pi \int d {k}^\parallel_{v_{HI}} \int d {k}^\perp_{v_{HI}} {k}^\perp_{v_{HI}} \left(\frac{\mu^2_{k_{v_{HI}}}}{k^2_{v_{HI}}} +\frac{\mu_{k_{v_{HI}}}}{k_{v_{HI}}} \frac{\mu_{k_{\delta_{HI}}}}{k_{\delta_{HI}}}\right) P_{\delta_{HI} \delta_{ksz}}(k_{HI}) P_{\delta_{HI} \delta_{ksz}}(k_{v_{HI}}),
+\end{equation}
+
+while the expression for $G(k_{HI}^\parallel)$ remains unchanged. 
+
+We can evaluate the accuracy of the squeezed bispectrum by considering figure \ref{fig:2d_kpperp_kppar_bispec_integrand}. Since $k^\parallel_{v_{HI}}$ is already on the order of $0.1$, we consider the $k^\perp_{v_{HI}}$ limit which is reduced from $1$ to $0.1$ $\textrm{Mpc}^{-1}$ in the squeezed bispectrum. Although figure \ref{fig:2d_kpperp_kppar_bispec_integrand} does indicate a lower signal contribution in the region of  $0.1 < k^\perp_{v_{HI}} < 1$ $\textrm{Mpc}^{-1}$, when compared to the lower $ k^\perp_{v_{HI}}$ modes, the signal in this region is still $\sim 10$ orders of magnitude larger than that contained in $k^\perp_{v_{HI}} > 1$ $\textrm{Mpc}^{-1}$. We therefore use the full bispectrum such that any mention of the bispectrum for the rest of the thesis is in reference to the full case. 
+
+
+\subsection{Bispectrum Estimator}\label{bispectrum noise section}
+
+The bispectrum estimator will be computed as was done in \cite{LEWIS_2006} \cite{smith2018ksz}. The reason for choosing an optimal estimator is that the signal-to-noise cannot be directly computed, as was explained in \ref{section:HI momentum noise}. 
+
+The integrated bispectrum signal, expressed in physical coordinates is written as 
+
+\begin{equation}
+B^{\delta_{HI} v_{HI} p_{ksz}}(\boldsymbol{k}_{HI}, z_{HI})
+= \zeta({z}_{HI}) \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \int \frac{d^3\boldsymbol{k}_{v_{HI}}}{(2\pi)^3} <\delta_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}){v}_{HI}^{\parallel}(\boldsymbol{k}_{v_{HI}}) p^*_{ksz}(\boldsymbol{l}_{ksz})>
+\end{equation}
+
+where we have defined $\zeta({z}_{HI})= \frac{D^2(z_{HI}) f(z_{HI}) H(z_{HI})}{1+z_{HI}}$ which contains all redshift dependent factors in the bispectrum signal. From here on, we omit the redshift dependence from the bispectrum for convenience, since all redshift terms are contained in $\zeta$. 
+
+
+Now, the integrand can be written as 
+
+\begin{equation}\label{full bispec}
+B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz})
+=\zeta({z}_{HI}) \left< \delta_{HI} (\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}) v^\parallel_{HI} (\boldsymbol{k}_{v_{HI}}) p_{ksz}(\boldsymbol{l}_{ksz})\right>.
+\end{equation}
+
+We then define an optimal bispectrum estimator, 
+
+\begin{equation}\label{bispectrum observed equals true bispec times epsilon}
+\hat{B}^{\delta_{HI} v_{HI} p_{ksz}}(\boldsymbol{k}_{HI})=B^{\delta_{HI} v_{HI} p_{ksz}}(\boldsymbol{k}_{HI}) \hat{\epsilon}(\boldsymbol{k}_{HI}),
+\end{equation}
+
+with
+
+\begin{equation}
+\hat{\epsilon}(\boldsymbol{k}_{HI})=\frac{\zeta(z_{HI})}{\mathcal{N}(\boldsymbol{k}_{HI})} \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}  \hat{f}(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz}) W(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz}),
+\end{equation}
+
+where
+
+\begin{equation}\label{f hat}
+ \hat{f}(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz})=\hat{\delta}_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})\hat{v}^\parallel_{HI} (\boldsymbol{k}_{v_{HI}}) \hat{p}_{ksz}(\boldsymbol{l}_{ksz}).
+\end{equation}
+
+
+and $W$ is a weighting which we have introduced. %Note that the function, $C(z_{HI})$, converts physical coordinates to observational coordinates, thereby allowing us to express the weighting in physical coordinates, as $W=W(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l_{ksz}})$, and obtain the estimator, $\hat{\epsilon}= \hat{\epsilon}(\boldsymbol{l},y, \bar{z}_{HI})$, in terms of observational coordinates.\\ 
+The normalization for the estimator is written such that $\left< \hat{\epsilon}(\boldsymbol{k}_{HI})\right>=1$. This gives us the expression,
+
+
+\begin{equation}\label{N eqn}
+\mathcal{N}(\boldsymbol{k}_{HI})=\int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3} B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz}) W(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz}),
+\end{equation}
+
+which we obtain by substituting equation \ref{f hat} into equation \ref{full bispec} to give us\\ $B (\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz}) = \zeta({z}_{HI}) \left< f \right>$. 
+
+The variance of the estimator, $\hat{\epsilon}(\boldsymbol{k}_{HI})$, is %computed for overlapping redshift bins, so that we can assume $\bar{z}_{HI} = \bar{z}'_{HI}$, which gives
+
+\begin{equation}\label{variance of epsilon}
+\begin{aligned}
+Var[\hat{\epsilon}(\boldsymbol{k}_{HI})]=&\int d z'_{HI} \int \frac{d^3\boldsymbol{k}'_{HI}}{(2\pi)^3} \left< \hat{\epsilon}(\boldsymbol{k}_{HI})\hat{\epsilon}^*(\boldsymbol{k}'_{HI}) \right>\\
+=&\frac{\zeta ({z}_{HI})}{\mathcal{N}(\boldsymbol{k}_{HI})} \int dz'_{HI} \zeta(z'_{HI}) \int \frac{d^3\boldsymbol{k}'_{HI}}{(2\pi)^3}  \frac{1}{\mathcal{N}(\boldsymbol{k}'_{HI})}
+\int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2}
+ \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3} \\
+& W(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz})    
+\int \frac{d^2 \boldsymbol{l}'_{ksz}}{(2\pi)^2}
+\int\frac{d^3\boldsymbol{k}'_{v_{HI}}}{(2\pi)^3}W(\boldsymbol{k}'_{HI},\boldsymbol{k}_{v_{HI}}',\boldsymbol{l}_{ksz}')\\
+& \left<\hat{\delta}_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})\hat{v}^\parallel_{HI} (\boldsymbol{k}_{v_{HI}}) \hat{p}_{ksz}(\boldsymbol{l}_{ksz})  \hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}}) \hat{p}^*_{ksz}(\boldsymbol{l}'_{ksz}) \right>.
+\end{aligned}
+\end{equation}
+
+To simplify the computation of the six-point correlation, we assume that $ \hat{p}_{ksz}$ is Gaussian, as was done in \cite{smith2018ksz}. Therefore, we decompose the six-point function into
+% two-point functions only, and omit the bispectra: $\left<\delta_{HI} v_{HI} p_{ksz}\right>$, $\left<\delta_{HI} \delta_{HI} p_{ksz}\right>$ and $\left<v_{HI} v_{HI} p_{ksz}\right>$. 
+%The first of these three-point functions is in fact the bispectrum which we are computing. The latter two would have been computed in the absence of the simplification, except in squeezed limit case.
+%We obtain 
+the product of the kSZ two-point correlation, and the four-point correlation of two HI density and velocity fields: %two terms:
+
+\iffalse
+\begin{equation*}
+\begin{aligned}
+\left< p_{ksz} (\boldsymbol{l}) p^*_{ksz} (\boldsymbol{l}')\right>[\left< \hat{\delta}_{HI} (\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})
+\hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})\right>
+\left<\hat{v}^{\parallel}_{HI} (\boldsymbol{k}_{v_{HI}})
+\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}}) \right> +\\
+\quad \quad \quad + \left<\hat{\delta}_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})
+\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}}) \right> \left<\hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})
+\hat{v}^{\parallel}_{HI} (\boldsymbol{k}_{v_{HI}})\right>].
+\end{aligned}
+\end{equation*}
+\fi
+
+\begin{equation*}
+\begin{aligned}
+\left< p_{ksz} (\boldsymbol{l}_{ksz}) p^*_{ksz} (\boldsymbol{l}'_{ksz})\right> 
+\left< \hat{\delta}_{HI} (\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})
+\hat{v}^{\parallel}_{HI} (\boldsymbol{k}_{v_{HI}})
+\hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})
+\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}}) \right>.
+\end{aligned}
+\end{equation*}
+
+
+ %$\left<\hat{\delta}_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}})\right>$, $\left<  \hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})\hat{v}^{\parallel}_{HI} (\boldsymbol{k}_{v_{HI}})\right>$, $\left<\hat{\delta}_{HI}(\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}}) \left<\hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})$, $\left<\hat{v}^{\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}})\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}})\right>$, $\left<\hat{p}_{ksz}(\boldsymbol{l})\hat{p}^*_{ksz}(\boldsymbol{l}'_{ksz}) \right>$
+
+The two-point correlation has been computed in equation \ref{Cl lin kSZ ito delta and v}. To evaluate the four-point correlation, we return to the expression for $C_l^{p_{HI},tot}$ in equation \ref{Cl p21 tot eqn} and express the HI momentum power spectrum in physical coordinates as,
+
+\begin{equation}
+\begin{aligned}
+C^{p_{HI},tot} (\boldsymbol{k}_{HI}) =& \zeta(z_{HI}) \int d z'_{HI} \zeta(z'_{HI}) \int \frac{d^3 \boldsymbol{k}'_{{HI}}}{(2\pi)^3} \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3} \int \frac{d^3 \boldsymbol{k}'_{v_{HI}}}{(2\pi)^3}\\
+& \left< \hat{\delta}_{HI} (\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})
+\hat{v}^{\parallel}_{HI} (\boldsymbol{k}_{v_{HI}})
+\hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})
+\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}}) \right>.
+\end{aligned}
+\end{equation}
+
+Omitting the integral over $\boldsymbol{k}_{v_{HI}}$, we can write the HI momentum power spectrum as
+
+\begin{equation}\label{Cl pHI tot non-integrated}
+\begin{aligned}
+C^{p_{HI},tot} (\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}) =& \zeta(z_{HI}) \int dz'_{HI} \zeta(z'_{HI}) \int \frac{d^3 \boldsymbol{k}'_{{HI}}}{(2\pi)^3}\int \frac{d^3 \boldsymbol{k}'_{v_{HI}}}{(2\pi)^3}\\
+&\left< \hat{\delta}_{HI} (\boldsymbol{k}_{HI}-\boldsymbol{k}_{v_{HI}})
+\hat{v}^{\parallel}_{HI} (\boldsymbol{k}_{v_{HI}})
+\hat{\delta}^*_{HI}(\boldsymbol{k}'_{HI}-\boldsymbol{k}'_{v_{HI}})
+\hat{v}^{*\parallel}_{HI} (\boldsymbol{k}'_{v_{HI}}) \right>.
+\end{aligned}
+\end{equation}
+
+Thus, using equations \ref{Cl pHI tot non-integrated} and collapsing integrals, we obtain the simplified expression for the variance, 
+
+\begin{equation}\label{var of epsilon}
+\begin{aligned}
+Var[\hat{\epsilon}(\boldsymbol{k}_{HI})]=&
+%\frac{C(z_{HI})}{N(\boldsymbol{l},y)} C^{p_{ksz},tot}_{l}\int \frac{d^2 \boldsymbol{l}'}{(2\pi)^2} \delta^2_D(\boldsymbol{l}-\boldsymbol{l}') \int \frac{dy'}{2\pi} \frac{1}{N(\boldsymbol{l}',y')}  \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}W(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l})\\ &    
+%\int \frac{d^3\boldsymbol{k}'_{v_{HI}}}{(2\pi)^3} W(\boldsymbol{k}'_{HI},\boldsymbol{k}_{v_{HI}}',\boldsymbol{l}')\delta^2_D(\boldsymbol{k}^\perp_{HI}-\boldsymbol{k}'^\perp_{HI})\delta(k^\parallel_{HI}-k'^\parallel_{HI}) \delta^3_D(\boldsymbol{k}_{v_{HI}} - \boldsymbol{k}'_{v_{HI}})\\
+%& [P^{tot}_{\delta_{HI}\delta_{HI}}(k_{\delta_{HI}})P^{tot}_{v_{HI}v_{HI}}(k_{v_{HI}})+P^{tot}_{\delta_{HI}v_{HI}}(k_{\delta_{HI}})P^{tot}_{\delta_{HI} v_{HI}}(k_{v_{HI}})] 
+\frac{1}{\mathcal{N}^2(\boldsymbol{k}_{HI})}  \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2}C^{p_{ksz},tot}_{{l}_{ksz}} \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3} W^2(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz}) C^{p_{HI},tot}(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}).
+\end{aligned}
+\end{equation}
+
+ 
+
+Minimizing the variance gives the optimal weighting of 
+
+\begin{equation}\label{W eqn}
+W(\boldsymbol{k}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l}_{ksz})=\frac{ B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz})} {C^{p_{HI},tot}(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}) C^{p_{ksz},tot}_{{l}_{ksz}}}.
+\end{equation}
+
+Substituting this into equation \ref{N eqn} to get the expression for the normalization gives,
+
+\begin{equation}
+\mathcal{N}(\boldsymbol{k}_{HI})=  \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \frac{1}{C^{p_{ksz},tot}_{{l}_{ksz}}} \int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}  \frac{|B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz})|^2}{ C^{p_{HI},tot}(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}})}.
+\end{equation}
+
+
+Furthermore, substituting $\mathcal{N}$ into equation \ref{var of epsilon}, together with equation \ref{W eqn}, gives the result, $Var[\hat{\epsilon} (\boldsymbol{k}_{HI})]=\frac{1}{\mathcal{N}(\boldsymbol{k}_{HI})}$, written in observational coordinates as
+
+\begin{equation}\label{variance of estimator obs coords}
+\begin{aligned}
+Var[\hat{\epsilon}(\boldsymbol{l},y, \bar{z}_{HI})] =& \frac{1}{\mathcal{N}(\boldsymbol{l}, y)}\\
+=&\int \frac{dz_{HI} }{\chi^2(z_{HI})r_\nu(z_{HI})} \frac{1}{\mathcal{N}(\boldsymbol{k}_{HI})}\\
+=& \left[ \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \frac{1}{C^{p_{ksz},tot}_{{l}_{ksz}}}\int \frac{dz_{HI} }{\chi^2(z_{HI})r_\nu(z_{HI})}\int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}  \frac{|B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz})|^2}{ C^{p_{HI},tot}(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}})}\right]^{-1}
+\end{aligned}
+\end{equation}
+ 
+The variance of the bispectrum is then written as
+
+
+
+\begin{equation}\label{bispec variance}
+Var[\hat{B}_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y, \bar{z}_{HI})]=|B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y, \bar{z}_{HI})|^2 Var[\hat{\epsilon}(l,y, \bar{z}_{HI})].
+\end{equation}
+
+
+
+%The noise can be approximated as,
+
+
+%\begin{equation}\label{sigma noise bispec}
+%Var(\hat{B}(l_{HI},y_{HI}))^{1/2} \approx \left[\frac{1}{C_{l}^{p_{ksz},tot}}\int \frac{d^3k'}{(2\pi)^3} \frac{1}{C^{p_{HI},tot}_{l_{HI}}(y_{HI},\boldsymbol{k}_{v_{HI}}, \bar{z}_{HI})}\right]^{-1/2}.
+%\end{equation}
+
+Equation \ref{bispec variance} is plotted in figure \ref{fig:bispec_var_2_bins} for two frequency bins, viz. the $700-800$ MHz and $400-500$ MHz bins. The $ d^3\boldsymbol{k}_{v_{HI}}$ integral is decomposed into its perpendicular and parallel components, with $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$ integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively. These specifications are the same as those used in plotting the bispectrum signal in figure \ref{fig:2dbispecfourierz1deltazpt2withz21intfullzkszint}.
+
+Both plots in figure \ref{fig:bispec_var_2_bins} show that the variance is lowest in the kSZ window, which is the window of detectability for the kSZ signal demarcated in figure \ref{fig:clttnlttov}. This window has a range of $0.2 \lesssim k_\perp \lesssim 2$ and $0.1 \lesssim k_\perp \lesssim 1$ for the frequency bins shown in the left and right plots, respectively. The combined CMB spectrum and AdvACT detector noise reach a minimum at $l \sim 5000$  which can be seen in figure \ref{fig:clttnlttov} if we refer to the intersection of the CMB spectrum and noise curves. This corresponds to values of $k^\perp \sim 1$ $\text{Mpc}^{-1}$ and $k^\perp \sim 0.6$ $\text{Mpc}^{-1}$ for the left and right plots, respectively. Hence we notice a minimum bispectrum variance in this region. 
+
+Of course, the kSZ window accounts only for the kSZ momentum noise. To explain the highest bispectrum variance for $k^\perp \gtrsim 2$ $\text{Mpc}^{-1}$ we use the HI momentum noise. This can be seen from figure \ref{fig:nncolorplotrectcoords} which is plotted for a bin that matches closely to the $700-800$ MHz frequency bin in figure \ref{fig:bispec_var_2_bins}. The right panel of figure \ref{fig:bispec_var_2_bins} shows the variance for a lower frequency bin which extends from $400-500$ MHz. The variance dominates from a lower $k^\perp \sim 0.7$ $\text{Mpc}^{-1}$ when compared to that of the higher frequency bin in the left panel. The difference in the $k^\perp$ cut offs can be understood visually by referring to figure \ref{fig:hiraxnoise4bins100mhzwidth} which depicts a decrease in the $l$ mode at which the noise cuts off when we observe at lower frequencies. 
+
+%Figure \ref{fig:nncolorplotrectcoords} shows that the noise dominates for $k^\perp \gtrsim 2$ $\text{Mpc}^{-1}$ in the bottom panel. Although the same does not apply for all $k^\perp>2$ $\text{Mpc}^{-1}$ in the top panels of figure \ref{fig:nncolorplotrectcoords}, the contribution from the noisy modes of the $N(k_v) N(k_\delta)$ terms are much larger than that of the other terms in $C_l^{p_{HI},tot}$. 
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/2D_inv_sigma_hirax_z_1_deltaz_pt2_with_z21_int_kpperp_5e-4_1_kppar_1e-3_1_40pts}
+%	\caption{}
+%	\label{fig:2dinvsigmahiraxz1deltazpt2withz21intkpperp5e-41kppar1e-3140pts}
+%\end{figure}
+
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/2D_bispec_var_hirax_700_800_no_z21_int_kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/2D_bispec_var_hirax_400_500_no_z21_int__kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{The bispectrum variance is plotted using equation \ref{bispec variance} for two frequency bins. The perpendicular and parallel components, $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$, are integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively. From the plot, we see that the variance dominates from $k^\perp \ge 0.7$ $\textrm{Mpc}^{-1}$ for the right panel, whereas the left panel has low variance until $k^\perp \sim 2$ $\textrm{Mpc}^{-1}$.}
+	\label{fig:bispec_var_2_bins}
+\end{figure}
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/2D_bispec_var_hirax_z_1_deltaz_pt2_with_z21_int_kpperp_5e-4_1_kppar_1e-6_pt15_30pts}
+%	\caption{}
+%	\label{fig:2dbispecvarhiraxz1deltazpt2withz21intkpperp5e-41kppar1e-6pt1530pts}
+%\end{figure}
+
+
+\subsection{Bispectrum Estimator Signal-to-Noise}\label{Bispec SN section}
+
+In equation \ref{bispec variance} we wrote a simple expression relating the bispectrum variance to the true bispectrum and the variance of the estimator, $\epsilon$, with all quantities expressed as a function of observational coordinates. In a similar manner, equation \ref{bispectrum observed equals true bispec times epsilon} can be rewritten in observational coordinates as $\hat{B}_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y, \bar{z}_{HI})=|B_{l}^{\delta_{HI} v_{HI} p_{ksz}}(y, \bar{z}_{HI})|^2 \hat{\epsilon}(l,y, \bar{z}_{HI})$.
+
+
+The signal-to-noise ratio is then computed by taking the ratio of the signal and variance of the bispectrum estimator, 
+
+
+\begin{equation}\label{SN bispec as a func of l,y}
+\begin{aligned}
+\left(\frac{S}{N}(l,y)\right)^2&=\frac{|\hat{B}_l^{\delta_{HI} v_{HI} p_{ksz}}(y,\bar{z}_{HI})|^2}{Var[\hat{B}^{\delta_{HI} v_{HI} p_{ksz}}_{l}(y,\bar{z}_{HI})]}  \\
+&= \int \frac{d^2 \boldsymbol{l}_{ksz}}{(2\pi)^2} \frac{1}{C^{p_{ksz},tot}_{{l}_{ksz}}}\int \frac{dz_{HI} }{\chi^2(z_{HI})r_\nu(z_{HI})}\int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}  \frac{|B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}}, \boldsymbol{l}_{ksz})|^2}{ C^{p_{HI},tot}(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}})}
+\end{aligned}
+\end{equation}
+
+
+where the simplified expression in the last line shows that $\left(\frac{S}{N}(l,y)\right)^2 =  \mathcal{N}(l,y)$. 
+
+We have already used the constraint obtained from the three-point correlation in equation \ref{3 point function of bispectrum} to set $\boldsymbol{k}^\perp_{HI} = \boldsymbol{k}^\perp_{ksz}$. Due to the individual redshifts, $z_{HI}$ and $z_{ksz}$, the $l$ modes of the HI and kSZ fields were not set equal. However, in equation \ref{SN bispec as a func of l,y}, we have integrated out all redshift dependence and can therefore set $\boldsymbol{l}_{ksz} = \boldsymbol{l}$, which is a constraint from the two-point correlation of the HI and kSZ momentum fields:
+
+\begin{equation}
+\left<p_{ksz}(\boldsymbol{l}_{ksz}) p_{HI}(\boldsymbol{l}) \right> =C^{p_{HI}p_{ksz}}_l \delta^2(\boldsymbol{l}_{ksz} - \boldsymbol{l}).
+\end{equation}
+
+ Thus, equation \ref{SN bispec as a func of l,y} is simplified to
+
+\begin{equation}
+\left(\frac{S}{N}(l,y)\right)^2= \frac{1}{C^{p_{ksz},tot}_{l}}\int \frac{dz_{HI} }{\chi^2(z_{HI})r_\nu(z_{HI})}\int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}  \frac{|B(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}})|^2}{ C^{p_{HI},tot}(\boldsymbol{k}_{HI}, \boldsymbol{k}_{v_{HI}})}.
+\end{equation}
+
+\iffalse
+where we substitute
+
+\begin{equation}
+\begin{aligned}
+B_{l_{HI}}(y_{HI},\bar{z}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l})=&\frac{1}{8\pi^3}\int d z_{HI} \frac{D^2(z_{HI})}{\chi^2(z_{HI}) r(z_{HI})} G(k_{HI}, k_{v_{HI}})
+\int d\chi_{ksz} g(\chi_{ksz}) D^2(z_{ksz}) e^{-ik_{HI}^\parallel \chi_{ksz}},
+\end{aligned}
+\end{equation}
+
+with $G$ defined as
+
+\begin{equation}
+G(k_{HI}, k_{v_{HI}})= P_{\delta_{HI} \delta_{ksz}}(k_{\delta_{HI}}) P_{v_{HI} v_{ksz}}(k_{v_{HI}})+P_{\delta_{HI} v_{ksz}}(k_{\delta_{HI}}) P_{v_{HI} \delta_{ksz}}(k_{v_{HI}}).
+\end{equation}
+
+
+
+Since both $B_{l}(y,\bar{z}_{HI},\boldsymbol{k}_{v_{HI}},\boldsymbol{l})$ and $C^{p_{HI},tot}_{l}(y,\boldsymbol{k}_{v_{HI}}, \bar{z}_{HI})$ have already been integrated over redshift, we can rewrite the signal-to-noise expression by removing the $z_{HI}$ integral from the individual expressions which gives,
+
+\begin{equation}
+\left(\frac{S}{N}(l,y)\right)^2= \frac{V}{C^{p_{ksz},tot}_{l}} \int \frac{dz_{HI}}{\chi^2(z_{HI} )r_\nu(z_{HI})}\int \frac{d^3 \boldsymbol{k}_{v_{HI}}}{(2\pi)^3}
+\frac{|B(k^\perp_{HI}, k^\parallel_{HI},\boldsymbol{k}_{v_{HI}})|^2}
+{C^{p_{HI},tot}(k^\perp_{HI}, k^\parallel_{HI},\boldsymbol{k}_{v_{HI}}, \bar{z}_{HI})}.
+\end{equation}
+
+%The equation can be simplified by removing the $d z_{21}$ from full bispectrum and HI momentum signals. 
+\fi 
+
+In section \ref{section:HI momentum noise}, we discussed the noise dominating the signal on all scales, due to the integration over all $k_v^\perp$. This issue was resolved by computing the signal-to-noise using an optimal weighting. We can now integrate the $\frac{S}{N}(l,y)$ over $l$ and $y$ as,
+
+\begin{equation}\label{SN sq}
+\left(\frac{S}{N}\right)^2=V\int \frac{dl}{2\pi} \int \frac{dy}{2\pi} l \left(\frac{S}{N}(l,y)\right)^2.
+\end{equation}
+
+where we have used equations \ref{Nmodes} and \ref{SN HI intensity} to include the $l$ factor in the integrand, as well as the volume factor, $V=2 f_{sky} S_{area} \Delta \tilde{\nu} N_{patches}$. The volume in this expression differs from equation \ref{SN HI intensity} in that we have also accounted for the number of patches, $N_{patches}$, that the telescope observes. This relates to the telescope survey area and field of view as $N_{patches} =S_{area}/FOV$. 
+
+The pixelated signal-to-noise is plotted in figure \ref{fig:bispec_SN_hirax_4_bins} for HIRAX for four frequency bins each of width 100 MHz. The perpendicular and parallel components, $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$, are integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively. Using these specifications, we show that the signal-to-noise is highest in the kSZ window and is lowest for the $k^\perp$ scales on which the $C_l^{p_{HI}}$ noise is largest. This plot is extremely useful in determining which modes contribute the most to the bispectrum signal-to-noise. 
+
+This result can be checked by comparing the signal and variance from figures \ref{fig:2dbispecfourierz1deltazpt2withz21intfullzkszint} and \ref{fig:bispec_var_2_bins}. Of course the full signal-to-noise expression in equation \ref{SN sq} is not exactly equal to the ratio of equations \ref{bispec eqn simplified} and \ref{bispec variance} due to the way in which the optimal estimator is set up, but it does provide a rough estimate of the pixelated signal-to-noise. Using logarithmic spacing for the $k^\perp$ and $k^\parallel$ bin widths, we obtain $\Delta l \sim 0.1$ at $k^\perp =1$ $\textrm{Mpc}^{-1}$. We can also approximate the noise to be 10 time larger than the signal at this $k^\perp$ by looking at the figures. Together with the value for the volume factor of $V \sim 100$, we can expect pixelated signal-to-noise of $ \sim 0.1$ at $k^\perp =1$ $\textrm{Mpc}^{-1}$, which is close to the result obtained in figure \ref{fig:bispec_SN_hirax_4_bins}. 
+
+
+
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/optimal_SN_2D_bispec_z_1_deltaz_pt2_integrated_over_redshift_kppar_1e-3_1_kpperp_lims__5e-4_1_zksz_full_80pts}
+%	\caption{2D pixelated signal-to-noise plot which shows the highest signal-to-noise in the kSZ window and the lowest signal-to-noise after the $C_l^{p_{HI}}$ noise overwhelms the signal.}
+%	\label{fig:optimalsn2dbispecz1deltazpt2integratedoverredshiftkppar1e-31kpperplims5e-41zkszfull80pts}
+%\end{figure}
+
+\iffalse
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/optimal_SN_2D_bispec_hirax_700MHz_800MHz_no_zint_kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts_60pts_25by25}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/optimal_SN_2D_bispec_hirax_600MHz_700MHz_no_zint_kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts_60pts_25by25}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+	\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/optimal_SN_2D_bispec_hirax_500MHz_600MHz_no_zint_kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts_60pts_25by25.png}
+	%\caption{With outliers removed (66 maps)}
+\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+	\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/optimal_SN_2D_bispec_hirax_400MHz_500MHz_no_zint_kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts_60pts_25by25.png}
+	%\caption{With outliers removed (66 maps)}
+\end{subfigure}
+	\caption{The pixelated signal-to-noise is plotted using equation \ref{SN sq} for four frequency bins. The perpendicular and parallel components, $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$, are integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively. From the plot, we see that the $k^\perp$ scales on which the scales are detectable varies with the frequency bin, with the 700 - 800 MHz bin giving the highest pixelated signal-to-noise, over the widest scales. The opposite is true for the 400 - 500 frequency bin.}
+	%\label{fig:bispec_SN_hirax_4_bins}
+\end{figure}
+\fi
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{../python_scripts/kSZ_21cm_signal/HIRAX_SNR_2d_4bins_subplot}
+	\caption{The pixelated signal-to-noise is plotted using equation \ref{SN sq} for four frequency bins. The perpendicular and parallel components, $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$, are integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively. From the plot, we see that the $k^\perp$ scales on which the scales are detectable varies with the frequency bin, with the 700 - 800 MHz bin giving the highest pixelated signal-to-noise, over the widest scales. The opposite is true for the 400 - 500 frequency bin.}
+	\label{fig:bispec_SN_hirax_4_bins}
+\end{figure}
+
+
+So far we have only discussed the use of the HIRAX experiment in estimating the signal-to-noise. We now compute bispectrum forecasts using a different radio telescope - the Square Kilometre Array (SKA), and compare the results obtained for both experiments.
+
+\subsubsection{Comparison of HIRAX and SKA}
+
+We have chosen to include SKA in our forecasts as it will be the world's largest radio telescope, upon completion. Both HIRAX and SKA will be built in the same location, yet there are a number of differences between the two experiments regarding their frequency range, dishes and survey area which makes it worthwhile to compare the noise and resulting signal-to-noise of both experiments. So far MeerKAT (Karoo Array Telescope) has been launched and is collecting data. Phase 1 of SKA in the mid-frequency range is known as SKA1-MID \cite{Schediwy_2019}, and will consist of MeerKAT dishes and 15 m SKA1-MID dishes.  In this thesis we consider the SKA1-MID dishes without the inclusion of MeerKAT. The specifications for the array are obtained from \cite{Bull_2015} and are listed in table \ref{tab:SKA_specs}. 
+
+\begin{table}[h!]
+	\centering
+		\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{l|l}
+		\hline
+		{\textbf{SKA1-MID}} &{\textbf{Value}}\\
+		\hline
+		System temperature, $T_{sys}$ (K) & $28$ \\
+		\hline
+		Number of dishes, $N_{dishes}$ & $190$  \\
+		\hline
+		Dish diameter, $D_{dish}$ (m) & $15$   \\
+		\hline
+		Minimum frequency, $\nu_{min}$ (MHz) & $350$ \\
+		\hline
+		Maximum frequency, $\nu_{max}$ (MHz)& $1050$ \\
+		\hline
+		Minimum redshift, $z_{min}$ & $0.35$ \\
+		\hline
+		Maximum redshift, $z_{max}$ & $3.06$ \\
+		\hline
+		
+		%Channel width, $\delta_{\nu}$ (kHZ)& $50$\\
+		%\hline
+		Survey area, $S_{area}$ (square degrees) & $25000$\\
+		\hline
+	\end{tabular}
+	\caption{\label{tab:SKA_specs} SKA1-MID specifications.}
+\end{table}
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/HIRAX_SKA_noise_700_800MHz}
+		%\caption{With outliers (70 maps)}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\includegraphics[width=\linewidth]{../python_scripts/kSZ_21cm_signal/HIRAX_SKA_noise_400_500MHz}
+		%\caption{With outliers removed (66 maps)}
+	\end{subfigure}
+	\caption{Comparison of the HIRAX and SKA1-MID noise for the $700-800$ MHz and $400-500$ MHz bins. The SKA1-MID is plotted separately for the dish and interferometer, with the total SKA1-
+		MID noise obtained by adding the dish and interferometer noise in
+		quadrature. The kSZ window is demarcated with black dotted lines.} 
+	\label{fig:hiraxskanoise2bins}
+\end{figure}
+
+
+We use the values in table \ref{tab:SKA_specs} to plot the noise for SKA1-MID assuming its use as both a single dish and interferometer experiment, which we then compare to the HIRAX noise. This is shown in figure \ref{fig:hiraxskanoise2bins} for the $700-800$ MHz and $400-500$ MHz frequency bins. In the plot we see that the HIRAX noise is lower than SKA, but does not extend to very low $k^\perp$ since we are not using HIRAX as a single dish experiment. The HIRAX noise also cuts off much more sharply at high $k^\perp$ as compared to the SKA1-MID interferometer since SKA has longer baselines. It is expected that HIRAX will give better signal-to-noise constraints than SKA1-MID, despite the larger range of $k^\perp$ modes to which we have access with SKA1-MID.  This is because the HIRAX noise is lower for the majority of the kSZ window, which is demarcated with black dotted lines in figure \ref{fig:hiraxskanoise2bins}. The reduced signal-to-noise obtained using SKA1-MID is depicted in figure \ref{fig:ska1mid_sn_700_800_mhz} for the $700 - 800$ MHz bin. The same colour bar is used for SKA as was used for the HIRAX signal-to-noise plots in figure \ref{fig:bispec_SN_hirax_4_bins}, making for easy comparisons. Comparing the two experiments in the same frequency bin, we can see that the signal-to-noise is higher for HIRAX. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/optimal_SN_2D_bispec_ska_700MHz_800MHz_no_zint_kppar_from_tel_specs_pt15_kpperp_from_tel_specs_1_kpar_1e-3_pt15_kperp_5e-4_5_50pts_60pts_25by25}
+	\caption{The pixelated signal-to-noise plotted for SKA1-MID in the $700 - 800$ MHz frequency bin. The perpendicular and parallel components, $k^\perp_{v_{HI}}$ and $k^\parallel_{v_{HI}}$, are integrated up to $1$ $\textrm{Mpc}^{-1}$ and $0.14$ $\textrm{Mpc}^{-1}$, respectively. Comparing the plot to the HIRAX signal-to-noise in the top left panel of figure \ref{fig:bispec_SN_hirax_4_bins}, we find that HIRAX forecasts a higher signal-to-noise for the HI-HI-kSZ bispectrum.}
+	\label{fig:ska1mid_sn_700_800_mhz}
+\end{figure}
+
+Returning to figure \ref{fig:hiraxskanoise2bins}, we can make a few important observations of what to expect from the cumulative signal-to-noise which is shown in section \ref{sec:cumulative_sn}. For the $700-800$ MHz bin in the left panel of figure \ref{fig:hiraxskanoise2bins}, HIRAX noise is $\gtrsim 100$ times lower than SKA in the range $0.02 < k^\perp_{HI} < 0.7$ $\textrm{Mpc}^{-1}$. Although the SKA noise is significantly lower than HIRAX between $0.7 < k^\perp_{HI} < 2$ $\textrm{Mpc}^{-1}$, that noise still rapidly increases by a factor of $\sim 1000$ in that region thereby limiting any signal-to-noise contribution. For the $400-500$ MHz bin in the right panel of figure \ref{fig:hiraxskanoise2bins}, we can expect a smaller discrepancy between the SKA and HIRAX signal-to-noise results since the HIRAX noise is lower than SKA in a smaller range of $0.15 < k^\perp_{HI} < 0.3$ $\textrm{Mpc}^{-1}$ within the kSZ window, as compared to the left panel. 
+
+
+\subsubsection{Foreground and Telescope Limitations}\label{sec:foregrounds and systm limits}
+
+So far we have considered an idealistic case when computing signal-to-noise estimates in that our results assume low foreground contamination in the data. We now discuss foregrounds and their impact on our ability to detect the HI-HI-kSZ bispectrum signal.  
+
+Galactic foregrounds have many contributors, such as synchrotron emission and bremsstrahlung radiation \cite{2005ApJ...625..575S}. There are also extragalactic contributions to foregrounds from bright point sources. The difficulty of dealing with foreground signals is that they are about six orders of magnitude
+larger than the HI signal \cite{Shaw_2015}. The foregrounds are smoothly varying and are therefore contained in the low $k^\parallel$ modes. We can thus remove the foregrounds at the expense of filtering out the low $k^\parallel$ modes from the visibility data \cite{Zaldarriaga_2004} \cite{2006ApJ...650..529W} \cite{McQuinn_2006} \cite{Liu_2009}. To quantify the effect of foregrounds, we stipulate a foreground cut, set to $k^\parallel_{min} = 0.02h$ $\textrm{Mpc}^{-1}$ \cite{Shaw_2015}. %, so that the limit remains the same for different frequency bins and redshifts. 
+
+We now plot the cumulative signal-to-noise for two cases - one which assumes low foregrounds thereby allowing us to use the maximum bispectrum signal, while the other is more realistic and includes a foreground cut. Table \ref{tab:k limits} shows the limits for the components of $\boldsymbol{k}_{HI}$ and $\boldsymbol{k}_{v_{HI}}$ used in both HIRAX and SKA1-MID experiments. The values are shown for the $700 - 800$ MHz and $400 - 500$ MHz bins, although the cumulative signal-to-noise is plotted for all four bins in the next section. The variables listed in the table with no subscript apply to $\boldsymbol{k}_{HI}$ and $\boldsymbol{k}_{v_{HI}}$, since the limits for these vectors differ only for $k^\perp_{max}$ which is written separately for each vector. Likewise, the limits are equal for both the `Full' and 'Foregrounds cut' cases, with the exception of $k^\parallel_{min}$ which is listed explicitly for each case.
+%The limits for $k_{v_{HI}}$ are similar, with the exception that we must restrict the maximum up to which $k^\perp_{v_{HI}}$ can be integrated, thereby setting $k^\perp_{v_{max}} = 1$ $\textrm{Mpc}^{-1}$, for both full and cut cases. We have used $k^\parallel_{max} = 0.14$ $\textrm{Mpc}^{-1}$ \cite{Bull_2015}. The limitation on $k^\parallel_{max}$ is also relaxed in the full case.
+\iffalse
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{l|l|l|l}
+		&\multirow{1}{*}{\textbf{Full case}}& \multicolumn{2}{c}{\textbf{Cut case} } \\
+		& &    \textbf{HIRAX}               &     \textbf{SKA1-MID}     \\
+		\hline
+		$k^\parallel_{min}$	& $10^{-3}$ & \multicolumn{2}{c}{$10^{-2}$}                  \\
+		\hline
+		$k^\parallel_{max}$	&1&  \multicolumn{2}{c}{0.14}                     \\
+		\hline
+		$k^\perp_{min}$	&$5 \times 10^{-4}$  &     0.02             &         0.04         \\
+		\hline
+		$k^\perp_{max}$	&$20$  &     11.6             &         14.6         \\
+		\hline
+		
+	\end{tabular}
+	\caption{The $k$ ranges considered for the $k_{HI}$ components at $z=1$. The $k_{v_{HI}}$ components have the same limits, with the exception of $k^\perp_{v_{max}}$, which is set to 1 for both full and cut cases. }
+\end{table}
+
+\fi
+
+\begin{table}[h!]
+	\centering
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{l|l|l|l|l}
+		\hline
+		\multirow{2}{*}{\textbf{k limits ($\textrm{Mpc}^{-1}$)}} & \multicolumn{2}{c}{\textbf{HIRAX} } & \multicolumn{2}{c}{\textbf{SKA1-MID}} \\
+		 &  \textbf{700 - 800 MHz} & \textbf{400 - 500 MHz} & \textbf{700 - 800 MHz} & \textbf{400 - 500 MHz}    \\
+		\hline
+	 $k^\perp_{min}$	& $2 \times 10^{-2}$ & $7 \times 10^{-3}$& $5 \times 10^{-4}$ & $2 \times 10^{-4}$\\
+	 \hline
+		 $k^\perp_{HI,max}$	& $1$ & $0.4$& $10$ & $6$\\
+		\hline
+	$k^\perp_{v_{HI},max}$	& \multicolumn{4}{c}{1} \\	
+	\hline
+		 $k^\parallel_{min}$ (Full)	& $ 10^{-3}$ & $7 \times 10^{-4}$& $ 10^{-3}$ & $7\times 10^{-4}$\\ 
+		 \hline
+		 $k^\parallel_{min}$ (Foregrounds cut)	& \multicolumn{4}{c}{0.01}\\ 
+	\hline
+	 $k^\parallel_{max}$	& \multicolumn{4}{c}{0.14}\\ 
+	 \hline
+	\end{tabular}
+	\caption{\label{tab:k limits} The $k$ ranges are listed for the $k_{HI}$ and ${k}_{HI}$ components in units of $\textrm{Mpc}^{-1}$ for both HIRAX and SKA1-MID. The values are calculated for two frequency bins using equation \ref{telescope limits eqns}. All variables, with the exception of $k^\perp_{{max}}$, apply to both $\boldsymbol{k}$ vectors. The limits for $k^\parallel_{min}$ are listed explicitly for the `Full' and 'Foregrounds cut' cases. All other variables are equal for both cases.}
+\end{table}
+
+The value for $k^\parallel_{min}$ (Full) is significant because it restricts the low $k^\parallel$ modes before accounting for foregrounds. We discuss this separately for $\boldsymbol{k}_{HI}$ and $\boldsymbol{k}_{v_{HI}}$. A large portion of the bispectrum signal is contained in the range $10^{-6} <k^\parallel_{HI} < 10^{-4}$ $\textrm{Mpc}^{-1}$, as shown in figure \ref{fig:2dbispecfourierz1deltazpt2withz21intfullzkszint}, but accessing these modes requires an unrealistic bandwidth of $10^5$ MHz. For $k^\parallel_{HI} > 10^{-4}$ $\textrm{Mpc}^{-1}$, the radial $k$ modes contribute roughly equally to the bispectrum signal, such that we expect the `Foregrounds cut' case to reduce the signal-to-noise. With regards to $\boldsymbol{k}_{v_{HI}}$, returning to figure \ref{fig:2d_kpperp_kppar_bispec_integrand}, we find that the $k^\perp_{min}$ and $k^\parallel_{min}$ values in table \ref{tab:k limits} do not require us to omit any of the dominant modes in the middle panel. This panel is most crucial for signal-to-noise estimates than the left and right panels due to CMB spectrum and interferometer noise, respectively. However, for the `Foregrounds cut' case, dominant radial velocity modes will be lost. We leave the reconstruction of velocity modes lost due to foregrounds for future work. 
+
+\subsubsection{Cumulative Signal-to-Noise Results}\label{sec:cumulative_sn}
+
+
+Now that we have discussed the $k$ limits for both HIRAX and SKA1-MID experiments, we plot the cumulative signal-to-noise with and without foregrounds cut for all four $100$ MHz frequency bins across the HIRAX bandwidth. This is shown in figure \ref{fig:cumulativesnrsubplot4binshiraxska} with the HIRAX results in the left panels and SKA1-MID in the right. The top and bottom panels depict the high and low frequency bins, respectively, for both the full and foregrounds cut (labeled as `Fg cut') cases. 
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{../python_scripts/kSZ_21cm_signal/cumulative_snr_subplot_4bins_hiraxska}
+	\caption{Cumulative S/N plotted as a function of $k^\perp_{HI}$ for the four $100$ MHz frequency bins across the HIRAX bandwidth. The results are depicted for both experiments with HIRAX in the left panels and SKA1-MID in the right. The top and bottom panels depict the high and low frequency bins, respectively, for both the full and foregrounds cut (labeled as `Fg cut') cases. The limits for the components of $\boldsymbol{k}_{HI}$ and $\boldsymbol{k}_{v_{HI}}$ used in both HIRAX and SKA1-MID experiments are shown in table \ref{tab:k limits}.} 
+	\label{fig:cumulativesnrsubplot4binshiraxska}
+\end{figure}
+
+The shape of the cumulative S/N plots is the same in all panels, with low contribution in low $k_{HI}^\perp$ modes and the S/N leveling off at a high $k_{HI}^\perp$ at values which are consistent with the $k_{HI, max}^\perp$ from table \ref{tab:k limits}.
+The cumulative S/N has a maximum of $\sim 8$ when measuring the bispectrum signal in the $700-800$ MHz bin with HIRAX and assuming no foreground contamination. With the foreground cut, this value reduces to a $\sim 3 \sigma$ detection. The large reduction in S/N is due to the loss of dominant radial velocity modes as well as the reduced bispectrum signal. Comparing HIRAX and SKA, we find that the cumulative S/N from HIRAX is $\sim 4$ times larger in the top panels while the lower frequency bins have a lower discrepancy between HIRAX and SKA of a factor of $\sim 2$. This was expected from figure \ref{fig:hiraxskanoise2bins} and the discussion that followed thereafter. 
+
+The effect of foreground cuts can be seen more clearly by plotting the cumulative signal-to-noise again as a function of $k^\parallel$, which is shown in figure \ref{fig:cumulativesnrsubplot2binshiraxkpar} for HIRAX. We do not repeat the plot for SKA since the results are equivalent, with differences only in the amplitude. As seen, the signal-to-noise increases more gradually as a function of $k^\parallel$ as compared to $k^\perp$ which was heavily suppressed for low transverse modes due to the transverse CMB spectrum and telescope noise. The top left panel of figure \ref{fig:bispec_SN_hirax_4_bins} shows that the signal contribution is highest for $10^{-3}< k^\parallel_{HI}<10^{-2}$ $\textrm{Mpc}^{-1}$, which we can see clearly in figure \ref{fig:cumulativesnrsubplot2binshiraxkpar} as well. This once more necessitates reconstruction of modes which may be lost due to foregrounds. 
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/cumulative_snr_subplot_2bins_hirax_kpar}
+	\caption{Cumulative S/N plotted as a function of $k^\parallel_{HI}$ for the highest and lowest $100$ MHz frequency bins of HIRAX. We see that the foreground cut affects the S/N because a lot of signal is contained in the radial modes between $10^{-3}$ and $10^{-2}$ $\textrm{Mpc}^{-1}$.}
+	\label{fig:cumulativesnrsubplot2binshiraxkpar}
+\end{figure}
+
+Now, if we refer to figure \ref{fig:hiraxskanoise2bins}, it is clear from both panels that the HIRAX noise cuts off signal within the kSZ window, while the SKA noise still allows gradual increases in S/N. We can consider the impact that reducing the SKA noise will have on the S/N results by multiplying the SKA1-MID dish and interferometer noise by a factor of 0.02, so that the SKA and HIRAX interferometer noise is on the same level. In doing so, we obtain the results for each of the four bins, as shown in figure \ref{fig:cumulativesnr4binsskalow}. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/cumulative_snr_4bins_skalow}
+	\caption{Cumulative S/N plotted for four frequency bins using a reduced SKA noise that is $0.02$ times lower than the noise shown in figure \ref{fig:hiraxskanoise2bins}. We can see a significant increase in S/N when compared to figure \ref{fig:cumulativesnrsubplot4binshiraxska}. This is because we are combining the low noise level of HIRAX with the higher $k_\perp$ limit of SKA1-MID. The SKA1-MID limits for $k^\perp$ and $k^\parallel$ in table \ref{tab:k limits} are used in generating these plots.}
+	\label{fig:cumulativesnr4binsskalow}
+\end{figure}
+
+These results look promising because there is a factor of $\sim 10$ increase in the cumulative S/N obtained by combining the low noise level of HIRAX with the higher $k_\perp$ limit of SKA1-MID. The SKA1-MID limits for $k^\perp$ and $k^\parallel$ in table \ref{tab:k limits} are used in generating the curves in figure \ref{fig:cumulativesnr4binsskalow}.  
+
+\subsection{Comparison to other Work}
+
+We now discuss the work done by \cite{smith2018ksz} on the $\left< \delta_g(\boldsymbol{k}) \delta_g (\boldsymbol{k}') p_{ksz}(\boldsymbol{l})\right>$ bispectrum, where $\delta_g$ is the galaxy density field. This work has been mentioned briefly in section \ref{definitions and notations} as motivation for the computation of our HI-HI-kSZ bispectrum. We wish to understand the huge discrepancy between the signal-to-noise of $\sim 400$ in \cite{smith2018ksz} and our total value of $\sim 7$, obtained after summing over the foreground cut S/N in all four bins. There are several differences in the signal and noise of both bispectra. We will discuss the signal first. 
+
+Our $\left< \delta_{HI}(\boldsymbol{k}-\boldsymbol{k}') v^\parallel_{HI} (\boldsymbol{k}') p_{ksz}(\boldsymbol{l})\right>$ bispectrum has a similar form to that of \cite{smith2018ksz} with two main differences; we use HI density fields as opposed to galaxy density fields and we use a reconstructed velocity field which is related to the density field but contains extra redshift and $k$ dependent factors, as per equation \ref{v related to delta continuity eqn}. However, since we have used an optimal bispectrum estimator which is of the same form as the estimator used in computing the signal-to-noise in \cite{smith2018ksz}, we expect the fields chosen in constructing the bispectrum to be weighted such that the signal amplitudes are comparable. 
+
+Now, \cite{smith2018ksz} uses the Dark Energy Spectroscopic Instrument (DESI) which measures the redshifts of galaxies and quasars in a survey area of $14 000$ square degrees \cite{levi2019dark}. Shot noise is associated with galaxy surveys and is expressed as 
+
+\begin{equation}
+P_N^{Shot} = \frac{1}{\bar{n}}
+\end{equation}
+
+where $\bar{n}$ is the galaxy number density. To compare the noise levels of DESI to HIRAX and SKA, we convert the angular noise power spectrum into a 3D HI noise power spectrum as \cite{Alonso_2017}
+
+ \begin{equation}\label{conversion of 3D noise}
+P_N(k) = \frac{\chi^2(z) r_\nu(z)}{\bar{T}^2(z)} N_l^{HI}
+ \end{equation}
+
+ 
+
+Figure \ref{fig:hiraxskadesi700800mhz} shows the DESI noise used in \cite{smith2018ksz} with $\bar{n}=1.7 \times 10^{-4}$ $\textrm{Mpc}^{-3}$ at a mean redshift of $\bar{z} = 0.75$. Also shown are the noise plots from the HIRAX and SKA1-MID experiments in the $700-800$ MHz frequency bin shown previously in figure \ref{fig:hiraxskanoise2bins}. From the plot we see that DESI has a constant noise for all $k^\perp$ which overlaps with a noise level that is comparable to HIRAX in the given bin. We cannot compare DESI noise from \cite{smith2018ksz} to the HIRAX experiment in the same redshift bin because HIRAX does not extend to redshifts lower than $z=0.77$.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/HIRAX_SKA_DESI_700_800MHz_Mpc^3}
+	\caption{Comparison of DESI noise at $\bar{z}=0.75$ to the HIRAX and SKA1-MID noise in the $700-800$ MHz bin which were shown previously in figure \ref{fig:hiraxskanoise2bins}. The kSZ window is demarcated with black dotted lines.}
+	\label{fig:hiraxskadesi700800mhz}
+\end{figure}
+
+Let us now consider the S/N results which we would obtain if we were to assume the shot noise from DESI as our HI intensity mapping experiment noise with the same mean redshift of $0.75$. Using equation \ref{conversion of 3D noise} we would obtain a noise level of $\sim 0.002$ $\mu \textrm{K}^2$. The $k$ limits provided in table \ref{tab:k limits} no longer apply since DESI has no $k^\perp$ cut offs. Also, the large redshift range of $0-1.5$ allows us to set a lower $k^\parallel_{min}$ of $10^{-4}$ $\textrm{Mpc}^{-1}$. We expect a signal contribution from the high $k_{HI}^\perp$ modes within the kSZ window, which cannot be accessed by HIRAX and which are dominated by large SKA1-MID noise. For the low $k_{HI}^\perp$ modes we do not expect any increase in S/N. However, the radial velocity modes dominate at low $k_{{v}_{HI}}^\perp$ and $k_{{v}_{HI}}^\parallel$, as shown in figure \ref{fig:2d_kpperp_kppar_bispec_integrand} and these modes can now be accessed. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{../python_scripts/kSZ_21cm_signal/DESI_14000sqdeg_fskypt2_zc_pt75_deltaz_pt75_z_int_kppar_1e-4_pt15_kpperp_1e-4_10_kpar_1e-4_pt15_kperp_1e-4_10_80pts_80pts_25by25}
+	\caption{Cumulative S/N obtained using the HI-HI-kSZ bispectrum with DESI noise at a mean redshift of $0.75$.}
+	\label{fig:cumulative_snr_desi}
+\end{figure}
+
+The signal-to-noise which we obtain using DESI noise with our HI-HI-kSZ bispectrum at a mean redshift of $0.75$ is shown in figure \ref{fig:cumulative_snr_desi} to be $\sim 200$. The factor of 2 difference from the S/N of 400 in \cite{smith2018ksz} would then be due to the bispectrum computation. The conclusion from this comparison is that the $\left< \delta_g(\boldsymbol{k}) \delta_g (\boldsymbol{k}') p_{ksz}(\boldsymbol{l})\right>$ bispectrum is comparable to our $\left< \delta_{HI}(\boldsymbol{k}-\boldsymbol{k}') v^\parallel_{HI} (\boldsymbol{k}') p_{ksz}(\boldsymbol{l})\right>$ bispectrum in spite of differences in the bispectrum computation. Thus, the reason for the low signal-to-noise forecasts obtained with HIRAX and SKA is the telescope and foreground limitations set on the $k$ components, which reduce the S/N by a factor of about $30$. This large discrepancy can be reduced with intensity mapping experiments if our instrument contains low levels of noise with an extended $k^\perp$ range, which was shown in figure \ref{fig:cumulativesnr4binsskalow} after applying foreground cuts. These forecasts can be further improved by reconstructing modes that were lost due to foregrounds which has been done in \cite{Li_2019}, which we discuss next. \\
+
+
+
+  %Their results give the cumulative signal-to-noise for both HIRAX and CHIME at redshifts, $z=1$ and $z=2$, with high and low foregrounds. We briefly review the methodology in order to highlight the differences in their computation, compared to our bispectrum, and thereafter compare the results obtained.
+Although we have correlated HI intensity mapping experiments with the kSZ signal by computing a bispectrum, a different approach taken by \cite{Li_2019} is to use the kSZ template formalism \cite{Shao_2011}.
+This involves constructing a weighted momentum field from galaxy surveys or HI intensity mapping experiments by convolving the density and velocity fields and then weighting it with the same redshift dependence that is used in the kSZ signal. The velocity reconstruction is done using equation \ref{v related to delta continuity eqn}. In \cite{Li_2019} the momentum field is constructed using the HI signal but this differs from our HI momentum field in equation \ref{HI momentum field} because we do not include any kSZ redshift dependent terms.  %signal doesnt vary much over redshift so they dont integrate it?
+
+ The kSZ template is related to the actual kSZ through the correlation coefficient, expressed as \cite{Li_2019},
+
+\begin{equation}
+r = \frac{C_{l_{temp,real}}}{C_{l_{temp}}C_{l_{real}}},
+\end{equation}  
+
+where $C_{l_{temp,real}}$ is the cross spectrum of the kSZ template and the actual kSZ. Again we draw comparisons since we do not introduce a correlation coefficient, but instead correlate the HI fields with the kSZ momentum field in the form of a $\left<\delta_{HI} v^\parallel_{HI} p_{ksz}\right>$ bispectrum.
+
+ The signal-to-noise is then computed simply as \cite{Li_2019},
+
+\begin{equation}\label{S/N ksz template form}
+\frac{S}{N} = r \sqrt{(2l+1) \Delta l f_{sky}} \sqrt{\frac{C_l^{kSZ, \Delta z}}{C_l^{TT} + C_l^{kSZ} + N_l^{TT}}},
+\end{equation}
+
+where $C_l^{kSZ, \Delta z}$ is the kSZ signal within a redshift bin. This expression can be compared to equation \ref{SN sq}. Using Planck and HIRAX, S/N estimates were obtained at central redshifts of $z_i=1$ and $z_i=2$ in bins of $1.8$ Gpc size. One of the caveats mentioned in \cite{Li_2019} is that large redshift bins were used, while the redshift evolution within the bin was not accounted for. In comparison we have used frequency bins of equal width which accounts for the increase in redshift bin size for higher redshifts, and have also integrated over the redshift signal within each bin.
+
+Without foreground cuts, the forecasts were S/N of about 20 and 35 at $z_i=1$ and $z_i=2$, respectively. The total S/N found in \cite{Li_2019} is then about 3 times higher than our HIRAX forecasts without foreground cuts, as per figure \ref{fig:cumulativesnrsubplot4binshiraxska}, suggesting that the method of kSZ tomography gives higher S/N forecasts than the HI-HI-kSZ bispectrum. It is clear that the S/N increases with redshift in \cite{Li_2019} which is different from our results that show a decrease. This is because the kSZ signal increases with redshift due to the increase in electron densities, while the HI signal decreases. The weighted momentum in \cite{Li_2019} uses only kSZ redshift dependencies whereas our bispectrum accounts for both HI and kSZ redshift dependencies.
+
+The S/N after implementing foreground cuts are equal to $70\%$ of the full S/N obtained with low foregrounds. This is a result of reconstructing the modes lost due to foregrounds using cosmic tidal reconstruction which uses the small scale density field, unaffected by foreground contamination, to reconstruct the large scale density field \cite{Li_2019} \cite{Zhu_2016} \cite{Zhu_2018} \cite{pen2012cosmic} \cite{Kara_ayl__2019}. The idea is that long wavelength density perturbations modulate the small scale perturbations through tidal interactions. This can be understood by considering tidal forces on Earth which result from the gravitational potential of the Moon. This potential can be Taylor expanded, with the second derivative expressing the tidal field that deforms oceans on Earth. In the same way, the long wavelength cosmological gravitational potential, $\phi_L$ can be expanded to second order to account for the deformation effects that the tidal field, $t_{ij}$ has on the local anisotropic matter power spectrum \cite{Kara_ayl__2019}. The large scale density field, $\delta_L$ is then obtained from $\phi_L$ using Poisson's equation \ref{poissons eqn}. Now, tidal reconstruction is limited to recovering low $k^\parallel$ and high $k^\perp$ modes only \cite{Zhu_2016}. From figure \ref{fig:effective_modes}, plotted for the matter power spectrum, we can infer that the HI density modes dominate in the correct range for tidal reconstruction. Thus, the reconstructed density modes, $\delta^{tide}_{HI}$, were used in the HI velocity reconstruction to obtain $v^{tide}_{HI}$ \cite{Li_2019}. We plan to implement this in future work.
+
+%Note that we have used the OV effect only, while \cite{Li_2019} has used the non-linear kSZ signal. 
+
+
+
+%Using the plots in the paper, we can approximate the signal-to-noise at $l=2000$ for z=1 as being, $l^2C_{l}^{kSZ, \Delta z}/2\pi = 2\times 10^{-13}$ $\textrm{K}^2$. In comparison, our bispectrum signal is of a much lower amplitude than this, with $l^2 B_l/2\pi \approx 10^{-21}$ $\textrm{K}^2$. The Planck noise and the CMB spectrum are $l^2C_{l}^{CMB, N}/2\pi = 5\times 10^{-10}$ $\textrm{K}^2$ and $l^2C_{l}^{CMB}/2\pi = 3 \times 10^{-11}$ $\textrm{K}^2$, respectively. The full non-linear kSZ spectrum can be approximated from \cite{Ma_2002} as roughly equivalent to the amplitude of the binned kSZ signal at $l=2000$. %As mentioned, the CMB noise from AdvACT which we are using is lower than that of Planck. In comparison, our bispectrum noise has $\sigma \sim10^{-19}$ $\textrm{K}^3$. 
+
+%At this point, in comparing just the ratios of the signal and noise for a single $l$, the bispectrum method does not give a detection, while the kSZ template method does. Returning to the results of \cite{Li_2019}, we must include factors such as the correlation coefficient which, for the case of high foregrounds, is $r \approx 0.3$. The sky fraction used for HIRAX is $f_{sky} = 0.4$. For an $l$ range of 4000, these values give a signal-to-noise of $14.4$, as shown in the upper panel of figure 4 in \cite{Li_2019}. This can be compared to the blue curve in figure \ref{fig:cumulativesnrsubplot4binshiraxska} which gives a signal-to-noise of about $3$. %, even with the extra factor which we account for, which is the number of sky patches observed.
+
+ %The kSZ tomography for HI intensity mapping with HIRAX, as carried out in \cite{Li_2019}, gives a higher signal-to-noise than the HI-HI-kSZ bispectrum which we have computed for the same experiment. 
+ 
+ %It is worth noting that our signal-to-noise decreases at higher redshifts, due to the $1/V_p$ factor used in the HI and bispectrum signals, which decreases as a function of redshift. The signal-to-noise in \cite{Li_2019} increases with redshift, as expected for the kSZ signal. 
+ 
+ %The computation of the bispectrum was shown to be equivalent to other kSZ formalisms, such as the kSZ template, in \cite{smith2018ksz}. Thus, the main contributing factor for the reduced signal-to-noise which we obtain, in comparison to \cite{Li_2019} is the method of tidal reconstruction which increased the signal-to-noise by a factor of $\sim 3$. Thus we can expect much higher signal-to-noise if we attempt to reconstruct those modes lost due to foregrounds. %non-linear scales
+
+
+%\section{Future work}
+
+% 
+
+\subsection{Future Work}
+
+We have only used the linear kSZ power spectrum, but we plan to implement non-linear kSZ power spectrum into our bispectrum calculations and forecasts. Since the non-linear kSZ is larger than the linear OV spectrum, we expect an increase in the bispectrum signal at non-linear scales. Since the signal increase is expected within the kSZ window, we can expect better S/N forecasts.
+
+We have discussed already the importance of reconstructing modes which may be lost due to foregrounds. The bispectrum expression in equation \ref{3 point function of bispectrum} will be calculated as $\left<\delta^{tide}_{HI}(\boldsymbol{k}_{\delta_{HI}}){v}_{HI}^{\parallel, tide}(\boldsymbol{k}_{v_{HI}}) p^*_{ksz}(\boldsymbol{l}_{ksz})\right>$, after first reconstructing lost density modes. Thus, we plan to use this method to optimize the cumulative signal-to-noise results for the `Foregrounds cut' case and expect S/N forecasts that are more than $70\%$ of the `Full case' \cite{Li_2019}.
+
+Although we have motivated this research with the probing of diffuse baryon content, applications of the bispectrum on missing baryons has not yet been conducted in this thesis. We leave this for future work in which we aim to compute parameter forecasts to deduce how well the baryon density can be constrained.
+
+%Another means of improving signal-to-noise forecasts would be to investigate the effects that modifications to the HIRAX array might have on our current S/N estimates. We have included the SKA1-MID experiment which allowed us to probe higher $k_{HI}^\perp$ modes than HIRAX, but which resulted in lower S/N estimates due to the higher instrument noise of SKA. We will therefore investigate the effects of larger dish spacing on the HIRAX S/N but the ksz noise dominates at high kperp and also implement various array layouts
+
+%The evolution of small-scale density perturbations is modulated by long wavelength perturbations during non-linear structure formation. The gravitational coupling of a long wavelength tidal field with small-scale density fluctuations.
+%The large-scale density field can be reconstructed from the anisotropic tidal distortions of the local power spectrum.
+%Density fluctuations on different scales interact under the gravitational interactions during nonlinear structure formation. The anisotropic tidal distortions of the local power spectrum solves the tidal field and underlying LSS.
+%Large-scale modes leave an anisotropic imprint on small-scale modes through non-linear tidal interactions. 
